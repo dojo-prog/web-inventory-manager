@@ -1,0 +1,40 @@
+import { z } from "zod";
+import { MulterFileSchema } from "./multer";
+
+// Core Model
+export const BrandSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  logo_url: z.string().url().nullable(),
+  logo_path: z.string().nullable(),
+  created_at: z.string(),
+});
+
+// Base Input Shape
+const InputShape = z.object({
+  name: z
+    .string()
+    .min(1, { message: "Brand name is required" })
+    .max(50, { message: "Brand name cannot exceed 50 characters" }),
+
+  logo: MulterFileSchema.optional(),
+});
+
+// Action Schemas
+export const AddBrandInputSchema = InputShape.transform((data) => {
+  const { logo, ...rest } = data;
+  return rest;
+});
+
+export const UpdateBrandInputSchema = InputShape.extend({
+  logo_url: z.string().url().nullable(),
+  logo_path: z.string().nullable(),
+}).transform((data) => {
+  const { logo, ...rest } = data;
+  return rest;
+});
+
+// Inferred Types
+export type Brand = z.infer<typeof BrandSchema>;
+export type AddBrandInput = z.infer<typeof AddBrandInputSchema>;
+export type UpdateBrandInput = z.infer<typeof UpdateBrandInputSchema>;
