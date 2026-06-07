@@ -77,6 +77,7 @@ export const UserFilterSchema = z.object({
 
 // Types
 export type User = z.infer<typeof UserSchema>;
+export type UserRole = z.infer<typeof UserRoleSchema>;
 export type AddUserInput = z.infer<typeof AddUserInputSchema>;
 export type UpdateUserInput = z.infer<typeof UpdateUserInputSchema>;
 export type UserFilter = z.infer<typeof UserFilterSchema>;
