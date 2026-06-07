@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import ENV from "./lib/env";
+import errorMiddleware from "./middlewares/error.middleware";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(
 
 // TODO Routers
 
-// TODO error handler
+// Error Handler
+app.use(errorMiddleware);
 
 export default app;
