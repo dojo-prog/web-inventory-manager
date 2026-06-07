@@ -15,7 +15,6 @@ const startServer = async () => {
       console.log(dbConnStr);
     });
   } catch (error) {
-    // TODO apply error handler
     console.error(error);
     process.exit(1);
   }
