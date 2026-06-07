@@ -20,6 +20,7 @@
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^2.1.0",
     "@types/node": "^25.9.2",
     "@types/pg": "^8.20.0",
@@ -27,8 +28,8 @@
     "typescript": "^6.0.3"
   },
   "dependencies": {
-    "@web-inventory-manager/shared": "file:../shared",
     "@supabase/supabase-js": "^2.107.0",
+    "@web-inventory-manager/shared": "file:../shared",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
