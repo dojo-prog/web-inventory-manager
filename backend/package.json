@@ -27,6 +27,7 @@
     "typescript": "^6.0.3"
   },
   "dependencies": {
+    "@web-inventory-manager/shared": "file:../shared",
     "@supabase/supabase-js": "^2.107.0",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
