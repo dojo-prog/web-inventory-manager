@@ -1,3 +1,4 @@
+import AppError from "../utils/AppError";
 import db from "./db";
 
 const testDBConnection = async () => {
@@ -5,8 +6,8 @@ const testDBConnection = async () => {
     await db.query(`SELECT NOW();`);
 
     return "Supabase DB connected";
-  } catch (error) {
-    // TODO apply error handler
+  } catch (error: any) {
+    throw new AppError(`Supabase DB connection failed: ${error.message}`, 500);
   }
 };
 
