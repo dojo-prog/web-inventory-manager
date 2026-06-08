@@ -3,6 +3,7 @@ import { keyof } from "zod";
 import db from "../../database/db";
 import { userSelectProjection } from "../../constants/auth.constants";
 import buildFilterClause from "../../utils/buildFilterClause";
+import buildInsertFields from "../../utils/buildInsertFields";
 
 export const findAll = async (filters: UserFilter): Promise<User[]> => {
   const {} = buildFilterClause(filters, [
@@ -66,32 +67,15 @@ export const findById = async (userId: string): Promise<User> => {
 export const create = async (
   inputs: AddUserInput & { hash_password: string },
 ): Promise<User> => {
-  const { fname, lname, email, role, hash_password, avatar_url, avatar_path } =
-    inputs;
+  const { keysStr, placeholders, values } = buildInsertFields(inputs);
 
   const result = await db.query(
     `
-    INSERT INTO users (
-     fname,
-     lname,
-     email, 
-     role,
-     hash_password,
-     avatar_url,
-     avatar_path
-    )
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    INSERT INTO users (${keysStr})
+    VALUES (${placeholders})
     RETURNING ${userSelectProjection};
     `,
-    [
-      fname,
-      lname,
-      email,
-      role,
-      hash_password,
-      avatar_url ?? null,
-      avatar_path ?? null,
-    ],
+    values,
   );
 
   return result.rows[0];

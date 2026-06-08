@@ -5,6 +5,7 @@ import {
 } from "@web-inventory-manager/shared";
 import db from "../../database/db";
 import buildFilterClause from "../../utils/buildFilterClause";
+import buildInsertFields from "../../utils/buildInsertFields";
 
 export const findAll = async (
   filters: SupplierFilters,
@@ -43,42 +44,15 @@ export const findById = async (supplierId: string): Promise<Supplier> => {
 };
 
 export const create = async (inputs: AddSupplierInput): Promise<Supplier> => {
-  const {
-    name,
-    supplier_code,
-    contact_name,
-    email,
-    phone,
-    website,
-    address_line,
-    is_active,
-  } = inputs;
+  const { keysStr, placeholders, values } = buildInsertFields(inputs);
 
   const result = await db.query(
     `
-    INSERT INTO suppliers (
-      name,
-      supplier_code,
-      contact_name,
-      email,
-      phone,
-      website,
-      address_line,
-      is_active, 
-    )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    INSERT INTO suppliers (${keysStr})
+    VALUES (${placeholders})
     RETURNING *;
     `,
-    [
-      name,
-      supplier_code,
-      contact_name,
-      email,
-      phone,
-      website,
-      address_line,
-      is_active,
-    ],
+    values,
   );
 
   return result.rows[0];
