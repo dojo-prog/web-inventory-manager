@@ -41,16 +41,7 @@ export const updateSupplier = async (
     throw new AppError("Supplier not found", 404);
   }
 
-  // Changes check
-  let changes: Partial<Supplier> = {};
-
-  const compareKeys = Object.keys(inputs) as (keyof UpdateSupplierInput)[];
-
-  compareKeys.forEach((k) => {
-    if (supplier[k] !== inputs[k]) {
-      changes[k] = inputs[k] as any;
-    }
-  });
+  const { changes } = generateChanges(supplier, inputs);
 
   if (Object.keys(changes).length === 0) {
     throw new AppError("No changes has been made");

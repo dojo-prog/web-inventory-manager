@@ -73,15 +73,7 @@ export const updateUser = async (
   }
 
   // Changes check
-  let changes: Partial<User> = {};
-
-  const compareKeys = Object.keys(inputs) as (keyof UpdateUserInput)[];
-
-  compareKeys.forEach((k) => {
-    if (user[k] !== inputs[k]) {
-      changes[k] = inputs[k] as any;
-    }
-  });
+  const { changes } = generateChanges(user, inputs);
 
   // Avatar change upload
   if (avatar) {
