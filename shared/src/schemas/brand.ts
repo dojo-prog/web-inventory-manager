@@ -34,7 +34,13 @@ export const UpdateBrandInputSchema = InputShape.extend({
   return rest;
 });
 
+// Filter
+export const BrandFilterSchema = z.object({
+  q: z.string().optional(),
+});
+
 // Inferred Types
 export type Brand = z.infer<typeof BrandSchema>;
 export type AddBrandInput = z.infer<typeof AddBrandInputSchema>;
 export type UpdateBrandInput = z.infer<typeof UpdateBrandInputSchema>;
+export type BrandFilters = z.infer<typeof BrandFilterSchema>;
