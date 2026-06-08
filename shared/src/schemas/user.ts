@@ -29,11 +29,20 @@ const AddUserInputShape = LoginInputSchema.extend({
     .min(1, { message: "Last name is required" })
     .max(50, { message: "Last name cannot exceed 50 characters" }),
 
+  password: z
+    .string()
+    .min(6, { message: "Password must be atleast 6 charactes" })
+    .max(50, { message: "Password cannot exceed 50 characters " }),
+
   confirm_password: z
     .string()
     .min(1, { message: "Confirmation Password is required" }),
 
   role: UserRoleSchema,
+
+  avatar_url: z.string().url().nullable().optional(),
+
+  avatar_path: z.string().url().nullable().optional(),
 
   avatar: MulterFileSchema.optional(),
 });
@@ -51,6 +60,10 @@ const UpdateUserInputShape = z.object({
 
   role: UserRoleSchema,
 
+  avatar_url: z.string().url().nullable().optional(),
+
+  avatar_path: z.string().url().nullable().optional(),
+
   avatar: MulterFileSchema.optional(),
 });
 
@@ -62,10 +75,7 @@ export const AddUserInputSchema = AddUserInputShape.refine(
   return rest;
 });
 
-export const UpdateUserInputSchema = UpdateUserInputShape.extend({
-  avatar_url: z.string().url().optional().nullable(),
-  avatar_path: z.string().optional().nullable(),
-}).transform((data) => {
+export const UpdateUserInputSchema = UpdateUserInputShape.transform((data) => {
   const { avatar, ...rest } = data;
   return rest;
 });
