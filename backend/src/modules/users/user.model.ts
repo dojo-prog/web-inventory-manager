@@ -93,10 +93,7 @@ export const update = async (
   userId: string,
   changes: Partial<User>,
 ): Promise<User> => {
-  const changesKeys = Object.keys(changes) as (keyof Partial<User>)[];
-
-  const setClause = changesKeys.map((k, i) => `${k} = ${i + 1}`);
-  const values = changesKeys.map((k) => changes[k]);
+  const { setClause, values } = buildUpdateFields(changes);
   values.push(userId);
 
   const result = await db.query(
