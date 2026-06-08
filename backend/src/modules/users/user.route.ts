@@ -8,7 +8,6 @@ import {
   getAllUsers,
   getUserById,
   removeUser,
-  searchUsers,
   updateUser,
 } from "./user.controller";
 import { validate } from "../../middlewares/validation.middleware";
@@ -22,7 +21,6 @@ const router = express.Router();
 router.use(protectRoute);
 
 router.get("/", authorizeRoles("admin"), getAllUsers);
-router.get("/", authorizeRoles("admin"), searchUsers);
 router.post(
   "/",
   validate(AddUserInputSchema),
