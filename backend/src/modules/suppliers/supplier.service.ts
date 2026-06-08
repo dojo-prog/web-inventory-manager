@@ -41,7 +41,7 @@ export const updateSupplier = async (
     throw new AppError("Supplier not found", 404);
   }
 
-  const { changes } = generateChanges(supplier, inputs);
+  const changes = generateChanges(supplier, inputs);
 
   if (Object.keys(changes).length === 0) {
     throw new AppError("No changes has been made");

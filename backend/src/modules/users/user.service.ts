@@ -72,8 +72,7 @@ export const updateUser = async (
     throw new AppError("User not found", 404);
   }
 
-  // Changes check
-  const { changes } = generateChanges(user, inputs);
+  const changes = generateChanges(user, inputs);
 
   // Avatar change upload
   if (avatar) {
