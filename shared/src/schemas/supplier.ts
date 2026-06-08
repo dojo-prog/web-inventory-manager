@@ -42,7 +42,13 @@ export const AddSupplierInputSchema = InputShape;
 
 export const UpdateSupplierInputSchema = InputShape;
 
+// Filter Schema
+export const SupplierFiltersSchema = z.object({
+  q: z.string().optional(),
+});
+
 // Inferred Types
 export type Supplier = z.infer<typeof SupplierSchema>;
 export type AddSupplierInput = z.infer<typeof AddSupplierInputSchema>;
-export type UpdateSupplier = z.infer<typeof UpdateSupplierInputSchema>;
+export type UpdateSupplierInput = z.infer<typeof UpdateSupplierInputSchema>;
+export type SupplierFilters = z.infer<typeof SupplierFiltersSchema>;
