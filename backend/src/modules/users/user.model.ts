@@ -2,8 +2,16 @@ import { AddUserInput, User, UserFilter } from "@web-inventory-manager/shared";
 import { keyof } from "zod";
 import db from "../../database/db";
 import { userSelectProjection } from "../../constants/auth.constants";
+import buildFilterClause from "../../utils/buildFilterClause";
 
 export const findAll = async (filters: UserFilter): Promise<User[]> => {
+  const {} = buildFilterClause(filters, [
+    "fname",
+    "lname",
+    "email",
+    "id::text",
+  ]);
+
   const conditions: string[] = [];
   const values: any[] = [];
 
