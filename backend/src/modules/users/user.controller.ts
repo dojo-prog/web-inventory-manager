@@ -1,8 +1,74 @@
+import {
+  UserFilter,
+  UserFilterSchema,
+} from "@web-inventory-manager/shared/dist";
 import { Controller } from "../../types/handlers";
+import * as userService from "./user.service";
+import AppError from "../../utils/AppError";
 
-export const getAllUsers: Controller = async (req, res, next) => {};
-export const searchUsers: Controller = async (req, res, next) => {};
-export const getUserById: Controller = async (req, res, next) => {};
-export const addUser: Controller = async (req, res, next) => {};
-export const updateUser: Controller = async (req, res, next) => {};
-export const removeUser: Controller = async (req, res, next) => {};
+export const getAllUsers: Controller = async (req, res, next) => {
+  try {
+    const result = UserFilterSchema.safeParse(req.query);
+
+    if (!result.success) {
+      throw new AppError("Validation Error: Invalid query passed", 400, {
+        errors: result.error.flatten().fieldErrors,
+      });
+    }
+
+    const users = await userService.getAllUsers(result.data);
+
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserById: Controller = async (req, res, next) => {
+  try {
+    const userId = req.params.userId as string;
+
+    const user = await userService.getUserById(userId);
+
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const addUser: Controller = async (req, res, next) => {
+  try {
+    const avatar = req.file;
+
+    const newUser = await userService.addUser(req.body, avatar);
+
+    res.status(200).json({ success: true, newUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateUser: Controller = async (req, res, next) => {
+  try {
+    const avatar = req.file;
+    const userId = req.params.userId as string;
+
+    const updatedUser = await userService.updateUser(userId, req.body, avatar);
+
+    res.status(200).json({ success: true, updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeUser: Controller = async (req, res, next) => {
+  try {
+    const userId = req.params.userId as string;
+
+    const removedUser = await userService.removeUser(req.body);
+
+    res.status(200).json({ success: true, removeUser });
+  } catch (error) {
+    next(error);
+  }
+};
