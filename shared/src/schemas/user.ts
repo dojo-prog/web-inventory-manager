@@ -82,7 +82,8 @@ export const UpdateUserInputSchema = UpdateUserInputShape.transform((data) => {
 
 // Filter Schema
 export const UserFilterSchema = z.object({
-  role: UserRoleSchema,
+  q: z.string().optional(),
+  role: UserRoleSchema.optional(),
 });
 
 // Types
