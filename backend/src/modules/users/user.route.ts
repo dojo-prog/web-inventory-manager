@@ -15,6 +15,7 @@ import {
   AddUserInputSchema,
   UpdateUserInputSchema,
 } from "@web-inventory-manager/shared";
+import multerUpload from "../../lib/multer";
 
 const router = express.Router();
 
@@ -23,15 +24,17 @@ router.use(protectRoute);
 router.get("/", authorizeRoles("admin"), getAllUsers);
 router.post(
   "/",
-  validate(AddUserInputSchema),
   authorizeRoles("admin"),
+  multerUpload.single("avatar"),
+  validate(AddUserInputSchema),
   addUser,
 );
 router.get("/:userId", getUserById);
 router.put(
   "/:userId",
-  validate(UpdateUserInputSchema),
   authorizeRoles("admin"),
+  multerUpload.single("avatar"),
+  validate(UpdateUserInputSchema),
   updateUser,
 );
 router.delete("/:userId", authorizeRoles("admin"), removeUser);
