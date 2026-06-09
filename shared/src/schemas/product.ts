@@ -78,6 +78,6 @@ export const ProductFilterSchema = z.object({
 
 // Inferred Types
 export type Product = z.infer<typeof ProductSchema>;
-export type AddProductInputSchema = z.infer<typeof AddProductInputSchema>;
-export type UpdateProductInputSchema = z.infer<typeof UpdateProductInputSchema>;
+export type AddProductInput = z.infer<typeof AddProductInputSchema>;
+export type UpdateProductInput = z.infer<typeof UpdateProductInputSchema>;
 export type ProductFilter = z.infer<typeof ProductFilterSchema>;
