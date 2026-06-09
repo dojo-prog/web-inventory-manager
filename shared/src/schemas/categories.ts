@@ -21,7 +21,13 @@ const InputShape = z.object({
 export const AddCategoryInputSchema = InputShape;
 export const UpdateCategoryInputSchema = InputShape;
 
+// Filter
+export const CategoryFiltersSchema = z.object({
+  q: z.string().optional(),
+});
+
 // Inferred Types
 export type Category = z.infer<typeof CategorySchema>;
 export type AddCategoryInput = z.infer<typeof AddCategoryInputSchema>;
 export type UpdateCategoryInput = z.infer<typeof UpdateCategoryInputSchema>;
+export type CategoryFilters = z.infer<typeof CategoryFiltersSchema>;
