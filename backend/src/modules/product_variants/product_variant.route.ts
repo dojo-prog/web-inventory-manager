@@ -23,17 +23,14 @@ const router = express.Router();
 
 router.use(protectRoute, authorizeRoles("admin", "manager"));
 
-router.get(
-  "/",
-  validate({ query: ProductVariantFiltersSchema }),
-  getAllProductVariants,
-);
+router.get("/", getAllProductVariants);
 
 router.post(
   "/:productId",
   validate({ params: ProductParamsSchema, body: AddProductVariantInputSchema }),
   addProductVariant,
 );
+
 router.put(
   "/:productId/variants/:variantId",
   validate({
@@ -42,11 +39,13 @@ router.put(
   }),
   updateProductVariant,
 );
+
 router.delete(
   "/:productId/variants/:variantId",
   validate({ params: ProductAndVariantParamsSchema }),
   removeProductVariant,
 );
+
 router.get("/:productId/variants/:variantId", getProductVariantById);
 
 export default router;
