@@ -51,6 +51,9 @@ const InputShape = z.object({
   gender: GenderSchema.default("unisex"),
   status: ProductStatusSchema.default("inactive"),
 
+  thumbnail_url: z.string().url().nullable().optional(),
+  thumbnail_path: z.string().nullable().optional(),
+
   thumbnail: MulterFileSchema.optional(),
 });
 
@@ -60,16 +63,14 @@ export const AddProductInputSchema = InputShape.transform((data) => {
   return rest;
 });
 
-export const UpdateProductInputSchema = InputShape.extend({
-  thumbnail_url: z.string().url().nullable(),
-  thumbnail_path: z.string().nullable(),
-}).transform((data) => {
+export const UpdateProductInputSchema = InputShape.transform((data) => {
   const { thumbnail, ...rest } = data;
   return rest;
 });
 
 // Filter Schema
 export const ProductFilterSchema = z.object({
+  q: z.string().optional(),
   brand_id: z.string().uuid({ message: "Invalid brand ID " }).optional(),
   category_id: z.string().uuid({ message: "Invalid category ID" }).optional(),
   gender: GenderSchema.optional(),
