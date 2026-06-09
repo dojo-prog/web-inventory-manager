@@ -12,8 +12,6 @@ export const ProductImageSchema = z.object({
 
 // Base Input Shape
 const InputShape = z.object({
-  product_id: z.string().uuid({ message: "Invalid product ID" }),
-
   image: MulterFileSchema.optional(),
 });
 
@@ -23,6 +21,10 @@ export const AddProductImageInputSchema = InputShape.transform((data) => {
   return rest;
 });
 
+// Params Schema
+export const ProductImageParamsSchema = z.object({
+  productImageId: z.string().uuid("Invalid Product ID format"),
+});
+
 // Inferred Types
 export type ProductImage = z.infer<typeof ProductImageSchema>;
-export type AddProductImageInput = z.infer<typeof AddProductImageInputSchema>;

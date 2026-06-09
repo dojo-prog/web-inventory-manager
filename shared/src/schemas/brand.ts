@@ -39,6 +39,11 @@ export const BrandFilterSchema = z.object({
   q: z.string().optional(),
 });
 
+// Params Schema
+export const BrandParamsShcema = z.object({
+  brandId: z.string().uuid({ message: "Invalid Brand ID format" }),
+});
+
 // Inferred Types
 export type Brand = z.infer<typeof BrandSchema>;
 export type AddBrandInput = z.infer<typeof AddBrandInputSchema>;

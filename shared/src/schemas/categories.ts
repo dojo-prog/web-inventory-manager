@@ -26,6 +26,11 @@ export const CategoryFiltersSchema = z.object({
   q: z.string().optional(),
 });
 
+// Params
+export const CategoryParamsSchema = z.object({
+  categoryId: z.string().uuid({ message: "Invalid Category ID format" }),
+});
+
 // Inferred Types
 export type Category = z.infer<typeof CategorySchema>;
 export type AddCategoryInput = z.infer<typeof AddCategoryInputSchema>;

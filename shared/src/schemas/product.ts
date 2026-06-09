@@ -77,6 +77,11 @@ export const ProductFilterSchema = z.object({
   status: ProductStatusSchema.optional(),
 });
 
+// Params
+export const ProductParamsSchema = z.object({
+  productId: z.string().uuid({ message: "Invalid Product ID format" }),
+});
+
 // Inferred Types
 export type Product = z.infer<typeof ProductSchema>;
 export type AddProductInput = z.infer<typeof AddProductInputSchema>;
