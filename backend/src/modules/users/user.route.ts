@@ -14,6 +14,8 @@ import { validate } from "../../middlewares/validation.middleware";
 import {
   AddUserInputSchema,
   UpdateUserInputSchema,
+  UserFilterSchema,
+  UserParamsSchema,
 } from "@web-inventory-manager/shared";
 import multerUpload from "../../lib/multer";
 
@@ -21,22 +23,36 @@ const router = express.Router();
 
 router.use(protectRoute);
 
-router.get("/", authorizeRoles("admin"), getAllUsers);
+router.get(
+  "/",
+  authorizeRoles("admin"),
+  validate({ query: UserFilterSchema }),
+  getAllUsers,
+);
+
 router.post(
   "/",
   authorizeRoles("admin"),
   multerUpload.single("avatar"),
-  validate(AddUserInputSchema),
+  validate({ body: AddUserInputSchema }),
   addUser,
 );
-router.get("/:userId", getUserById);
+
+router.get("/:userId", validate({ params: UserParamsSchema }), getUserById);
+
 router.put(
   "/:userId",
   authorizeRoles("admin"),
   multerUpload.single("avatar"),
-  validate(UpdateUserInputSchema),
+  validate({ params: UserParamsSchema, body: UpdateUserInputSchema }),
   updateUser,
 );
-router.delete("/:userId", authorizeRoles("admin"), removeUser);
+
+router.delete(
+  "/:userId",
+  authorizeRoles("admin"),
+  validate({ params: UserParamsSchema }),
+  removeUser,
+);
 
 export default router;
