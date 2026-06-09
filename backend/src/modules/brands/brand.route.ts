@@ -15,6 +15,7 @@ import {
   removeBrand,
   updateBrand,
 } from "./brand.controller";
+import multerUpload from "../../lib/multer";
 
 const router = express.Router();
 
@@ -22,8 +23,18 @@ router.use(protectRoute);
 router.use(authorizeRoles("admin", "manager"));
 
 router.get("/", getAllBrands);
-router.post("/", validate(AddBrandInputSchema), addBrand);
-router.put("/:brandId", validate(UpdateBrandInputSchema), updateBrand);
+router.post(
+  "/",
+  multerUpload.single("logo"),
+  validate(AddBrandInputSchema),
+  addBrand,
+);
+router.put(
+  "/:brandId",
+  multerUpload.single("logo"),
+  validate(UpdateBrandInputSchema),
+  updateBrand,
+);
 router.delete("/:brandId", removeBrand);
 router.get("/:brandId", getBrandById);
 
