@@ -27,7 +27,7 @@ const InputShape = z.object({
     .string()
     .min(1, { message: "Color is required" })
     .max(10, { message: "Color text too long" }),
-  stock_quanitty: z.coerce
+  stock_quantity: z.coerce
     .number()
     .int()
     .min(0, { message: "Stock cannot be negative" })
