@@ -22,9 +22,9 @@ router.use(protectRoute);
 router.use(authorizeRoles("admin", "manager"));
 
 router.get("/", getAllBrands);
-router.get("/", validate(AddBrandInputSchema), addBrand);
-router.get("/:brandId", validate(UpdateBrandInputSchema), updateBrand);
-router.get("/:brandId", removeBrand);
+router.post("/", validate(AddBrandInputSchema), addBrand);
+router.put("/:brandId", validate(UpdateBrandInputSchema), updateBrand);
+router.delete("/:brandId", removeBrand);
 router.get("/:brandId", getBrandById);
 
 export default router;
