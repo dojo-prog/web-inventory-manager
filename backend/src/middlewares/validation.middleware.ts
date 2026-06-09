@@ -1,11 +1,11 @@
+import { ZodTypeAny } from "zod";
 import { Middleware } from "../types/handlers";
 import AppError from "../utils/AppError";
-import { AnyZodObject } from "zod/v3";
 
 interface ValidationRequestSchema {
-  params?: AnyZodObject;
-  query?: AnyZodObject;
-  body?: AnyZodObject;
+  params?: ZodTypeAny;
+  query?: ZodTypeAny;
+  body?: ZodTypeAny;
 }
 
 export const validate = (schemas: ValidationRequestSchema): Middleware => {
@@ -19,7 +19,7 @@ export const validate = (schemas: ValidationRequestSchema): Middleware => {
       if (!result.success) {
         Object.assign(validationError, result.error.flatten().fieldErrors);
       } else {
-        req.params = result.data;
+        req.params = result.data as any;
       }
     }
 
@@ -30,7 +30,7 @@ export const validate = (schemas: ValidationRequestSchema): Middleware => {
       if (!result.success) {
         Object.assign(validationError, result.error.flatten().fieldErrors);
       } else {
-        req.query = result.data;
+        req.query = result.data as any;
       }
     }
 
