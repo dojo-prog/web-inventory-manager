@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { MulterFileSchema } from "./multer";
+import { ProductParamsSchema } from "./product";
 
 // Core Model
 export const ProductImageSchema = z.object({
@@ -25,6 +26,10 @@ export const AddProductImageInputSchema = InputShape.transform((data) => {
 export const ProductImageParamsSchema = z.object({
   productImageId: z.string().uuid("Invalid Product ID format"),
 });
+
+export const ProductAndImageParamsSchema = ProductParamsSchema.merge(
+  ProductImageParamsSchema,
+);
 
 // Inferred Types
 export type ProductImage = z.infer<typeof ProductImageSchema>;
