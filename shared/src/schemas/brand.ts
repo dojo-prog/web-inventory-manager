@@ -17,6 +17,9 @@ const InputShape = z.object({
     .min(1, { message: "Brand name is required" })
     .max(50, { message: "Brand name cannot exceed 50 characters" }),
 
+  logo_url: z.string().url().nullable().optional(),
+  logo_path: z.string().nullable().optional(),
+
   logo: MulterFileSchema.optional(),
 });
 
@@ -26,10 +29,7 @@ export const AddBrandInputSchema = InputShape.transform((data) => {
   return rest;
 });
 
-export const UpdateBrandInputSchema = InputShape.extend({
-  logo_url: z.string().url().nullable(),
-  logo_path: z.string().nullable(),
-}).transform((data) => {
+export const UpdateBrandInputSchema = InputShape.transform((data) => {
   const { logo, ...rest } = data;
   return rest;
 });
