@@ -1,19 +1,10 @@
 import { SupplierFiltersSchema } from "@web-inventory-manager/shared/dist";
 import { Controller } from "../../types/handlers";
-import AppError from "../../utils/AppError";
 import * as supplierService from "./supplier.service";
 
 export const getAllSuppliers: Controller = async (req, res, next) => {
   try {
-    const result = SupplierFiltersSchema.safeParse(req.query);
-
-    if (!result.success) {
-      throw new AppError("Validation Error: Invalid query passed", 400, {
-        errors: result.error.flatten().fieldErrors,
-      });
-    }
-
-    const suppliers = await supplierService.getAllSuppliers(result.data);
+    const suppliers = await supplierService.getAllSuppliers(req.params);
 
     res.status(200).json({ success: true, suppliers });
   } catch (error) {

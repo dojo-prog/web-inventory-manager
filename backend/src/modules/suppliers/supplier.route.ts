@@ -6,7 +6,9 @@ import {
 import { validate } from "../../middlewares/validation.middleware";
 import {
   AddSupplierInputSchema,
+  SupplierParamsSchema,
   UpdateSupplierInputSchema,
+  UserFilterSchema,
 } from "@web-inventory-manager/shared/dist";
 import {
   addSupplier,
@@ -21,14 +23,26 @@ const router = express.Router();
 router.use(protectRoute);
 router.use(authorizeRoles("admin", "manager"));
 
-router.get("/", getAllSuppliers);
-router.post("/", validate(AddSupplierInputSchema), addSupplier);
+router.get("/", validate({ query: UserFilterSchema }), getAllSuppliers);
+
+router.post("/", validate({ body: AddSupplierInputSchema }), addSupplier);
+
 router.post(
   "/:supplierId",
-  validate(UpdateSupplierInputSchema),
+  validate({ params: SupplierParamsSchema, body: UpdateSupplierInputSchema }),
   updateSupplier,
 );
-router.patch("/:supplierId", toggleActiveStatus);
-router.get("/:supplierId", getSupplierById);
+
+router.patch(
+  "/:supplierId",
+  validate({ params: SupplierParamsSchema }),
+  toggleActiveStatus,
+);
+
+router.get(
+  "/:supplierId",
+  validate({ params: SupplierParamsSchema }),
+  getSupplierById,
+);
 
 export default router;
