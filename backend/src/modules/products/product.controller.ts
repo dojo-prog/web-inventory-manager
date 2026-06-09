@@ -5,15 +5,7 @@ import * as productService from "./product.service";
 
 export const getAllProducts: Controller = async (req, res, next) => {
   try {
-    const result = ProductFilterSchema.safeParse(req.query);
-
-    if (!result.success) {
-      throw new AppError("Validation Error: Invalid query", 400, {
-        errors: result.error.flatten().fieldErrors,
-      });
-    }
-
-    const products = await productService.getAllProducts(result.data);
+    const products = await productService.getAllProducts(req.query);
 
     res.status(200).json({ success: true, products });
   } catch (error) {

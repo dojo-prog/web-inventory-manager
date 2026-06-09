@@ -5,15 +5,7 @@ import AppError from "../../utils/AppError";
 
 export const getAllCategories: Controller = async (req, res, next) => {
   try {
-    const result = CategoryFiltersSchema.safeParse(req.query);
-
-    if (!result.success) {
-      throw new AppError("Validation Error: Invalid query", 400, {
-        errors: result.error.flatten().fieldErrors,
-      });
-    }
-
-    const categories = await categoryService.getAllCategories(result.data);
+    const categories = await categoryService.getAllCategories(req.query);
 
     res.status(200).json({ success: true, categories });
   } catch (error) {

@@ -5,15 +5,7 @@ import * as brandService from "./brand.service";
 
 export const getAllBrands: Controller = async (req, res, next) => {
   try {
-    const result = BrandFilterSchema.safeParse(req.query);
-
-    if (!result.success) {
-      throw new AppError("Validation Error: Invalid query passed", 400, {
-        errors: result.error.flatten().fieldErrors,
-      });
-    }
-
-    const brands = await brandService.getAllBrands(result.data);
+    const brands = await brandService.getAllBrands(req.query);
 
     res.status(200).json({ success: true, brands });
   } catch (error) {

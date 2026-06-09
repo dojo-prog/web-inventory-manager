@@ -8,15 +8,7 @@ import AppError from "../../utils/AppError";
 
 export const getAllUsers: Controller = async (req, res, next) => {
   try {
-    const result = UserFilterSchema.safeParse(req.query);
-
-    if (!result.success) {
-      throw new AppError("Validation Error: Invalid query passed", 400, {
-        errors: result.error.flatten().fieldErrors,
-      });
-    }
-
-    const users = await userService.getAllUsers(result.data);
+    const users = await userService.getAllUsers(req.query);
 
     res.status(200).json({ success: true, users });
   } catch (error) {
