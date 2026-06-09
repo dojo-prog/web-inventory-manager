@@ -47,6 +47,11 @@ export const SupplierFiltersSchema = z.object({
   q: z.string().optional(),
 });
 
+// Params Schema
+export const SupplierParamsSchema = z.object({
+  supplierId: z.string().uuid({ message: "Invalid Supplier ID format" }),
+});
+
 // Inferred Types
 export type Supplier = z.infer<typeof SupplierSchema>;
 export type AddSupplierInput = z.infer<typeof AddSupplierInputSchema>;
