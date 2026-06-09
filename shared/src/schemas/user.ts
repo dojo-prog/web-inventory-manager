@@ -86,6 +86,11 @@ export const UserFilterSchema = z.object({
   role: UserRoleSchema.optional(),
 });
 
+// Params Schema
+export const UserParamsSchema = z.object({
+  userId: z.string().uuid({ message: "Invalid User ID format" }),
+});
+
 // Types
 export type User = z.infer<typeof UserSchema>;
 export type UserRole = z.infer<typeof UserRoleSchema>;
