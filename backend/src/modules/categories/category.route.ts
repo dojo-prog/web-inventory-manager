@@ -10,15 +10,38 @@ import {
   removeCategory,
   updateCategory,
 } from "./category.controller";
+import { validate } from "../../middlewares/validation.middleware";
+import {
+  AddCategoryInputSchema,
+  CategoryFiltersSchema,
+  CategoryParamsSchema,
+  UpdateCategoryInputSchema,
+} from "@web-inventory-manager/shared/dist";
 
 const router = express.Router();
 
 router.use(protectRoute, authorizeRoles("admin", "manager"));
 
-router.get("/", getAllCategories);
-router.post("/", addCategory);
-router.get("/:categoryId", updateCategory);
-router.get("/:categoryId", removeCategory);
-router.get("/:categoryId", getCategoryById);
+router.get("/", validate({ query: CategoryFiltersSchema }), getAllCategories);
+
+router.post("/", validate({ body: AddCategoryInputSchema }), addCategory);
+
+router.get(
+  "/:categoryId",
+  validate({ body: UpdateCategoryInputSchema, params: CategoryParamsSchema }),
+  updateCategory,
+);
+
+router.get(
+  "/:categoryId",
+  validate({ params: CategoryParamsSchema }),
+  removeCategory,
+);
+
+router.get(
+  "/:categoryId",
+  validate({ params: CategoryParamsSchema }),
+  getCategoryById,
+);
 
 export default router;

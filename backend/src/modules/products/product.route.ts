@@ -6,6 +6,8 @@ import {
 import { validate } from "../../middlewares/validation.middleware";
 import {
   AddProductInputSchema,
+  ProductFilterSchema,
+  ProductParamsSchema,
   UpdateProductInputSchema,
 } from "@web-inventory-manager/shared";
 import multerUpload from "../../lib/multer";
@@ -21,20 +23,32 @@ const router = express.Router();
 
 router.use(protectRoute, authorizeRoles("admin", "manager"));
 
-router.get("/", getAllProducts);
+router.get("/", validate({ query: ProductFilterSchema }), getAllProducts);
+
 router.post(
   "/",
   multerUpload.single("thumbnail"),
-  validate(AddProductInputSchema),
+  validate({ body: AddProductInputSchema }),
   addProduct,
 );
+
 router.put(
   "/:productId",
   multerUpload.single("thumbnail"),
-  validate(UpdateProductInputSchema),
+  validate({ params: ProductParamsSchema, body: UpdateProductInputSchema }),
   updateProduct,
 );
-router.delete("/:productId", removeProduct);
-router.get("/:productId", getProductById);
+
+router.delete(
+  "/:productId",
+  validate({ params: ProductParamsSchema }),
+  removeProduct,
+);
+
+router.get(
+  "/:productId",
+  validate({ params: ProductParamsSchema }),
+  getProductById,
+);
 
 export default router;

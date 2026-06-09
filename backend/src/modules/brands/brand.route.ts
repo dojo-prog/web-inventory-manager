@@ -6,6 +6,8 @@ import {
 import { validate } from "../../middlewares/validation.middleware";
 import {
   AddBrandInputSchema,
+  BrandFilterSchema,
+  BrandParamsShcema,
   UpdateBrandInputSchema,
 } from "@web-inventory-manager/shared/dist";
 import {
@@ -22,20 +24,24 @@ const router = express.Router();
 router.use(protectRoute);
 router.use(authorizeRoles("admin", "manager"));
 
-router.get("/", getAllBrands);
+router.get("/", validate({ query: BrandFilterSchema }), getAllBrands);
+
 router.post(
   "/",
   multerUpload.single("logo"),
-  validate(AddBrandInputSchema),
+  validate({ body: AddBrandInputSchema }),
   addBrand,
 );
+
 router.put(
   "/:brandId",
   multerUpload.single("logo"),
-  validate(UpdateBrandInputSchema),
+  validate({ body: UpdateBrandInputSchema, params: BrandParamsShcema }),
   updateBrand,
 );
+
 router.delete("/:brandId", removeBrand);
+
 router.get("/:brandId", getBrandById);
 
 export default router;

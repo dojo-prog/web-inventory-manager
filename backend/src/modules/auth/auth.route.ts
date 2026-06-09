@@ -15,7 +15,7 @@ import { LoginInputSchema } from "@web-inventory-manager/shared";
 const router = express.Router();
 
 router.get("/me", protectRoute, getCurrentUser);
-router.post("/login", validate(LoginInputSchema), login);
+router.post("/login", validate({ body: LoginInputSchema }), login);
 router.post("/logout", logout);
 router.post("/refresh", refreshAccessToken);
 
