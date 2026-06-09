@@ -7,7 +7,7 @@ import multerUpload from "../../lib/multer";
 import { validate } from "../../middlewares/validation.middleware";
 import {
   AddProductImageInputSchema,
-  ProductImageParamsSchema,
+  ProductAndImageParamsSchema,
   ProductParamsSchema,
 } from "@web-inventory-manager/shared/dist";
 import {
@@ -39,8 +39,8 @@ router.post(
 );
 
 router.delete(
-  "/:productImageId",
-  validate({ params: ProductImageParamsSchema }),
+  "/:productId/image/:productImageId",
+  validate({ params: ProductAndImageParamsSchema }),
   removeProductImage,
 );
 

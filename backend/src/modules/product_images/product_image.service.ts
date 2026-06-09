@@ -43,9 +43,13 @@ export const addProductImage = async (
 };
 
 export const removeProductImage = async (
+  productId: string,
   productImageId: string,
 ): Promise<ProductImage> => {
-  const removedImage = await productImageModel.remove(productImageId);
+  const removedImage = await productImageModel.remove(
+    productId,
+    productImageId,
+  );
 
   if (!removedImage) {
     throw new AppError("Product image not found", 404);

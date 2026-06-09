@@ -48,13 +48,17 @@ export const add = async (
   return result.rows[0];
 };
 
-export const remove = async (productImageId: string): Promise<ProductImage> => {
+export const remove = async (
+  productId: string,
+  productImageId: string,
+): Promise<ProductImage> => {
   const result = await db.query(
     `
     DELETE FROM product_images
     WHERE id = $1
+      AND product_id = $2
     `,
-    [productImageId],
+    [productImageId, productId],
   );
 
   return result.rows[0];

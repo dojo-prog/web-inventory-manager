@@ -37,12 +37,14 @@ export const addProductImage: Controller = async (req, res, next) => {
 
 export const removeProductImage: Controller = async (req, res, next) => {
   try {
-    const productImageId = req.params.productImageId as string;
+    const { productId, productImageId } = req.params as Record<string, string>;
 
-    const removedProductImage =
-      await productImageService.removeProductImage(productImageId);
+    const removedProductImage = await productImageService.removeProductImage(
+      productId,
+      productImageId,
+    );
 
-    res.status(200).json({ success: true, removeProductImage });
+    res.status(200).json({ success: true, removedProductImage });
   } catch (error) {
     next(error);
   }
