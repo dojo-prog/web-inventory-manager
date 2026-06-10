@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { adminRoutes } from "./admin.routes";
-import AdminLayout from "../../layouts/AdminLayout";
+import AdminLayout from "../../layouts/admin/AdminLayout";
 import Signin from "../../pages/admin/Auth/Signin";
 import NotFound from "../../pages/NotFound";
 
