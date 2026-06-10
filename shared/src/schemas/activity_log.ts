@@ -46,6 +46,7 @@ export const CreateLogInputSchema = InputShape;
 
 // Filter Schema
 export const ActivityLogFilterSchema = z.object({
+  q: z.string().optional(),
   user_id: z.string().uuid().optional(),
 
   action: ActivityActionSchema.optional(),
