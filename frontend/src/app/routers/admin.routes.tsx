@@ -5,50 +5,57 @@ import {
   LayoutDashboardIcon,
   ShapesIcon,
   TagIcon,
+  Users,
   UsersRound,
 } from "lucide-react";
+import Dashboard from "../../pages/admin/Dashboard/Dashboard";
+import Products from "../../pages/admin/Products/Products";
+import Suppliers from "../../pages/admin/Suppliers/Suppliers";
+import Brands from "../../pages/admin/Brands/Brands";
+import Categories from "../../pages/admin/Categories/Categories";
+import ActivityLogs from "../../pages/admin/ActivityLogs/ActivityLogs";
 
 export const adminRoutes = [
   {
     index: true,
     path: "/admin",
-    element: <></>,
+    element: <Dashboard />,
     title: "Dashboard",
     Icon: LayoutDashboardIcon,
   },
   {
     path: "/admin/products",
-    element: <></>,
+    element: <Products />,
     title: "Products",
     Icon: BoxIcon,
   },
   {
     path: "/admin/suppliers",
-    element: <></>,
+    element: <Suppliers />,
     title: "Suppliers",
     Icon: ContainerIcon,
   },
   {
     path: "/admin/brands",
-    element: <></>,
+    element: <Brands />,
     title: "Brands",
     Icon: TagIcon,
   },
   {
     path: "/admin/categories",
-    element: <></>,
+    element: <Categories />,
     title: "Categories",
     Icon: ShapesIcon,
   },
   {
     path: "/admin/users",
-    element: <></>,
+    element: <Users />,
     title: "Users",
     Icon: UsersRound,
   },
   {
     path: "/admin/activity-logs",
-    element: <></>,
+    element: <ActivityLogs />,
     title: "Activity Logs",
     Icon: HistoryIcon,
   },
