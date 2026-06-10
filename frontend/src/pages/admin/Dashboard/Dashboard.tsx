@@ -1,6 +1,7 @@
 import { ClipboardCheck, TriangleAlertIcon, TruckIcon } from "lucide-react";
 import Header from "./sections/Header";
 import SummaryCard from "./components/SummaryCard";
+import Body from "./sections/Body";
 
 const Dashboard = () => {
   const summaryCards = [
@@ -25,9 +26,9 @@ const Dashboard = () => {
   ];
 
   return (
-    <div>
+    <div className="space-y-8">
       {/* Header */}
-      <div className="mb-8">
+      <div>
         <Header />
       </div>
 
@@ -36,6 +37,11 @@ const Dashboard = () => {
         {summaryCards.map((sc) => (
           <SummaryCard key={sc.title} item={sc} />
         ))}
+      </div>
+
+      {/* Body */}
+      <div>
+        <Body />
       </div>
     </div>
   );
