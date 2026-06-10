@@ -33,25 +33,31 @@ export const ActivityLogSchema = z.object({
 
 // Base Input Shape
 const InputShape = z.object({
+  user_id: z.string().uuid().nullable().optional(),
   action: ActivityActionSchema,
   entityType: EntityTypeSchema,
-
-  old_values: z.object().nullable(),
-  new_values: z.object().nullable(),
+  entity_id: z.string().uuid().nullable().optional(),
+  old_values: z.record(z.string(), z.any()).nullable().optional(),
+  new_values: z.record(z.string(), z.any()).nullable().optional(),
 });
 
 // Action Schemas
-export const ActivityLogInputSchema = InputShape;
+export const CreateLogInputSchema = InputShape;
 
 // Filter Schema
-export const ActivityLogFilter = z.object({
+export const ActivityLogFilterSchema = z.object({
   user_id: z.string().uuid().optional(),
 
   action: ActivityActionSchema.optional(),
   entityType: EntityTypeSchema.optional(),
 });
 
+// Params
+export const ActivityLogParamsSchema = z.object({
+  logId: z.string().uuid({ message: "Invalid Activity Log ID Format" }),
+});
+
 // Inferred Types
 export type ActivityLog = z.infer<typeof ActivityLogSchema>;
-export type ActivityLogInput = z.infer<typeof ActivityLogInputSchema>;
-export type ActivityLogFilter = z.infer<typeof ActivityLogFilter>;
+export type CreateLogInput = z.infer<typeof CreateLogInputSchema>;
+export type ActivityLogFilter = z.infer<typeof ActivityLogFilterSchema>;
