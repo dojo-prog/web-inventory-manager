@@ -51,6 +51,17 @@ export const ActivityLogFilterSchema = z.object({
 
   action: ActivityActionSchema.optional(),
   entityType: EntityTypeSchema.optional(),
+
+  page: z
+    .string()
+    .optional()
+    .default("1")
+    .transform((v) => Math.max(1, parseInt(v, 10))),
+  limit: z
+    .string()
+    .optional()
+    .default("20")
+    .transform((v) => Math.max(1, parseInt(v, 10))),
 });
 
 // Params
