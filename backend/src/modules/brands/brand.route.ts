@@ -12,7 +12,7 @@ import {
 } from "@web-inventory-manager/shared/dist";
 import {
   addBrand,
-  getAllBrands,
+  getBrands,
   getBrandById,
   removeBrand,
   updateBrand,
@@ -24,7 +24,7 @@ const router = express.Router();
 router.use(protectRoute);
 router.use(authorizeRoles("admin", "manager"));
 
-router.get("/", validate({ query: BrandFilterSchema }), getAllBrands);
+router.get("/", validate({ query: BrandFilterSchema }), getBrands);
 
 router.post(
   "/",

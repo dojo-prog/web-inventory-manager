@@ -3,9 +3,9 @@ import { Controller } from "../../types/handlers";
 import AppError from "../../utils/AppError";
 import * as productService from "./product.service";
 
-export const getAllProducts: Controller = async (req, res, next) => {
+export const getProducts: Controller = async (req, res, next) => {
   try {
-    const products = await productService.getAllProducts(req.query);
+    const products = await productService.getProducts(req.query);
 
     res.status(200).json({ success: true, products });
   } catch (error) {

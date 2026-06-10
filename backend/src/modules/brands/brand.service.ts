@@ -9,7 +9,7 @@ import AppError from "../../utils/AppError";
 import uploadImage from "../../storage/handlers/uploadImage";
 import deleteImage from "../../storage/handlers/deleteImage";
 
-export const getAllBrands = async (filters: BrandFilters): Promise<Brand[]> => {
+export const getBrands = async (filters: BrandFilters): Promise<Brand[]> => {
   return await brandModel.findAll(filters);
 };
 

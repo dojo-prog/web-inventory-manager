@@ -7,7 +7,7 @@ import {
 import * as supplierModel from "./supplier.model";
 import AppError from "../../utils/AppError";
 
-export const getAllSuppliers = async (
+export const getSuppliers = async (
   filters: SupplierFilters,
 ): Promise<Supplier[]> => {
   return await supplierModel.findAll(filters);

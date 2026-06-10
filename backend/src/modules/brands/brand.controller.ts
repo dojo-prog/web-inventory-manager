@@ -3,9 +3,9 @@ import { Controller } from "../../types/handlers";
 import AppError from "../../utils/AppError";
 import * as brandService from "./brand.service";
 
-export const getAllBrands: Controller = async (req, res, next) => {
+export const getBrands: Controller = async (req, res, next) => {
   try {
-    const brands = await brandService.getAllBrands(req.query);
+    const brands = await brandService.getBrands(req.query);
 
     res.status(200).json({ success: true, brands });
   } catch (error) {

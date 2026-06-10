@@ -1,9 +1,11 @@
 import { Controller } from "../../types/handlers";
 import * as activityLogService from "./activity_log.service";
 
-export const getAllActivityLogs: Controller = async (req, res, next) => {
+export const getActivityLogs: Controller = async (req, res, next) => {
   try {
-    const activityLogs = await activityLogService.getAllActivityLogs(req.query);
+    const activityLogs = await activityLogService.getActivityLogs(
+      req.query as any,
+    );
 
     res.status(200).json({ sucess: true, activityLogs });
   } catch (error) {

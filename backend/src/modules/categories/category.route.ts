@@ -5,7 +5,7 @@ import {
 } from "../../middlewares/auth.middleware";
 import {
   addCategory,
-  getAllCategories,
+  getCategories,
   getCategoryById,
   removeCategory,
   updateCategory,
@@ -22,7 +22,7 @@ const router = express.Router();
 
 router.use(protectRoute, authorizeRoles("admin", "manager"));
 
-router.get("/", validate({ query: CategoryFiltersSchema }), getAllCategories);
+router.get("/", validate({ query: CategoryFiltersSchema }), getCategories);
 
 router.post("/", validate({ body: AddCategoryInputSchema }), addCategory);
 

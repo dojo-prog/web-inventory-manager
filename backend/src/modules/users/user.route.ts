@@ -5,7 +5,7 @@ import {
 } from "../../middlewares/auth.middleware";
 import {
   addUser,
-  getAllUsers,
+  getUsers,
   getUserById,
   removeUser,
   updateUser,
@@ -27,7 +27,7 @@ router.get(
   "/",
   authorizeRoles("admin"),
   validate({ query: UserFilterSchema }),
-  getAllUsers,
+  getUsers,
 );
 
 router.post(

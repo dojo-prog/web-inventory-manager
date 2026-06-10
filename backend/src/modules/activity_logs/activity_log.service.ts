@@ -6,7 +6,7 @@ import {
 import * as activityLogModel from "./activity_log.model";
 import AppError from "../../utils/AppError";
 
-export const getAllActivityLogs = async (
+export const getActivityLogs = async (
   filters: ActivityLogFilter,
 ): Promise<ActivityLog[]> => {
   return await activityLogModel.findAll(filters);

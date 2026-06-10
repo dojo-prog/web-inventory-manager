@@ -3,9 +3,9 @@ import { Controller } from "../../types/handlers";
 import * as categoryService from "./category.service";
 import AppError from "../../utils/AppError";
 
-export const getAllCategories: Controller = async (req, res, next) => {
+export const getCategories: Controller = async (req, res, next) => {
   try {
-    const categories = await categoryService.getAllCategories(req.query);
+    const categories = await categoryService.getCategories(req.query);
 
     res.status(200).json({ success: true, categories });
   } catch (error) {

@@ -2,9 +2,9 @@ import { SupplierFiltersSchema } from "@web-inventory-manager/shared/dist";
 import { Controller } from "../../types/handlers";
 import * as supplierService from "./supplier.service";
 
-export const getAllSuppliers: Controller = async (req, res, next) => {
+export const getSuppliers: Controller = async (req, res, next) => {
   try {
-    const suppliers = await supplierService.getAllSuppliers(req.params);
+    const suppliers = await supplierService.getSuppliers(req.params);
 
     res.status(200).json({ success: true, suppliers });
   } catch (error) {

@@ -12,7 +12,7 @@ import {
 } from "@web-inventory-manager/shared/dist";
 import {
   addSupplier,
-  getAllSuppliers,
+  getSuppliers,
   getSupplierById,
   toggleActiveStatus,
   updateSupplier,
@@ -23,7 +23,7 @@ const router = express.Router();
 router.use(protectRoute);
 router.use(authorizeRoles("admin", "manager"));
 
-router.get("/", validate({ query: UserFilterSchema }), getAllSuppliers);
+router.get("/", validate({ query: UserFilterSchema }), getSuppliers);
 
 router.post("/", validate({ body: AddSupplierInputSchema }), addSupplier);
 

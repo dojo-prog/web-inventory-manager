@@ -6,9 +6,9 @@ import { Controller } from "../../types/handlers";
 import * as userService from "./user.service";
 import AppError from "../../utils/AppError";
 
-export const getAllUsers: Controller = async (req, res, next) => {
+export const getUsers: Controller = async (req, res, next) => {
   try {
-    const users = await userService.getAllUsers(req.query);
+    const users = await userService.getUsers(req.query);
 
     res.status(200).json({ success: true, users });
   } catch (error) {

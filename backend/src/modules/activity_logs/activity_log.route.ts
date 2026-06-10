@@ -8,17 +8,13 @@ import {
   ActivityLogFilterSchema,
   ActivityLogParamsSchema,
 } from "@web-inventory-manager/shared/dist";
-import { getAllActivityLogs, getLogById } from "./activity_log.controller";
+import { getActivityLogs, getLogById } from "./activity_log.controller";
 
 const router = express.Router();
 
 router.use(protectRoute, authorizeRoles("admin"));
 
-router.get(
-  "/",
-  validate({ query: ActivityLogFilterSchema }),
-  getAllActivityLogs,
-);
+router.get("/", validate({ query: ActivityLogFilterSchema }), getActivityLogs);
 router.get(
   "/:logId",
   validate({ params: ActivityLogParamsSchema }),

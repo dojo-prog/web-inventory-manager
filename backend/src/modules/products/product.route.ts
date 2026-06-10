@@ -13,7 +13,7 @@ import {
 import multerUpload from "../../lib/multer";
 import {
   addProduct,
-  getAllProducts,
+  getProducts,
   getProductById,
   removeProduct,
   updateProduct,
@@ -23,7 +23,7 @@ const router = express.Router();
 
 router.use(protectRoute, authorizeRoles("admin", "manager"));
 
-router.get("/", validate({ query: ProductFilterSchema }), getAllProducts);
+router.get("/", validate({ query: ProductFilterSchema }), getProducts);
 
 router.post(
   "/",

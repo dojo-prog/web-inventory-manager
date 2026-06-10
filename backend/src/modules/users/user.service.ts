@@ -11,7 +11,7 @@ import generateHash from "../../utils/generateHash";
 import uploadImage from "../../storage/handlers/uploadImage";
 import deleteImage from "../../storage/handlers/deleteImage";
 
-export const getAllUsers = async (filters: UserFilter): Promise<User[]> => {
+export const getUsers = async (filters: UserFilter): Promise<User[]> => {
   return await userModel.findAll(filters);
 };
 

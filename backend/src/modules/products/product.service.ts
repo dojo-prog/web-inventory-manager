@@ -9,7 +9,7 @@ import uploadImage from "../../storage/handlers/uploadImage";
 import AppError from "../../utils/AppError";
 import deleteImage from "../../storage/handlers/deleteImage";
 
-export const getAllProducts = async (
+export const getProducts = async (
   filters: ProductFilter,
 ): Promise<Product[]> => {
   return productModel.findAll(filters);

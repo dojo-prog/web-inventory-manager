@@ -7,7 +7,7 @@ import {
 import * as categoryModel from "./category.model";
 import AppError from "../../utils/AppError";
 
-export const getAllCategories = async (
+export const getCategories = async (
   filters: CategoryFilters,
 ): Promise<Category[]> => {
   return await categoryModel.findAll(filters);
