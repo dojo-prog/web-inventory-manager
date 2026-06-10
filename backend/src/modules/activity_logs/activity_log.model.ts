@@ -10,13 +10,18 @@ import buildInsertFields from "../../utils/buildInsertFields";
 export const findAll = async (
   filters: ActivityLogFilter,
 ): Promise<ActivityLog[]> => {
-  const { whereClause, values } = buildFilterClause(filters, ["id"]);
+  const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
+    filters,
+    ["id"],
+  );
 
   const result = await db.query(
     `
     SELECT * 
     FROM activity_logs
     ${whereClause}
+    ORDER BY created_at DESC
+    ${limitClause} ${offsetClause}
     `,
     values,
   );

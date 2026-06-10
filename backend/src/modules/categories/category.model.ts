@@ -10,17 +10,17 @@ import buildInsertFields from "../../utils/buildInsertFields";
 export const findAll = async (
   filters: CategoryFilters,
 ): Promise<Category[]> => {
-  const { whereClause, values } = buildFilterClause(filters, [
-    "id",
-    "name",
-    "slug",
-  ]);
+  const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
+    filters,
+    ["id", "name", "slug"],
+  );
 
   const result = await db.query(
     `
     SELECT * 
     FROM categories 
     ${whereClause}
+    ${limitClause} ${offsetClause}
     `,
     values,
   );

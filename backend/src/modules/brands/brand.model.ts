@@ -9,13 +9,17 @@ import db from "../../database/db";
 import buildInsertFields from "../../utils/buildInsertFields";
 
 export const findAll = async (filters: BrandFilters): Promise<Brand[]> => {
-  const { whereClause, values } = buildFilterClause(filters, ["name"]);
+  const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
+    filters,
+    ["name"],
+  );
 
   const result = await db.query(
     `
     SELECT * 
     FROM brands
     ${whereClause}
+    ${limitClause} ${offsetClause}
     `,
     values,
   );

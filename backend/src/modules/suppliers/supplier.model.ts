@@ -10,19 +10,16 @@ import buildInsertFields from "../../utils/buildInsertFields";
 export const findAll = async (
   filters: SupplierFilters,
 ): Promise<Supplier[]> => {
-  const { whereClause, values } = buildFilterClause(filters, [
-    "name",
-    "supplier_code",
-    "contact_name",
-    "email",
-    "website",
-    "id::text",
-  ]);
+  const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
+    filters,
+    ["name", "supplier_code", "contact_name", "email", "website", "id::text"],
+  );
 
   const result = await db.query(
     `
     SELECT * FROM suppliers
     ${whereClause}
+    ${limitClause} ${offsetClause}
     `,
     values,
   );

@@ -6,45 +6,17 @@ import buildFilterClause from "../../utils/buildFilterClause";
 import buildInsertFields from "../../utils/buildInsertFields";
 
 export const findAll = async (filters: UserFilter): Promise<User[]> => {
-  const {} = buildFilterClause(filters, [
-    "fname",
-    "lname",
-    "email",
-    "id::text",
-  ]);
-
-  const conditions: string[] = [];
-  const values: any[] = [];
-
-  const entries = Object.entries(filters);
-
-  entries.forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
-      const placeholderNum = values.length + 1;
-
-      if (key === "q") {
-        conditions.push(
-          `(fname ILIKE $${placeholderNum} 
-              OR lname ILIKE $${placeholderNum} 
-              OR email ILIKE $${placeholderNum} 
-              OR id::text ILIKE $${placeholderNum}) `,
-        );
-        values.push(`%${value}%`);
-      } else {
-        conditions.push(`${key} = $${placeholderNum}`);
-        values.push(value);
-      }
-    }
-  });
-
-  const whereClause =
-    conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+  const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
+    filters,
+    ["fname", "lname", "email", "id::text"],
+  );
 
   const result = await db.query(
     `
     SELECT ${userSelectProjection}
     FROM users 
     ${whereClause}
+    ${limitClause} ${offsetClause}
     `,
     values,
   );
