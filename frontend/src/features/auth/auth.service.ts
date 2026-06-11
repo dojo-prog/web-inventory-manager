@@ -2,7 +2,7 @@ import type { LoginInput, User } from "@web-inventory-manager/shared";
 import axios from "../../lib/axios";
 
 export const checkAuth = async (): Promise<User> => {
-  const res = await axios.post("/auth/me");
+  const res = await axios.get("/auth/me");
 
   return res.data.user;
 };
