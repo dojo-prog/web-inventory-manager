@@ -23,12 +23,28 @@ export const ActivityLogSchema = z.object({
   user_id: z.string().uuid().nullable(),
 
   action: ActivityActionSchema,
-  entityType: EntityTypeSchema,
+  entity_type: EntityTypeSchema,
+  entity_id: z.string().uuid(),
 
   old_values: z.object().nullable(),
   new_values: z.object().nullable(),
 
   created_at: z.string(),
+});
+
+export const DetailedActivityLogSchema = z.object({
+  id: z.string().uuid(),
+  user_id: z.string().uuid().nullable(),
+  action: ActivityActionSchema,
+  entity_type: EntityTypeSchema,
+  entity_id: z.string().uuid(),
+  old_values: z.object().nullable(),
+  new_values: z.object().nullable(),
+  created_at: z.string(),
+
+  user_fname: z.string(),
+  user_lname: z.string(),
+  user_email: z.string(),
 });
 
 // Base Input Shape
@@ -71,5 +87,6 @@ export const ActivityLogParamsSchema = z.object({
 
 // Inferred Types
 export type ActivityLog = z.infer<typeof ActivityLogSchema>;
+export type DetailedActivityLog = z.infer<typeof DetailedActivityLogSchema>;
 export type CreateLogInput = z.infer<typeof CreateLogInputSchema>;
 export type ActivityLogFilter = z.infer<typeof ActivityLogFilterSchema>;
