@@ -32,7 +32,7 @@ export const findLowStock = async (): Promise<LowStockProduct[]> => {
       pv.id, 
       pv.size,
       pv.color,
-      pv.stock_quantity
+      pv.stock_quantity,
 
       b.id AS brand_id,
       b.name AS brand_name,
@@ -46,13 +46,13 @@ export const findLowStock = async (): Promise<LowStockProduct[]> => {
 
     FROM product_variants pv
 
-    JOIN brands b
-      ON b.id = pv.brand_id
-    
     JOIN products p
       ON p.id = pv.product_id
 
-    JOIN products c
+    JOIN brands b
+      ON b.id = p.brand_id
+
+    JOIN categories c
       ON c.id = p.category_id
     
     WHERE pv.stock_quantity < 10
