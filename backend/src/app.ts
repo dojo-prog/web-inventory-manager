@@ -12,6 +12,7 @@ import productImageRouter from "./modules/product_images/product_image.route";
 import productVariantRouter from "./modules/product_variants/product_variant.route";
 import supplierRouter from "./modules/suppliers/supplier.route";
 import activityLogRouter from "./modules/activity_logs/activity_log.route";
+import dashboardRouter from "./modules/dashboard/dashboard.route";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/v1/products", productRouter);
 app.use("/api/v1/products", productImageRouter);
 app.use("/api/v1/products", productVariantRouter);
 app.use("/api/v1/activity-logs", activityLogRouter);
+app.use("/api/v1/dashboard", dashboardRouter);
 
 // Error Handler
 app.use(errorMiddleware);
