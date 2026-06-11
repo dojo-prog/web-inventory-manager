@@ -1,7 +1,6 @@
 import {
-  ActivityLog,
+  DetailedActivityLog,
   LowStockProduct,
-  Product,
   Summary,
 } from "@web-inventory-manager/shared";
 import * as dashboardModel from "./dashboard.model";
@@ -14,6 +13,6 @@ export const getLowStockProducts = async (): Promise<LowStockProduct[]> => {
   return await dashboardModel.findLowStock();
 };
 
-export const getRecentActivitie = async (): Promise<ActivityLog[]> => {
+export const getRecentActivitie = async (): Promise<DetailedActivityLog[]> => {
   return await dashboardModel.findRecentLogs();
 };

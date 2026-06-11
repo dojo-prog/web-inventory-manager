@@ -1,5 +1,5 @@
 import type {
-  ActivityLog,
+  DetailedActivityLog,
   LowStockProduct,
   Summary,
 } from "@web-inventory-manager/shared";
@@ -7,7 +7,7 @@ import type {
 export interface DashboardState {
   summary: Summary;
   lowStockProducts: LowStockProduct[];
-  recentActivityLogs: ActivityLog[];
+  recentActivityLogs: DetailedActivityLog[];
 
   fetchingSummary: boolean;
   fetchingLowStockProducts: boolean;

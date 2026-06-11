@@ -1,5 +1,6 @@
 import {
   ActivityLog,
+  DetailedActivityLog,
   LowStockProduct,
   Summary,
 } from "@web-inventory-manager/shared";
@@ -63,12 +64,29 @@ export const findLowStock = async (): Promise<LowStockProduct[]> => {
   return result.rows;
 };
 
-export const findRecentLogs = async (): Promise<ActivityLog[]> => {
+export const findRecentLogs = async (): Promise<DetailedActivityLog[]> => {
   const result = await db.query(
     `
-    SELECT *
-    FROM activity_logs
-    ORDER BY created_at DESC
+    SELECT 
+      al.id,
+      al.user_id,
+      al.action,
+      al.entity_type,
+      al.entity_id,
+      al.old_values,
+      al.new_values,
+      al.created_at,
+
+      u.fname AS user_fname,
+      u.lname AS user_lname,
+      u.email AS user_email
+
+    FROM activity_logs al
+
+    JOIN users u
+      ON u.id = al.user_id 
+
+    ORDER BY al.created_at DESC
     LIMIT 4; 
     `,
   );
