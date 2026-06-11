@@ -53,6 +53,7 @@ const useAuthStore = create<AuthState>((set) => ({
     try {
       await authService.refresh();
     } catch (error) {
+      set({ user: null });
       errorHandler(error, "refresh", true);
     }
   },
