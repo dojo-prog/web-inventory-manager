@@ -1,14 +1,35 @@
-import { LockIcon, User2Icon } from "lucide-react";
+import { Loader2Icon, LockIcon, User2Icon } from "lucide-react";
 import AuthInput from "../../../shared/AuthInputs";
 import Header from "./components/Header";
 import { useForm } from "../../../hooks/useForm";
+import useAuthStore from "../../../features/auth/auth.store";
+import validateInputs from "../../../utils/validateInputs";
+import {
+  LoginInputSchema,
+  type LoginInput,
+} from "@web-inventory-manager/shared";
+import { toast } from "react-toastify";
 
 const Signin = () => {
+  const { login, loading } = useAuthStore();
+
   const { formData, handleChange } = useForm({
     email: "",
     password: "",
   });
   const { email, password } = formData;
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    const error = validateInputs(LoginInputSchema, formData);
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    login(formData as LoginInput);
+  };
 
   return (
     <div className="h-screen w-screen">
@@ -32,7 +53,7 @@ const Signin = () => {
             </div>
 
             {/* Form */}
-            <form className="w-full space-y-4">
+            <form onSubmit={handleSubmit} className="w-full space-y-4">
               <AuthInput
                 type="email"
                 label="Email Address"
@@ -56,10 +77,14 @@ const Signin = () => {
               />
 
               <button
-                type="button"
-                className="h-10 w-full bg-primary hover:bg-primary-hover text-white font-label font-semibold rounded-md text-sm mt-6 flex items-center justify-center transition-colors duration-200 cursor-pointer "
+                type="submit"
+                className="h-10 w-full bg-primary hover:bg-primary-hover text-white font-label font-semibold rounded-md text-sm mt-6 flex items-center justify-center transition-colors duration-200 cursor-pointer"
               >
-                Sign In
+                {!loading ? (
+                  "Sign In"
+                ) : (
+                  <Loader2Icon className="h-full animate-spin" />
+                )}
               </button>
             </form>
           </div>
