@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@web-inventory-manager/shared": "file:../shared",
     "@tailwindcss/vite": "^4.3.0",
+    "@web-inventory-manager/shared": "file:../shared",
     "axios": "^1.17.0",
     "lucide-react": "^1.17.0",
     "react": "^19.2.6",
@@ -19,6 +19,7 @@
     "react-router-dom": "^7.17.0",
     "react-toastify": "^11.1.0",
     "tailwindcss": "^4.3.0",
+    "zod": "^4.4.3",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
