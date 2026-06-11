@@ -7,3 +7,4 @@ export * from "./schemas/product_image";
 export * from "./schemas/product_variant";
 export * from "./schemas/supplier";
 export * from "./schemas/user";
+export * from "./schemas/dashboard";
