@@ -2,26 +2,37 @@ import { ClipboardCheck, TriangleAlertIcon, TruckIcon } from "lucide-react";
 import Header from "./sections/Header";
 import SummaryCard from "./components/SummaryCard";
 import Body from "./sections/Body";
+import useDashboardStore from "../../../features/dashboard/dashboard.store";
+import { useEffect } from "react";
 
 const Dashboard = () => {
+  const { fetchSummary, fetchLowStocks, fetchRecentLogs, summary } =
+    useDashboardStore();
+
+  useEffect(() => {
+    fetchSummary();
+    fetchLowStocks();
+    fetchRecentLogs();
+  }, []);
+
   const summaryCards = [
     {
       icon: ClipboardCheck,
       title: "Total Units",
       subTitle: "",
-      value: "12,842",
+      value: `${summary.total_units}`,
     },
     {
       icon: TriangleAlertIcon,
       title: "Critical Actions",
       subTitle: "Below stock threshold",
-      value: "0 Items",
+      value: `${summary.low_stock_units} Items`,
     },
     {
       icon: TruckIcon,
       title: "Procurrent",
       subTitle: "Verified active partners",
-      value: "124",
+      value: `${summary.active_suppliers}`,
     },
   ];
 
