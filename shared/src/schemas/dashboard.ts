@@ -10,7 +10,7 @@ const LowStockProductSchema = z.object({
   id: z.string().uuid(),
   size: z.string(),
   color: z.string(),
-  stock_quantity: z.string(),
+  stock_quantity: z.coerce.number().int(),
 
   brand_id: z.string().uuid(),
   brand_name: z.string(),
