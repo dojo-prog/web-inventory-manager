@@ -19,6 +19,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         await useAuthStore.getState().refresh();
+        return axiosInstance(originalRequest);
       } catch (error) {
         useAuthStore.getState().logout();
         return Promise.reject(error);
