@@ -2,10 +2,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import useBrandStore from "../features/brands/brand.store";
 
 const PageControl = () => {
-  const { pagination, fetchBrands, fetchingBrands } = useBrandStore();
-  const { page, limit, total_count } = pagination;
+  const { filters, fetchBrands, total_count } = useBrandStore();
+  const { page, limit } = filters;
 
-  const totalPages = Math.max(1, Math.ceil(total_count / limit));
+  const totalPages = Math.max(1, Math.ceil(total_count / limit!));
 
   return (
     <div className="flex items-center gap-3 border-l border-border pl-4 h-9 font-body">

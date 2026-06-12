@@ -1,25 +1,24 @@
 import Searchbar from "../../../../shared/Searchbar";
 import PageControl from "../../../../shared/PageControl";
-import { useForm } from "../../../../hooks/useForm";
 import useBrandStore from "../../../../features/brands/brand.store";
 import getPaginationRange from "../../../../utils/getPaginationRange";
 import useDebounce from "../../../../hooks/useDebounce";
 import { useEffect } from "react";
 
 const TableHeader = () => {
-  const { brands, pagination, fetchBrands } = useBrandStore();
-  const { page, limit, total_count, setPage } = pagination;
+  const { brands, total_count, filters, setFilters, fetchBrands } =
+    useBrandStore();
+  const { q, page, limit } = filters;
 
-  const { formData, handleChange } = useForm({
-    q: "",
-  });
-  const { q } = formData;
+  const handleSearchChange = (e: any) => {
+    setFilters({ q: e.target.value });
+  };
 
   const debouncedQ = useDebounce(q, 400);
 
   useEffect(() => {
     const triggerSearch = async () => {
-      setPage(1);
+      setFilters({ page: 1 });
 
       await fetchBrands({ q: debouncedQ });
       console.log(brands);
@@ -28,7 +27,7 @@ const TableHeader = () => {
     triggerSearch();
   }, [debouncedQ]);
 
-  const { from, to } = getPaginationRange(total_count, page, limit);
+  const { from, to } = getPaginationRange(total_count, page!, limit!);
 
   return (
     <div className="border-b border-border p-5 shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-surface">
@@ -59,8 +58,8 @@ const TableHeader = () => {
             placeholder="Enter brand ID or name"
             id={"q"}
             name={"q"}
-            value={q}
-            onChange={handleChange}
+            value={q ?? ""}
+            onChange={handleSearchChange}
           />
 
           <PageControl />
