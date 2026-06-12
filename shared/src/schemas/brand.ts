@@ -48,16 +48,8 @@ export const UpdateBrandInputSchema = InputShape.transform((data) => {
 export const BrandFilterSchema = z.object({
   q: z.string().optional(),
 
-  page: z
-    .string()
-    .optional()
-    .default("1")
-    .transform((v) => Math.max(1, parseInt(v, 10))),
-  limit: z
-    .string()
-    .optional()
-    .default("20")
-    .transform((v) => Math.max(1, parseInt(v, 10))),
+  page: z.number().int().positive().default(1),
+  limit: z.number().int().positive().default(20),
 });
 
 export const BrandFilterResultSchema = z.object({
@@ -75,5 +67,5 @@ export type Brand = z.infer<typeof BrandSchema>;
 export type DetailedBrand = z.infer<typeof DetailedBrandSchema>;
 export type AddBrandInput = z.infer<typeof AddBrandInputSchema>;
 export type UpdateBrandInput = z.infer<typeof UpdateBrandInputSchema>;
-export type BrandFilters = z.infer<typeof BrandFilterSchema>;
+export type BrandFilters = z.input<typeof BrandFilterSchema>;
 export type BrandFilterResult = z.infer<typeof BrandFilterResultSchema>;
