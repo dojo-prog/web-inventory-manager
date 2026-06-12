@@ -10,6 +10,16 @@ export const BrandSchema = z.object({
   created_at: z.string(),
 });
 
+export const DetailedBrandSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  logo_url: z.string().url().nullable(),
+  logo_path: z.string().nullable(),
+  created_at: z.string(),
+
+  active_units_count: z.coerce.number().int(),
+});
+
 // Base Input Shape
 const InputShape = z.object({
   name: z
@@ -57,6 +67,7 @@ export const BrandParamsShcema = z.object({
 
 // Inferred Types
 export type Brand = z.infer<typeof BrandSchema>;
+export type DetailedBrand = z.infer<typeof DetailedBrandSchema>;
 export type AddBrandInput = z.infer<typeof AddBrandInputSchema>;
 export type UpdateBrandInput = z.infer<typeof UpdateBrandInputSchema>;
 export type BrandFilters = z.infer<typeof BrandFilterSchema>;
