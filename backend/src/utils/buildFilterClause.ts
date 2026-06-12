@@ -22,7 +22,7 @@ const buildFilterClause = (
 
       if (queryFields.length > 0 && key === "q") {
         const queries = queryFields
-          .map((field) => `${field} ILIKE $${placeholderNumber}`)
+          .map((field) => `${field}::text ILIKE $${placeholderNumber}`)
           .join(" OR ");
 
         conditions.push(`(${queries})`);
