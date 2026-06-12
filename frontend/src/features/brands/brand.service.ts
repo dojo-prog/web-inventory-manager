@@ -1,14 +1,49 @@
 import type {
   AddBrandInput,
+  BrandFilterResult,
   BrandFilters,
+  DetailedBrand,
   UpdateBrandInput,
 } from "@web-inventory-manager/shared";
+import axios from "../../lib/axios";
 
-export const fetchBrands = async (filters: BrandFilters) => {};
-export const fetchBrandById = async (brandId: string) => {};
-export const addBrand = async (inputs: AddBrandInput) => {};
+export const fetchBrands = async (
+  filters: BrandFilters,
+): Promise<BrandFilterResult> => {
+  const res = await axios.get("/brands", {
+    params: filters,
+  });
+
+  const { brands, total_count } = res.data;
+
+  return { brands, total_count };
+};
+
+export const fetchBrandById = async (
+  brandId: string,
+): Promise<DetailedBrand> => {
+  const res = await axios.get(`/brands/${brandId}`);
+
+  return res.data.brand;
+};
+
+export const addBrand = async (
+  inputs: AddBrandInput,
+): Promise<DetailedBrand> => {
+  const res = await axios.post("/brands", inputs);
+
+  return res.data.newBrand;
+};
+
 export const updateBrand = async (
   brandId: string,
   inputs: UpdateBrandInput,
-) => {};
-export const removeBrand = async (brandId: string) => {};
+): Promise<DetailedBrand> => {
+  const res = await axios.put(`/brands/${brandId}`, inputs);
+
+  return res.data.updatedBrand;
+};
+
+export const removeBrand = async (brandId: string): Promise<void> => {
+  await axios.delete(`/brands/${brandId}`);
+};
