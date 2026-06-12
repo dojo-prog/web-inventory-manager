@@ -2,6 +2,7 @@ import {
   AddBrandInput,
   Brand,
   BrandFilters,
+  BrandFilterResult,
   DetailedBrand,
 } from "@web-inventory-manager/shared";
 import buildFilterClause from "../../utils/buildFilterClause";
@@ -24,7 +25,7 @@ const DETAILED_BRAND_FIELDS = `
 
 export const findAll = async (
   filters: BrandFilters,
-): Promise<DetailedBrand[]> => {
+): Promise<BrandFilterResult> => {
   const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
     filters,
     ["id", "name"],
@@ -32,7 +33,8 @@ export const findAll = async (
 
   const result = await db.query(
     `
-    SELECT ${DETAILED_BRAND_FIELDS}
+    SELECT ${DETAILED_BRAND_FIELDS},
+      COUNT(*) OVER()::INT AS total_count
     FROM brands
     ${whereClause}
     ${limitClause} ${offsetClause}
@@ -40,7 +42,10 @@ export const findAll = async (
     values,
   );
 
-  return result.rows;
+  const total_count = result.rows.length > 0 ? result.rows[0].total_count : 0;
+  const brands = result.rows.map(({ total_count, ...brand }) => brand);
+
+  return { brands, total_count };
 };
 
 export const findById = async (brandId: string): Promise<DetailedBrand> => {
