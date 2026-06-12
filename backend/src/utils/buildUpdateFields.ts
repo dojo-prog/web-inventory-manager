@@ -18,3 +18,5 @@ const buildUpdateFields = (
     values,
   };
 };
+
+export default buildUpdateFields;
