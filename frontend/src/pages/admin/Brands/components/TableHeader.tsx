@@ -1,12 +1,19 @@
 import Searchbar from "../../../../shared/Searchbar";
 import PageControl from "../../../../shared/PageControl";
 import { useForm } from "../../../../hooks/useForm";
+import useBrandStore from "../../../../features/brands/brand.store";
+import getPaginationRange from "../../../../utils/getPaginationRange";
 
 const TableHeader = () => {
+  const { brands, pagination, fetchBrands, fetchingBrands } = useBrandStore();
+  const { page, limit, total_count } = pagination;
+
   const { formData, handleChange } = useForm({
     q: "",
   });
   const { q } = formData;
+
+  const { from, to } = getPaginationRange(total_count, page, limit);
 
   return (
     <div className="border-b border-border p-5 shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-surface">
@@ -17,24 +24,33 @@ const TableHeader = () => {
         </h2>
 
         {/* Row Indicator */}
-        <p className="text-xs font-medium font-body text-text-muted">
-          Showing <span className="font-semibold text-text">1-20</span> of{" "}
-          <span className="font-semibold text-text">200</span> entries
-        </p>
+        {total_count > 0 && (
+          <p className="text-xs font-medium font-body text-text-muted">
+            Showing{" "}
+            <span className="font-semibold text-text">
+              {from}-{to}
+            </span>{" "}
+            of <span className="font-semibold text-text">{total_count}</span>{" "}
+            entries
+          </p>
+        )}
       </div>
 
       {/* Control Actions Panel */}
-      <div className="flex flex-wrap items-center gap-4">
-        <Searchbar
-          placeholder="Enter brand ID or name"
-          id={"q"}
-          name={"q"}
-          value={q}
-          onChange={handleChange}
-        />
+      {/* TODO change condition */}
+      {true && (
+        <div className="flex flex-wrap items-center gap-4">
+          <Searchbar
+            placeholder="Enter brand ID or name"
+            id={"q"}
+            name={"q"}
+            value={q}
+            onChange={handleChange}
+          />
 
-        <PageControl />
-      </div>
+          <PageControl />
+        </div>
+      )}
     </div>
   );
 };
