@@ -48,8 +48,8 @@ export const UpdateBrandInputSchema = InputShape.transform((data) => {
 export const BrandFilterSchema = z.object({
   q: z.string().optional(),
 
-  page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().default(20),
+  page: z.coerce.number().int().positive().default(1),
+  limit: z.coerce.number().int().positive().default(20),
 });
 
 export const BrandFilterResultSchema = z.object({
