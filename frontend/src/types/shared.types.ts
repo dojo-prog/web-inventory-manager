@@ -8,3 +8,12 @@ export interface Route {
   element: JSX.Element;
   Icon: LucideIcon;
 }
+
+export interface Pagination {
+  page: number;
+  limit: number;
+  totalCount: number;
+
+  setPage: (page: number) => void;
+  setLimit: (limit: number) => void;
+}
