@@ -12,7 +12,7 @@ export interface Route {
 export interface Pagination {
   page: number;
   limit: number;
-  totalCount: number;
+  total_count: number;
 
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
