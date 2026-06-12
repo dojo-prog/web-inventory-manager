@@ -2,6 +2,7 @@ import {
   AddBrandInput,
   Brand,
   BrandFilters,
+  DetailedBrand,
   UpdateBrandInput,
 } from "@web-inventory-manager/shared";
 import * as brandModel from "./brand.model";
@@ -9,11 +10,13 @@ import AppError from "../../utils/AppError";
 import uploadImage from "../../storage/handlers/uploadImage";
 import deleteImage from "../../storage/handlers/deleteImage";
 
-export const getBrands = async (filters: BrandFilters): Promise<Brand[]> => {
+export const getBrands = async (
+  filters: BrandFilters,
+): Promise<DetailedBrand[]> => {
   return await brandModel.findAll(filters);
 };
 
-export const getBrandById = async (brandId: string): Promise<Brand> => {
+export const getBrandById = async (brandId: string): Promise<DetailedBrand> => {
   const brand = await brandModel.findById(brandId);
 
   if (!brand) {
@@ -26,7 +29,7 @@ export const getBrandById = async (brandId: string): Promise<Brand> => {
 export const addBrand = async (
   inputs: AddBrandInput,
   logo?: Express.Multer.File,
-): Promise<Brand> => {
+): Promise<DetailedBrand> => {
   const payload: AddBrandInput = { ...inputs };
 
   if (logo) {
@@ -43,7 +46,7 @@ export const updateBrand = async (
   brandId: string,
   inputs: UpdateBrandInput,
   logo?: Express.Multer.File,
-): Promise<Brand> => {
+): Promise<DetailedBrand> => {
   const brand = await brandModel.findById(brandId);
 
   if (!brand) {
