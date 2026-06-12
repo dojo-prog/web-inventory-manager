@@ -6,10 +6,10 @@ import useBrandStore from "../../../features/brands/brand.store";
 import { useEffect } from "react";
 
 const Brands = () => {
-  const { fetchBrands, brands } = useBrandStore();
+  const { fetchBrands, brands, filters } = useBrandStore();
 
   useEffect(() => {
-    fetchBrands({});
+    fetchBrands(filters);
   }, []);
 
   return (
@@ -30,7 +30,7 @@ const Brands = () => {
       </div>
 
       {/* Brands Table */}
-      <div className="max-h-[calc(100vh-8rem)]">
+      <div className="h-[calc(100vh-8rem)]">
         <BrandsTableContainer />
       </div>
     </div>
