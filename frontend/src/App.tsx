@@ -2,6 +2,7 @@ import { Slide, ToastContainer } from "react-toastify";
 import AppRouter from "./app/routers";
 import useAuthStore from "./features/auth/auth.store";
 import { useEffect } from "react";
+import PageLoader from "./shared/PageLoader";
 
 const App = () => {
   const { checkAuth, checkingAuth } = useAuthStore();
@@ -10,8 +11,7 @@ const App = () => {
     checkAuth();
   }, []);
 
-  // TODO add page loader
-  if (checkingAuth) return null;
+  if (checkingAuth) return <PageLoader />;
 
   return (
     <>
