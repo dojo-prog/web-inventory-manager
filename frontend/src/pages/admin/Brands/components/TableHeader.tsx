@@ -3,15 +3,30 @@ import PageControl from "../../../../shared/PageControl";
 import { useForm } from "../../../../hooks/useForm";
 import useBrandStore from "../../../../features/brands/brand.store";
 import getPaginationRange from "../../../../utils/getPaginationRange";
+import useDebounce from "../../../../hooks/useDebounce";
+import { useEffect } from "react";
 
 const TableHeader = () => {
-  const { brands, pagination, fetchBrands, fetchingBrands } = useBrandStore();
-  const { page, limit, total_count } = pagination;
+  const { brands, pagination, fetchBrands } = useBrandStore();
+  const { page, limit, total_count, setPage } = pagination;
 
   const { formData, handleChange } = useForm({
     q: "",
   });
   const { q } = formData;
+
+  const debouncedQ = useDebounce(q, 400);
+
+  useEffect(() => {
+    const triggerSearch = async () => {
+      setPage(1);
+
+      await fetchBrands({ q: debouncedQ });
+      console.log(brands);
+    };
+
+    triggerSearch();
+  }, [debouncedQ]);
 
   const { from, to } = getPaginationRange(total_count, page, limit);
 
