@@ -30,7 +30,10 @@ export const validate = (schemas: ValidationRequestSchema): Middleware => {
       if (!result.success) {
         Object.assign(validationError, result.error.flatten().fieldErrors);
       } else {
-        req.query = result.data as any;
+        for (const key in req.query) {
+          delete req.query[key];
+        }
+        Object.assign(req.query, result.data);
       }
     }
 
