@@ -2,6 +2,7 @@ import {
   AddBrandInput,
   Brand,
   BrandFilters,
+  BrandFilterResult,
   DetailedBrand,
   UpdateBrandInput,
 } from "@web-inventory-manager/shared";
@@ -12,8 +13,8 @@ import deleteImage from "../../storage/handlers/deleteImage";
 
 export const getBrands = async (
   filters: BrandFilters,
-): Promise<DetailedBrand[]> => {
-  return await brandModel.findAll(filters);
+): Promise<BrandFilterResult> => {
+  return brandModel.findAll(filters);
 };
 
 export const getBrandById = async (brandId: string): Promise<DetailedBrand> => {

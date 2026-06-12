@@ -5,9 +5,11 @@ import * as brandService from "./brand.service";
 
 export const getBrands: Controller = async (req, res, next) => {
   try {
-    const brands = await brandService.getBrands(req.query);
+    const { brands, total_count } = await brandService.getBrands(
+      req.query as any,
+    );
 
-    res.status(200).json({ success: true, brands });
+    res.status(200).json({ success: true, brands, total_count });
   } catch (error) {
     next(error);
   }
