@@ -4,7 +4,6 @@ import type {
   DetailedBrand,
   UpdateBrandInput,
 } from "@web-inventory-manager/shared";
-import type { Pagination } from "../../types/shared.types";
 
 export interface BrandState {
   brands: DetailedBrand[];
@@ -13,7 +12,11 @@ export interface BrandState {
   fetchingBrands: boolean;
   loading: boolean;
 
-  pagination: Pagination;
+  filters: BrandFilters;
+
+  total_count: number;
+
+  setFilters: (newFilters: BrandFilters) => void;
 
   fetchBrands: (filters: BrandFilters) => Promise<void>;
   fetchBrandById: (brandId: string) => Promise<void>;

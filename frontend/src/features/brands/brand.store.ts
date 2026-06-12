@@ -7,35 +7,28 @@ import { toast } from "react-toastify";
 const useBrandStore = create<BrandState>((set) => ({
   brands: [],
   selectedBrand: null,
+  total_count: 0,
 
   fetchingBrands: false,
   loading: false,
 
-  pagination: {
+  filters: {
+    q: "",
     page: 1,
     limit: 20,
-    total_count: 0,
-
-    setPage: (page) =>
-      set((state) => ({
-        pagination: { ...state.pagination, page },
-      })),
-
-    setLimit: (limit) =>
-      set((state) => ({
-        pagination: { ...state.pagination, limit },
-      })),
   },
+
+  setFilters: (newFilters) =>
+    set((state) => ({
+      filters: { ...state.filters, ...newFilters },
+    })),
 
   fetchBrands: async (filters) => {
     set({ fetchingBrands: true });
     try {
       const { brands, total_count } = await brandService.fetchBrands(filters);
 
-      set((state) => ({
-        brands,
-        pagination: { ...state.pagination, total_count },
-      }));
+      set({ brands, total_count });
     } catch (error) {
       errorHandler(error, "fetchBrands", true);
     } finally {
