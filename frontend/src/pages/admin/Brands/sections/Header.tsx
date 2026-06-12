@@ -1,7 +1,11 @@
+import useBrandStore from "../../../../features/brands/brand.store";
+
 const Header = () => {
+  const { total_count } = useBrandStore();
+
   const headerMetaData = [
-    { title: "Total Brands", value: 24 },
-    { title: "Active Items", value: 1402 },
+    { title: "Total Brands", value: total_count },
+    // { title: "Active Items", value: 1402 },
   ];
 
   return (
