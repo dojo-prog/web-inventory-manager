@@ -4,9 +4,12 @@ import AdminLayout from "../../layouts/admin/AdminLayout";
 import Signin from "../../pages/admin/Auth/Signin";
 import NotFound from "../../pages/NotFound";
 import useAuthStore from "../../features/auth/auth.store";
+import PageLoader from "../../shared/PageLoader";
 
 const AppRouter = () => {
-  const { user } = useAuthStore();
+  const { user, checkingAuth } = useAuthStore();
+
+  if (checkingAuth) return <PageLoader />;
 
   return (
     <BrowserRouter>

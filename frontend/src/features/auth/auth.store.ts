@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const useAuthStore = create<AuthState>((set) => ({
   user: null,
 
-  checkingAuth: false,
+  checkingAuth: true,
   loading: false,
 
   checkAuth: async () => {
