@@ -21,13 +21,16 @@ const TableHeader = () => {
       setFilters({ page: 1 });
 
       await fetchBrands({ q: debouncedQ });
-      console.log(brands);
     };
 
     triggerSearch();
   }, [debouncedQ]);
 
-  const { from, to } = getPaginationRange(total_count, page!, limit!);
+  const { from, to } = getPaginationRange(
+    total_count,
+    page as number,
+    limit as number,
+  );
 
   return (
     <div className="border-b border-border p-5 shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-surface">
