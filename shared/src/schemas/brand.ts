@@ -60,6 +60,11 @@ export const BrandFilterSchema = z.object({
     .transform((v) => Math.max(1, parseInt(v, 10))),
 });
 
+export const BrandFilterResultSchema = z.object({
+  brands: z.array(DetailedBrandSchema),
+  total_count: z.coerce.number().int(),
+});
+
 // Params Schema
 export const BrandParamsShcema = z.object({
   brandId: z.string().uuid({ message: "Invalid Brand ID format" }),
@@ -71,3 +76,4 @@ export type DetailedBrand = z.infer<typeof DetailedBrandSchema>;
 export type AddBrandInput = z.infer<typeof AddBrandInputSchema>;
 export type UpdateBrandInput = z.infer<typeof UpdateBrandInputSchema>;
 export type BrandFilters = z.infer<typeof BrandFilterSchema>;
+export type BrandFilterResult = z.infer<typeof BrandFilterResultSchema>;
