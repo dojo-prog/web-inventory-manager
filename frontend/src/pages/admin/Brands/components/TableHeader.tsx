@@ -6,8 +6,7 @@ import useDebounce from "../../../../hooks/useDebounce";
 import { useEffect } from "react";
 
 const TableHeader = () => {
-  const { brands, total_count, filters, setFilters, fetchBrands } =
-    useBrandStore();
+  const { total_count, filters, setFilters, fetchBrands } = useBrandStore();
   const { q, page, limit } = filters;
 
   const handleSearchChange = (e: any) => {
