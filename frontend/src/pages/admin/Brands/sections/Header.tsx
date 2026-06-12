@@ -12,7 +12,7 @@ const Header = () => {
 
       <div className="flex space-x-6">
         {headerMetaData.map((item) => (
-          <div>
+          <div key={item.title}>
             <span className="text-xs text-secondary font-label">
               {item.title}
             </span>
