@@ -1,23 +1,24 @@
+import type { DetailedBrand } from "@web-inventory-manager/shared";
 import { PenIcon, TagIcon, TrashIcon } from "lucide-react";
 
-const BrandCard = () => {
+const BrandCard = ({ item: b }: { item: DetailedBrand }) => {
   return (
     <div className="w-full bg-surface border border-border shadow rounded p-5 space-y-6">
       {/* Brand Image */}
       <div className="w-12 h-12 bg-primary/10 flex items-center justify-center rounded">
         {/* TODO apply true condition */}
-        {true ? (
+        {!b.logo_url ? (
           <TagIcon size={20} className="text-primary" />
         ) : (
-          <img src="" alt="" />
+          <img src={b.logo_url} alt={b.name} />
         )}
       </div>
 
       {/* Brand Data */}
       <div>
-        <h2 className="text-xl font-headline font-semibold mb-2">Nike</h2>
+        <h2 className="text-xl font-headline font-semibold mb-2">{b.name}</h2>
         <p className="w-full text-xs text-secondary font-label truncate">
-          ID: 1234587609laskdlashdaslhdsa
+          ID: {b.id}
         </p>
         <p className="w-full text-xs text-secondary font-label">Products</p>
       </div>
