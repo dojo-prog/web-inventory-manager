@@ -5,7 +5,7 @@ interface TableSkeletonProps {
 }
 
 export const BrandTableLoader: React.FC<TableSkeletonProps> = ({
-  rowCount = 5,
+  rowCount = 7,
 }) => {
   return (
     <>
