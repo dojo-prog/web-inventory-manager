@@ -12,7 +12,7 @@ const useBrandStore = create<BrandState>((set) => ({
   loading: false,
 
   pagination: {
-    page: 0,
+    page: 1,
     limit: 20,
     total_count: 0,
 
