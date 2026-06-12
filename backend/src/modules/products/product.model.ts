@@ -7,6 +7,7 @@ import {
 import buildFilterClause from "../../utils/buildFilterClause";
 import db from "../../database/db";
 import buildInsertFields from "../../utils/buildInsertFields";
+import buildUpdateFields from "../../utils/buildUpdateFields";
 
 export const findAll = async (filters: ProductFilter): Promise<Product[]> => {
   const { whereClause, values, limitClause, offsetClause } = buildFilterClause(

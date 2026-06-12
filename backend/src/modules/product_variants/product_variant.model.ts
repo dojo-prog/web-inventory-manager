@@ -7,6 +7,7 @@ import buildFilterClause from "../../utils/buildFilterClause";
 import db from "../../database/db";
 import buildInsertFields from "../../utils/buildInsertFields";
 import AppError from "../../utils/AppError";
+import buildUpdateFields from "../../utils/buildUpdateFields";
 
 export const findAll = async (productId: string): Promise<ProductVariant[]> => {
   const result = await db.query(

@@ -4,6 +4,7 @@ import db from "../../database/db";
 import { userSelectProjection } from "../../constants/auth.constants";
 import buildFilterClause from "../../utils/buildFilterClause";
 import buildInsertFields from "../../utils/buildInsertFields";
+import buildUpdateFields from "../../utils/buildUpdateFields";
 
 export const findAll = async (filters: UserFilter): Promise<User[]> => {
   const { whereClause, values, limitClause, offsetClause } = buildFilterClause(

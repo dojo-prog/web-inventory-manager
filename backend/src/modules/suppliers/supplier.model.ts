@@ -6,6 +6,7 @@ import {
 import db from "../../database/db";
 import buildFilterClause from "../../utils/buildFilterClause";
 import buildInsertFields from "../../utils/buildInsertFields";
+import buildUpdateFields from "../../utils/buildUpdateFields";
 
 export const findAll = async (
   filters: SupplierFilters,

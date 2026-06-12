@@ -6,6 +6,7 @@ import {
 import buildFilterClause from "../../utils/buildFilterClause";
 import db from "../../database/db";
 import buildInsertFields from "../../utils/buildInsertFields";
+import buildUpdateFields from "../../utils/buildUpdateFields";
 
 export const findAll = async (
   filters: CategoryFilters,
