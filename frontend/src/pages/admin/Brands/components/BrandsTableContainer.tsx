@@ -3,7 +3,7 @@ import TableHeader from "./TableHeader";
 
 const BrandsTableContainer = () => {
   return (
-    <div className="max-h-[calc(100vh-8rem)] f-full flex flex-col overflow-hidden rounded-md border border-border bg-surface shadow-sm">
+    <div className="h-full flex flex-col overflow-hidden rounded-md border border-border bg-surface shadow-sm">
       {/* Header */}
       <TableHeader />
 

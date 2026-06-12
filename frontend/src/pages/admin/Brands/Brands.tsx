@@ -30,7 +30,9 @@ const Brands = () => {
       </div>
 
       {/* Brands Table */}
-      <BrandsTableContainer />
+      <div className="max-h-[calc(100vh-8rem)]">
+        <BrandsTableContainer />
+      </div>
     </div>
   );
 };
