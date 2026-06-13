@@ -9,7 +9,7 @@ export const CategorySchema = z.object({
 });
 
 // Base Input Shape
-const InputShape = z.object({
+export const CategoriesInputShape = z.object({
   name: z
     .string()
     .trim()
@@ -18,8 +18,8 @@ const InputShape = z.object({
 });
 
 // Action Schemas
-export const AddCategoryInputSchema = InputShape;
-export const UpdateCategoryInputSchema = InputShape;
+export const AddCategoryInputSchema = CategoriesInputShape;
+export const UpdateCategoryInputSchema = CategoriesInputShape;
 
 // Filter
 export const CategoryFiltersSchema = z.object({
