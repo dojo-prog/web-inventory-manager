@@ -2,6 +2,7 @@ import { Edit2Icon, TagIcon, Trash2Icon } from "lucide-react";
 import useBrandStore from "../../../../features/brands/brand.store";
 import BrandTableLoader from "./BrandTableLoader";
 import BrandTableEmpty from "./BrandTableEmpty";
+import useModalStore from "../../../../features/ui/modals/modal.store";
 
 const headers = [
   "Brand Name",
@@ -12,6 +13,7 @@ const headers = [
 ];
 const BrandsTable = () => {
   const { fetchingBrands, brands } = useBrandStore();
+  const { openDeleteConfirmModal } = useModalStore();
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -89,6 +91,7 @@ const BrandsTable = () => {
                   <button
                     aria-label="Delete Brand"
                     className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                    onClick={() => openDeleteConfirmModal("brand", brand)}
                   >
                     <Trash2Icon className="h-4 w-4" />
                   </button>

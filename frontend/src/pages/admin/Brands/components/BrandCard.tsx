@@ -3,7 +3,7 @@ import { PenIcon, TagIcon, TrashIcon } from "lucide-react";
 import useModalStore from "../../../../features/ui/modals/modal.store";
 
 const BrandCard = ({ item: b }: { item: DetailedBrand }) => {
-  const { openBrandModal } = useModalStore();
+  const { openBrandModal, openDeleteConfirmModal } = useModalStore();
 
   return (
     <div className="w-full bg-surface border border-border shadow rounded p-5 space-y-6">
@@ -36,7 +36,10 @@ const BrandCard = ({ item: b }: { item: DetailedBrand }) => {
         >
           <PenIcon className="h-full w-full" />
         </button>
-        <button className="w-4 h-4 text-primary/70 hover:text-black cursor-pointer">
+        <button
+          className="w-4 h-4 text-primary/70 hover:text-black cursor-pointer"
+          onClick={() => openDeleteConfirmModal("brand", b)}
+        >
           <TrashIcon className="h-full w-full" />
         </button>
       </div>
