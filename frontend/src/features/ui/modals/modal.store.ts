@@ -26,12 +26,12 @@ const useModalStore = create<ModalState>((set) => ({
       set({ selectedCategory: category });
     }
 
-    set({ modalType: type, categoryModalOpen: true });
+    set({ categoryModalType: type, categoryModalOpen: true });
   },
   closeCategoryModal: () => {
     set({
       selectedCategory: null,
-      modalType: "create",
+      categoryModalType: "create",
       categoryModalOpen: false,
     });
   },
