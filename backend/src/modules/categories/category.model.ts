@@ -24,6 +24,7 @@ export const findAll = async (
       COUNT(*) OVER()::INT AS total_count
     FROM categories 
     ${whereClause}
+    ORDER BY created_at DESC
     ${limitClause} ${offsetClause}
     `,
     values,
