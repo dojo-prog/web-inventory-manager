@@ -4,7 +4,7 @@ import type { ModalState } from "./modal.types";
 const useModalStore = create<ModalState>((set) => ({
   // Brands
   brandModalOpen: false,
-  modalType: null,
+  modalType: "create",
   selectedBrand: null,
   openBrandModal: (type, brand) => {
     if (brand) {
@@ -14,7 +14,7 @@ const useModalStore = create<ModalState>((set) => ({
     set({ modalType: type, brandModalOpen: true });
   },
   closeBrandModal: () => {
-    set({ selectedBrand: null, modalType: null, brandModalOpen: false });
+    set({ selectedBrand: null, modalType: "create", brandModalOpen: false });
   },
 }));
 

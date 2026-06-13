@@ -1,6 +1,6 @@
 import type { DetailedBrand } from "@web-inventory-manager/shared";
 
-type ModalType = "create" | "update" | null;
+type ModalType = "create" | "update";
 
 export interface ModalState {
   // Brand Modal
