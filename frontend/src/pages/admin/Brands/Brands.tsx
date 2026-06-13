@@ -4,9 +4,12 @@ import RegisterCard from "./components/RegisterCard";
 import BrandsTableContainer from "./components/BrandsTableContainer";
 import useBrandStore from "../../../features/brands/brand.store";
 import { useEffect } from "react";
+import BrandModal from "./components/BrandModal";
+import useModalStore from "../../../features/ui/modals/modal.store";
 
 const Brands = () => {
   const { fetchBrands, brands, filters } = useBrandStore();
+  const { brandModalOpen } = useModalStore();
 
   useEffect(() => {
     fetchBrands(filters);
@@ -33,6 +36,8 @@ const Brands = () => {
       <div className="h-[calc(100vh-8rem)]">
         <BrandsTableContainer />
       </div>
+
+      {brandModalOpen && <BrandModal />}
     </div>
   );
 };
