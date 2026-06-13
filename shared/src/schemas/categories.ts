@@ -34,6 +34,11 @@ export const CategoryFilterResultSchema = z.object({
   total_count: z.coerce.number().int(),
 });
 
+export const MostUsedCategoryResultSchema = z.object({
+  category: CategorySchema,
+  product_count: z.coerce.number().int(),
+});
+
 // Params
 export const CategoryParamsSchema = z.object({
   categoryId: z.string().uuid({ message: "Invalid Category ID format" }),
@@ -45,3 +50,6 @@ export type AddCategoryInput = z.infer<typeof AddCategoryInputSchema>;
 export type UpdateCategoryInput = z.infer<typeof UpdateCategoryInputSchema>;
 export type CategoryFilters = z.input<typeof CategoryFiltersSchema>;
 export type CategoryFilterResult = z.infer<typeof CategoryFilterResultSchema>;
+export type MostUsedCategoryResult = z.infer<
+  typeof MostUsedCategoryResultSchema
+>;
