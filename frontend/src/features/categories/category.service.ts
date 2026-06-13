@@ -1,11 +1,38 @@
-import type { BrandFilters, Category } from "@web-inventory-manager/shared";
+import type {
+  AddCategoryInput,
+  BrandFilters,
+  Category,
+  UpdateCategoryInput,
+} from "@web-inventory-manager/shared";
+import axios from "../../lib/axios";
 
 export const fetchCategories = async (
   filters: BrandFilters,
-): Promise<Category[]> => {};
-export const addCategory = async (inputs: FormData): Promise<Category> => {};
+): Promise<Category[]> => {
+  const res = await axios.get("/categories", {
+    params: filters,
+  });
+
+  return res.data.categories;
+};
+
+export const addCategory = async (
+  inputs: AddCategoryInput,
+): Promise<Category> => {
+  const res = await axios.post("/categories", inputs);
+
+  return res.data.newCategory;
+};
+
 export const updateCategory = async (
   categoryId: string,
-  inputs: FormData,
-): Promise<Category> => {};
-export const removeCategory = async (catgoryId: string): Promise<void> => {};
+  inputs: UpdateCategoryInput,
+): Promise<Category> => {
+  const res = await axios.put(`/categories/${categoryId}`, inputs);
+
+  return res.data.updatedCategory;
+};
+
+export const removeCategory = async (categoryId: string): Promise<void> => {
+  await axios.delete(`/categories/${categoryId}`);
+};
