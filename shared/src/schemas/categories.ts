@@ -38,4 +38,4 @@ export const CategoryParamsSchema = z.object({
 export type Category = z.infer<typeof CategorySchema>;
 export type AddCategoryInput = z.infer<typeof AddCategoryInputSchema>;
 export type UpdateCategoryInput = z.infer<typeof UpdateCategoryInputSchema>;
-export type CategoryFilters = z.infer<typeof CategoryFiltersSchema>;
+export type CategoryFilters = z.input<typeof CategoryFiltersSchema>;
