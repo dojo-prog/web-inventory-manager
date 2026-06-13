@@ -4,13 +4,14 @@ import ModalWrapper from "./ModalWrapper";
 import CustomButton from "./CustomButton";
 
 const DeleteConfirmationModal = () => {
-  const { deleteConfirmModalOpen, closeBrandModal, entity } = useModalStore();
+  const { deleteConfirmModalOpen, closeDeleteConfirmModal, entity } =
+    useModalStore();
 
   return (
     <ModalWrapper
       title="Removal Confirmation"
       isOpen={deleteConfirmModalOpen}
-      onClose={closeBrandModal}
+      onClose={closeDeleteConfirmModal}
       size="xs"
     >
       <div className="w-full flex flex-col items-center text-center space-y-4">
@@ -33,7 +34,7 @@ const DeleteConfirmationModal = () => {
             title="Cancel"
             titleStyles="font-medium text-secondary"
             buttonStyles="w-1/2 bg-white hover:bg-gray-100 border border-border"
-            onClick={closeBrandModal}
+            onClick={closeDeleteConfirmModal}
           />
           <CustomButton
             type="submit"
