@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import type { ModalState } from "./modal.types";
+import type { ModalState, ModalType } from "./modal.types";
 
 const useModalStore = create<ModalState>((set) => ({
   // Brands
   brandModalOpen: false,
-  modalType: "create",
+  modalType: "create" as ModalType,
   selectedBrand: null,
   openBrandModal: (type, brand) => {
     if (brand) {
@@ -15,6 +15,27 @@ const useModalStore = create<ModalState>((set) => ({
   },
   closeBrandModal: () => {
     set({ selectedBrand: null, modalType: "create", brandModalOpen: false });
+  },
+
+  // Delete Confirmation
+  deleteConfirmModalOpen: false,
+  entity: undefined,
+  selectedEntity: null,
+  openDeleteConfirmModal: (entityType, entityData) => {
+    if (!entityData) return;
+
+    set({
+      entity: entityType,
+      selectedEntity: entityData,
+      deleteConfirmModalOpen: true,
+    });
+  },
+  closeDeleteConfirmModal: () => {
+    set({
+      entity: undefined,
+      selectedEntity: null,
+      deleteConfirmModalOpen: false,
+    });
   },
 }));
 

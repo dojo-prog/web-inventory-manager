@@ -1,6 +1,7 @@
 import type { DetailedBrand } from "@web-inventory-manager/shared";
 
-type ModalType = "create" | "update";
+export type ModalType = "create" | "update";
+export type Entity = "brand" | "category" | "product" | "user" | undefined;
 
 export interface ModalState {
   // Brand Modal
@@ -9,4 +10,11 @@ export interface ModalState {
   selectedBrand: DetailedBrand | null;
   openBrandModal: (type: ModalType, brand?: DetailedBrand) => void;
   closeBrandModal: () => void;
+
+  // Delete Confirmation Modal
+  deleteConfirmModalOpen: boolean;
+  entity: Entity;
+  selectedEntity: any; // TODO replace w/ true entity type
+  openDeleteConfirmModal: (entityType: Entity, entityData: any) => void;
+  closeDeleteConfirmModal: () => void;
 }
