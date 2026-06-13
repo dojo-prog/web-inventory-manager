@@ -1,4 +1,4 @@
-import type { DetailedBrand } from "@web-inventory-manager/shared";
+import type { Category, DetailedBrand } from "@web-inventory-manager/shared";
 
 export type ModalType = "create" | "update";
 export type Entity = "brand" | "category" | "product" | "user" | undefined;
@@ -10,6 +10,13 @@ export interface ModalState {
   selectedBrand: DetailedBrand | null;
   openBrandModal: (type: ModalType, brand?: DetailedBrand) => void;
   closeBrandModal: () => void;
+
+  // Category Modal
+  categoryModalOpen: boolean;
+  categoryModalType: ModalType;
+  selectedCategory: Category | null;
+  openCategoryModal: (type: ModalType, category?: Category) => void;
+  closeCategoryModal: () => void;
 
   // Delete Confirmation Modal
   deleteConfirmModalOpen: boolean;
