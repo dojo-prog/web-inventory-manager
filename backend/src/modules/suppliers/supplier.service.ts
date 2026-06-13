@@ -6,6 +6,7 @@ import {
 } from "@web-inventory-manager/shared";
 import * as supplierModel from "./supplier.model";
 import AppError from "../../utils/AppError";
+import generateChanges from "../../utils/generateChanges";
 
 export const getSuppliers = async (
   filters: SupplierFilters,

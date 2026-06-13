@@ -6,6 +6,7 @@ import {
 } from "@web-inventory-manager/shared";
 import * as categoryModel from "./category.model";
 import AppError from "../../utils/AppError";
+import generateChanges from "../../utils/generateChanges";
 
 export const getCategories = async (
   filters: CategoryFilters,

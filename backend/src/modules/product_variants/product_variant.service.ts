@@ -7,6 +7,7 @@ import {
 import * as productVariantModel from "./product_variant.model";
 import * as productModel from "../products/product.model";
 import AppError from "../../utils/AppError";
+import generateChanges from "../../utils/generateChanges";
 
 export const getAllProductVariants = async (
   productId: string,

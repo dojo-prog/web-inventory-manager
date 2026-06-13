@@ -10,6 +10,7 @@ import * as brandModel from "./brand.model";
 import AppError from "../../utils/AppError";
 import uploadImage from "../../storage/handlers/uploadImage";
 import deleteImage from "../../storage/handlers/deleteImage";
+import generateChanges from "../../utils/generateChanges";
 
 export const getBrands = async (
   filters: BrandFilters,

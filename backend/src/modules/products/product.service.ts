@@ -8,6 +8,7 @@ import * as productModel from "./product.model";
 import uploadImage from "../../storage/handlers/uploadImage";
 import AppError from "../../utils/AppError";
 import deleteImage from "../../storage/handlers/deleteImage";
+import generateChanges from "../../utils/generateChanges";
 
 export const getProducts = async (
   filters: ProductFilter,

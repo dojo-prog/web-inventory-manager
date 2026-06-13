@@ -10,6 +10,7 @@ import AppError from "../../utils/AppError";
 import generateHash from "../../utils/generateHash";
 import uploadImage from "../../storage/handlers/uploadImage";
 import deleteImage from "../../storage/handlers/deleteImage";
+import generateChanges from "../../utils/generateChanges";
 
 export const getUsers = async (filters: UserFilter): Promise<User[]> => {
   return await userModel.findAll(filters);
