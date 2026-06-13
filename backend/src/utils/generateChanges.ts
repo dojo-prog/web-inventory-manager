@@ -14,3 +14,5 @@ const generateChanges = (
 
   return changes;
 };
+
+export default generateChanges;
