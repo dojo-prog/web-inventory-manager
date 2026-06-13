@@ -1,7 +1,10 @@
 import type { DetailedBrand } from "@web-inventory-manager/shared";
 import { PenIcon, TagIcon, TrashIcon } from "lucide-react";
+import useModalStore from "../../../../features/ui/modals/modal.store";
 
 const BrandCard = ({ item: b }: { item: DetailedBrand }) => {
+  const { openBrandModal } = useModalStore();
+
   return (
     <div className="w-full bg-surface border border-border shadow rounded p-5 space-y-6">
       {/* Brand Image */}
@@ -27,7 +30,10 @@ const BrandCard = ({ item: b }: { item: DetailedBrand }) => {
 
       {/* Actions */}
       <div className="flex items-center justify-end space-x-4">
-        <button className="w-4 h-4 text-primary/70 hover:text-black cursor-pointer">
+        <button
+          className="w-4 h-4 text-primary/70 hover:text-black cursor-pointer"
+          onClick={() => openBrandModal("update", b)}
+        >
           <PenIcon className="h-full w-full" />
         </button>
         <button className="w-4 h-4 text-primary/70 hover:text-black cursor-pointer">
