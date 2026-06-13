@@ -49,7 +49,17 @@ const useBrandStore = create<BrandState>((set) => ({
   addBrand: async (inputs) => {
     set({ loading: true });
     try {
-      const newBrand = await brandService.addBrand(inputs);
+      const { name, logo } = inputs;
+
+      const formData = new FormData();
+      formData.append("name", name);
+      if (logo) {
+        formData.append("logo", logo);
+      }
+
+      console.log(formData);
+
+      const newBrand = await brandService.addBrand(formData);
 
       set((state) => ({
         brands: [newBrand, ...state.brands],
@@ -65,7 +75,15 @@ const useBrandStore = create<BrandState>((set) => ({
   updateBrand: async (brandId, inputs) => {
     set({ loading: true });
     try {
-      const updatedBrand = await brandService.updateBrand(brandId, inputs);
+      const { name, logo } = inputs;
+
+      const formData = new FormData();
+      formData.append("name", name);
+      if (logo) {
+        formData.append("logo", logo);
+      }
+
+      const updatedBrand = await brandService.updateBrand(brandId, formData);
 
       set((state) => ({
         brands: state.brands.map((b) => (b.id === brandId ? updatedBrand : b)),
