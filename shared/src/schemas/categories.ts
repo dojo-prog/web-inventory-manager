@@ -29,6 +29,11 @@ export const CategoryFiltersSchema = z.object({
   limit: z.coerce.number().int().default(20),
 });
 
+export const CategoryFilterResultSchema = z.object({
+  categories: z.array(CategorySchema),
+  total_count: z.coerce.number().int(),
+});
+
 // Params
 export const CategoryParamsSchema = z.object({
   categoryId: z.string().uuid({ message: "Invalid Category ID format" }),
@@ -39,3 +44,4 @@ export type Category = z.infer<typeof CategorySchema>;
 export type AddCategoryInput = z.infer<typeof AddCategoryInputSchema>;
 export type UpdateCategoryInput = z.infer<typeof UpdateCategoryInputSchema>;
 export type CategoryFilters = z.input<typeof CategoryFiltersSchema>;
+export type CategoryFilterResult = z.infer<typeof CategoryFilterResultSchema>;
