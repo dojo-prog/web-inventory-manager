@@ -2,11 +2,13 @@ import { Edit2Icon, TagIcon, Trash2Icon } from "lucide-react";
 import useCategoryStore from "../../../../features/categories/category.store";
 import CategoryTableLoader from "./CategoryTableLoader";
 import CategoryTableEmpty from "./CategoryTableEmpty";
+import useModalStore from "../../../../features/ui/modals/modal.store";
 
 const headers = ["Category Name", "Category ID", "Slug", "Actions"];
 
 const CategoriesTable = () => {
   const { categories, fetchingCategories } = useCategoryStore();
+  const { openCategoryModal } = useModalStore();
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -66,6 +68,7 @@ const CategoriesTable = () => {
                   <button
                     aria-label="Edit Category"
                     className="text-gray-400 hover:text-blue-600 transition-colors cursor-pointer"
+                    onClick={() => openCategoryModal("update", category)}
                   >
                     <Edit2Icon className="h-4 w-4" />
                   </button>
