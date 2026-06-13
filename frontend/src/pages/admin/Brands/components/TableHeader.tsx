@@ -31,6 +31,12 @@ const TableHeader = () => {
     limit as number,
   );
 
+  const handlePageChange = async (newPage: number) => {
+    setFilters({ page: newPage });
+
+    await fetchBrands(filters);
+  };
+
   return (
     <div className="border-b border-border p-5 shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-surface">
       {/* Title block */}
@@ -64,7 +70,12 @@ const TableHeader = () => {
             onChange={handleSearchChange}
           />
 
-          <PageControl />
+          <PageControl
+            page={page as number}
+            limit={limit as number}
+            totalCount={total_count}
+            onPageChange={handlePageChange}
+          />
         </div>
       )}
     </div>
