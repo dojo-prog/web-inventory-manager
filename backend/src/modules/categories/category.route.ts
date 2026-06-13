@@ -29,13 +29,13 @@ router.get("/most-used", getMostUsedCategory);
 
 router.post("/", validate({ body: AddCategoryInputSchema }), addCategory);
 
-router.get(
+router.put(
   "/:categoryId",
   validate({ body: UpdateCategoryInputSchema, params: CategoryParamsSchema }),
   updateCategory,
 );
 
-router.get(
+router.delete(
   "/:categoryId",
   validate({ params: CategoryParamsSchema }),
   removeCategory,
