@@ -10,6 +10,7 @@ import {
 import * as categoryModel from "./category.model";
 import AppError from "../../utils/AppError";
 import generateChanges from "../../utils/generateChanges";
+import generateSlug from "../../utils/generateSlug";
 
 export const getCategories = async (
   filters: CategoryFilters,
@@ -25,7 +26,9 @@ export const getMostUsedCategory =
 export const addCategory = async (
   inputs: AddCategoryInput,
 ): Promise<Category> => {
-  return await categoryModel.create(inputs);
+  const slug = generateSlug(inputs.name);
+
+  return await categoryModel.create({ ...inputs, slug });
 };
 
 export const updateCategory = async (
