@@ -3,6 +3,7 @@ import type { BrandState } from "./brand.types";
 import * as brandService from "./brand.service";
 import errorHandler from "../../utils/errorHandler";
 import { toast } from "react-toastify";
+import useModalStore from "../ui/modals/modal.store";
 
 const useBrandStore = create<BrandState>((set) => ({
   brands: [],
@@ -65,6 +66,7 @@ const useBrandStore = create<BrandState>((set) => ({
         brands: [newBrand, ...state.brands],
       }));
       toast.success("Brand added");
+      useModalStore.getState().closeBrandModal();
     } catch (error) {
       errorHandler(error, "fetchBrandById", true);
     } finally {
@@ -89,6 +91,7 @@ const useBrandStore = create<BrandState>((set) => ({
         brands: state.brands.map((b) => (b.id === brandId ? updatedBrand : b)),
       }));
       toast.success("Brand updated");
+      useModalStore.getState().closeBrandModal();
     } catch (error) {
       errorHandler(error, "fetchBrandById", true);
     } finally {
