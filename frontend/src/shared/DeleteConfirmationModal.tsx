@@ -2,6 +2,7 @@ import { TriangleAlert } from "lucide-react";
 import useModalStore from "../features/ui/modals/modal.store";
 import ModalWrapper from "./ModalWrapper";
 import CustomButton from "./CustomButton";
+import useBrandStore from "../features/brands/brand.store";
 
 const DeleteConfirmationModal = () => {
   const {
@@ -10,6 +11,25 @@ const DeleteConfirmationModal = () => {
     entity,
     selectedEntity,
   } = useModalStore();
+  const { removeBrand, loading: brandLoading } = useBrandStore();
+
+  const entityMap: Record<
+    string,
+    { handler: (id: string) => void; loading: boolean }
+  > = {
+    brand: {
+      handler: removeBrand,
+      loading: brandLoading,
+    },
+  };
+
+  const handleRemove = () => {
+    const removeFun = entity && entityMap[entity].handler;
+
+    if (!removeFun) return;
+
+    removeFun(selectedEntity.id);
+  };
 
   return (
     <ModalWrapper
@@ -18,7 +38,7 @@ const DeleteConfirmationModal = () => {
       onClose={closeDeleteConfirmModal}
       size="xs"
     >
-      <div className="w-full flex flex-col items-center text-center space-y-4">
+      <div className="w-full flex flex-col items-center text-center space-y-6">
         <div className="h-16 w-16 bg-red-100 rounded flex items-center justify-center">
           <TriangleAlert className="text-red-500" size={35} />
         </div>
@@ -33,7 +53,9 @@ const DeleteConfirmationModal = () => {
           <span className="font-bold text-black">cannot be undone.</span>
         </p>
 
-        <div className="w-full border-t border-border flex items-center space-x-4 mt-8">
+        <div className="w-full border-b border-border" />
+
+        <div className="w-full flex items-center space-x-4">
           <CustomButton
             type="button"
             title="Cancel"
@@ -46,6 +68,8 @@ const DeleteConfirmationModal = () => {
             title={`Delete ${entity}`}
             titleStyles="text-white"
             buttonStyles="w-1/2 bg-red-500 hover:bg-red-600"
+            onClick={handleRemove}
+            loading={entity && entityMap[entity].loading}
           />
         </div>
       </div>
