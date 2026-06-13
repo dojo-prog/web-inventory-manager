@@ -7,6 +7,7 @@ import type { CategoryForm } from "../../schemas/categories";
 
 export interface CategoryState {
   categories: Category[];
+  total_count: number;
 
   fetchingCategories: boolean;
   loading: boolean;
