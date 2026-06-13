@@ -97,6 +97,7 @@ const useCategoryStore = create<CategoryState>((set) => ({
   },
 
   removeCategory: async (categoryId) => {
+    set({ loading: true });
     try {
       await categoryService.removeCategory(categoryId);
 
@@ -108,6 +109,8 @@ const useCategoryStore = create<CategoryState>((set) => ({
       useModalStore.getState().closeDeleteConfirmModal();
     } catch (error) {
       errorHandler(error, "fetchCategories", true);
+    } finally {
+      set({ loading: false });
     }
   },
 }));
