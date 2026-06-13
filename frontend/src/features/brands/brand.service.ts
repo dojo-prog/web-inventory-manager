@@ -1,9 +1,7 @@
 import type {
-  AddBrandInput,
   BrandFilterResult,
   BrandFilters,
   DetailedBrand,
-  UpdateBrandInput,
 } from "@web-inventory-manager/shared";
 import axios from "../../lib/axios";
 
@@ -27,9 +25,7 @@ export const fetchBrandById = async (
   return res.data.brand;
 };
 
-export const addBrand = async (
-  inputs: AddBrandInput,
-): Promise<DetailedBrand> => {
+export const addBrand = async (inputs: FormData): Promise<DetailedBrand> => {
   const res = await axios.post("/brands", inputs);
 
   return res.data.newBrand;
@@ -37,7 +33,7 @@ export const addBrand = async (
 
 export const updateBrand = async (
   brandId: string,
-  inputs: UpdateBrandInput,
+  inputs: FormData,
 ): Promise<DetailedBrand> => {
   const res = await axios.put(`/brands/${brandId}`, inputs);
 
