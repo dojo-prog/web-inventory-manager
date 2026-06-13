@@ -40,8 +40,13 @@ const errorMiddleware: ErrorRequestHandler = async (error, req, res, next) => {
   }
 
   if (error.name === "TokenExpiredError") {
-    statusCode = 401;
-    message = "Unauthorized - Token expired";
+    if (req.originalUrl.includes("/auth/refresh")) {
+      statusCode = 403;
+      message = "Refresh token expired. Please login again";
+    } else {
+      statusCode = 401;
+      message = "Unauthorized - Token expired";
+    }
   }
 
   res.status(statusCode).json({ success: false, message, errors });
