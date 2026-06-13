@@ -1,12 +1,15 @@
 import { BadgeCheckIcon } from "lucide-react";
 import SummaryCard from "../components/SummaryCard";
+import useCategoryStore from "../../../../features/categories/category.store";
 
 const Summary = () => {
+  const { total_count } = useCategoryStore();
+
   return (
     <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
       <SummaryCard
         header="Total Categories"
-        value="12"
+        value={`${total_count}`}
         valueStyles="text-5xl text-primary"
       />
       <SummaryCard
