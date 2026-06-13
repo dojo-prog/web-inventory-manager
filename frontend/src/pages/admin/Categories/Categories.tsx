@@ -1,8 +1,16 @@
+import { useEffect } from "react";
+import useCategoryStore from "../../../features/categories/category.store";
 import CategoryTableContainer from "./components/CategoryTableContainer";
 import Header from "./sections/Header";
 import Summary from "./sections/Summary";
 
 const Categories = () => {
+  const { fetchCategories } = useCategoryStore();
+
+  useEffect(() => {
+    fetchCategories({});
+  }, []);
+
   return (
     <div className="space-y-8">
       {/* Header */}
