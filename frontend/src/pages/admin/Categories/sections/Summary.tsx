@@ -4,7 +4,8 @@ import useCategoryStore from "../../../../features/categories/category.store";
 import { useEffect } from "react";
 
 const Summary = () => {
-  const { total_count, fetchMostUsed } = useCategoryStore();
+  const { total_count, fetchMostUsed, mostUsedCategory } = useCategoryStore();
+  const { data, product_count } = mostUsedCategory;
 
   useEffect(() => {
     fetchMostUsed();
@@ -17,16 +18,18 @@ const Summary = () => {
         value={`${total_count}`}
         valueStyles="text-5xl text-primary"
       />
-      <SummaryCard
-        header="Most Used"
-        value="Running Shoes"
-        subheader="428 products"
-        valueStyles="text-xl"
-      />
+      {data && (
+        <SummaryCard
+          header="Most Used"
+          value={data.name}
+          subheader={`${product_count} products`}
+          valueStyles="text-xl"
+        />
+      )}
       <SummaryCard
         header="System Health"
         value="Data Integrity: Optimal"
-        subheader="All 12 slugs are SEO compliant and unique"
+        subheader={`All ${total_count} slugs are SEO compliant and unique`}
         Logo={BadgeCheckIcon}
         containerStyles="col-span-2 bg-primary-hover"
         headerStyles="text-white"
