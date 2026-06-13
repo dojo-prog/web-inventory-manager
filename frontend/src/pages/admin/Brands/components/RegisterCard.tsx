@@ -1,8 +1,14 @@
 import { TagsIcon } from "lucide-react";
+import useModalStore from "../../../../features/ui/modals/modal.store";
 
 const RegisterCard = () => {
+  const { openBrandModal } = useModalStore();
+
   return (
-    <button className="w-full bg-surface border-3 border-dashed border-border rounded p-5 flex flex-col items-center justify-center space-y-4 hover:scale-105 transition duration-150 cursor-pointer">
+    <button
+      className="w-full bg-surface border-3 border-dashed border-border rounded p-5 flex flex-col items-center justify-center space-y-4 hover:scale-105 transition duration-150 cursor-pointer"
+      onClick={() => openBrandModal("create")}
+    >
       <div className="h-14 w-14 bg-primary/10 rounded flex items-center justify-center">
         <TagsIcon className="h-full text-primary" />
       </div>
