@@ -4,8 +4,12 @@ import ModalWrapper from "./ModalWrapper";
 import CustomButton from "./CustomButton";
 
 const DeleteConfirmationModal = () => {
-  const { deleteConfirmModalOpen, closeDeleteConfirmModal, entity } =
-    useModalStore();
+  const {
+    deleteConfirmModalOpen,
+    closeDeleteConfirmModal,
+    entity,
+    selectedEntity,
+  } = useModalStore();
 
   return (
     <ModalWrapper
@@ -20,7 +24,8 @@ const DeleteConfirmationModal = () => {
         </div>
 
         <h2 className="text-xl font-headline font-bold capitalize">
-          Delete {entity}?
+          Delete {entity}{" "}
+          <span className="text-red-500">{selectedEntity.name || ""}</span>?
         </h2>
 
         <p className="font-label text-sm text-secondary">
