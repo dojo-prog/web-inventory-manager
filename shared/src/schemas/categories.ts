@@ -15,6 +15,8 @@ export const CategoryInputShape = z.object({
     .trim()
     .min(1, { message: "Category name is required" })
     .max(100, "Category name cannot exceed 100 characters"),
+
+  slug: z.string().optional(),
 });
 
 // Action Schemas
