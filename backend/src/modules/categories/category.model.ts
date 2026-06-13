@@ -3,6 +3,7 @@ import {
   Category,
   CategoryFilterResult,
   CategoryFilters,
+  MostUsedCategoryResult,
 } from "@web-inventory-manager/shared";
 import buildFilterClause from "../../utils/buildFilterClause";
 import db from "../../database/db";
@@ -52,7 +53,24 @@ export const findById = async (categoryId: string): Promise<Category> => {
   return result.rows[0];
 };
 
-export const findMostUsed = async () => {};
+export const findMostUsed = async (): Promise<MostUsedCategoryResult> => {
+  const result = await db.query(
+    `
+    SELECT category_id, COUNT(*) as product_count
+    FROM products
+    WHERE category_id IS NOT NULL
+    GROUP BY category_id
+    ORDER BY product_count DESC
+    LIMIT 1;
+    `,
+  );
+
+  const { category_id, product_count } = result.rows[0];
+
+  const category = await findById(category_id);
+
+  return { category, product_count };
+};
 
 export const create = async (inputs: AddCategoryInput): Promise<Category> => {
   const { keysStr, placeholders, values } = buildInsertFields(inputs);

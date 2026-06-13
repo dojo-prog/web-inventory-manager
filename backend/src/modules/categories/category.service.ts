@@ -4,6 +4,7 @@ import {
   Category,
   CategoryFilterResult,
   CategoryFilters,
+  MostUsedCategoryResult,
   UpdateCategoryInput,
 } from "@web-inventory-manager/shared";
 import * as categoryModel from "./category.model";
@@ -16,7 +17,10 @@ export const getCategories = async (
   return await categoryModel.findAll(filters);
 };
 
-export const getMostUsedCategory = async () => {};
+export const getMostUsedCategory =
+  async (): Promise<MostUsedCategoryResult> => {
+    return await categoryModel.findMostUsed();
+  };
 
 export const addCategory = async (
   inputs: AddCategoryInput,

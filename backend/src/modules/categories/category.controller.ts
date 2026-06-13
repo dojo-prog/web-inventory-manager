@@ -17,6 +17,10 @@ export const getCategories: Controller = async (req, res, next) => {
 
 export const getMostUsedCategory: Controller = async (req, res, next) => {
   try {
+    const { category, product_count } =
+      await categoryService.getMostUsedCategory();
+
+    res.status(200).json({ success: true, category, product_count });
   } catch (error) {
     next(error);
   }
