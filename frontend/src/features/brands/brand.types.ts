@@ -1,9 +1,8 @@
 import type {
-  AddBrandInput,
   BrandFilters,
   DetailedBrand,
-  UpdateBrandInput,
 } from "@web-inventory-manager/shared";
+import type { BrandForm } from "../../schemas/brand";
 
 export interface BrandState {
   brands: DetailedBrand[];
@@ -20,7 +19,7 @@ export interface BrandState {
 
   fetchBrands: (filters: BrandFilters) => Promise<void>;
   fetchBrandById: (brandId: string) => Promise<void>;
-  addBrand: (inputs: AddBrandInput) => Promise<void>;
-  updateBrand: (brandId: string, inputs: UpdateBrandInput) => Promise<void>;
+  addBrand: (inputs: BrandForm) => Promise<void>;
+  updateBrand: (brandId: string, inputs: BrandForm) => Promise<void>;
   removeBrand: (brandId: string) => Promise<void>;
 }
