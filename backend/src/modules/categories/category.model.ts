@@ -1,6 +1,7 @@
 import {
   AddCategoryInput,
   Category,
+  CategoryFilterResult,
   CategoryFilters,
 } from "@web-inventory-manager/shared";
 import buildFilterClause from "../../utils/buildFilterClause";
@@ -10,7 +11,7 @@ import buildUpdateFields from "../../utils/buildUpdateFields";
 
 export const findAll = async (
   filters: CategoryFilters,
-): Promise<Category[]> => {
+): Promise<CategoryFilterResult> => {
   const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
     filters,
     ["id", "name", "slug"],
@@ -18,7 +19,8 @@ export const findAll = async (
 
   const result = await db.query(
     `
-    SELECT * 
+    SELECT *,
+      COUNT(*) OVER()::INT AS total_count
     FROM categories 
     ${whereClause}
     ${limitClause} ${offsetClause}
@@ -26,7 +28,15 @@ export const findAll = async (
     values,
   );
 
-  return result.rows;
+  const total_count = result.rows.length > 0 ? result.rows[0].total_count : 0;
+  const categories = result.rows.map(
+    ({ total_count, ...categories }) => categories,
+  );
+
+  return {
+    total_count,
+    categories,
+  };
 };
 
 export const findById = async (categoryId: string): Promise<Category> => {

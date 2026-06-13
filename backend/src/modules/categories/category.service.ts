@@ -1,6 +1,8 @@
 import {
   AddCategoryInput,
+  BrandFilterResult,
   Category,
+  CategoryFilterResult,
   CategoryFilters,
   UpdateCategoryInput,
 } from "@web-inventory-manager/shared";
@@ -10,7 +12,7 @@ import generateChanges from "../../utils/generateChanges";
 
 export const getCategories = async (
   filters: CategoryFilters,
-): Promise<Category[]> => {
+): Promise<CategoryFilterResult> => {
   return await categoryModel.findAll(filters);
 };
 

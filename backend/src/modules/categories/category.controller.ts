@@ -5,9 +5,11 @@ import AppError from "../../utils/AppError";
 
 export const getCategories: Controller = async (req, res, next) => {
   try {
-    const categories = await categoryService.getCategories(req.query);
+    const { categories, total_count } = await categoryService.getCategories(
+      req.query,
+    );
 
-    res.status(200).json({ success: true, categories });
+    res.status(200).json({ success: true, categories, total_count });
   } catch (error) {
     next(error);
   }
