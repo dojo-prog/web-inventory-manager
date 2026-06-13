@@ -8,7 +8,7 @@ const headers = ["Category Name", "Category ID", "Slug", "Actions"];
 
 const CategoriesTable = () => {
   const { categories, fetchingCategories } = useCategoryStore();
-  const { openCategoryModal } = useModalStore();
+  const { openCategoryModal, openDeleteConfirmModal } = useModalStore();
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -75,6 +75,7 @@ const CategoriesTable = () => {
                   <button
                     aria-label="Delete Category"
                     className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                    onClick={() => openDeleteConfirmModal("category", category)}
                   >
                     <Trash2Icon className="h-4 w-4" />
                   </button>
