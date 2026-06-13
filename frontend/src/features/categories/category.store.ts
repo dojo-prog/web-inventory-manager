@@ -3,6 +3,7 @@ import type { CategoryState } from "./category.types";
 import errorHandler from "../../utils/errorHandler";
 import * as categoryService from "./category.service";
 import { toast } from "react-toastify";
+import useModalStore from "../ui/modals/modal.store";
 
 const useCategoryStore = create<CategoryState>((set) => ({
   categories: [],
@@ -62,8 +63,10 @@ const useCategoryStore = create<CategoryState>((set) => ({
 
       set((state) => ({
         categories: [newCategory, ...state.categories],
+        total_count: state.total_count + 1,
       }));
       toast.success("Category added");
+      useModalStore.getState().closeCategoryModal();
     } catch (error) {
       errorHandler(error, "addCategory", true);
     } finally {
@@ -85,6 +88,7 @@ const useCategoryStore = create<CategoryState>((set) => ({
         ),
       }));
       toast.success("Category updated");
+      useModalStore.getState().closeCategoryModal();
     } catch (error) {
       errorHandler(error, "fetchCategories", true);
     } finally {
@@ -98,8 +102,10 @@ const useCategoryStore = create<CategoryState>((set) => ({
 
       set((state) => ({
         categories: state.categories.filter((c) => c.id !== categoryId),
+        total_count: state.total_count - 1,
       }));
       toast.success("Category removed");
+      useModalStore.getState().closeDeleteConfirmModal();
     } catch (error) {
       errorHandler(error, "fetchCategories", true);
     }
