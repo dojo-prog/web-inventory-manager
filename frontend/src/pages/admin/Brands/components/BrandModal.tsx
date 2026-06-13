@@ -13,15 +13,18 @@ import useBrandStore from "../../../../features/brands/brand.store";
 import { BrandFormSchema, type BrandForm } from "../../../../schemas/brand";
 
 const BrandModal = () => {
-  const { addBrand, loading } = useBrandStore();
-  const { brandModalOpen, closeBrandModal, modalType } = useModalStore();
+  const { addBrand, updateBrand, loading } = useBrandStore();
+  const { brandModalOpen, closeBrandModal, modalType, selectedBrand } =
+    useModalStore();
 
-  const brandTypeMap = {
+  const typeMap = {
     create: {
       title: "Add New Brand",
+      btnTitle: "Add Brand",
     },
     update: {
       title: "Update Brand",
+      btnTitle: "Update Brand",
     },
   };
 
@@ -32,6 +35,16 @@ const BrandModal = () => {
   const { name } = formData;
 
   const [logoPreview, setLogoPreview] = useState<string>("");
+
+  useEffect(() => {
+    if (!selectedBrand) return;
+
+    setFormData({
+      name: selectedBrand.name ?? "",
+    });
+
+    setLogoPreview(selectedBrand.logo_url ?? "");
+  }, [modalType]);
 
   const handleLogoSelection = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -69,6 +82,9 @@ const BrandModal = () => {
 
     if (modalType === "create") {
       addBrand(formData as BrandForm);
+    } else if (modalType === "update") {
+      if (!selectedBrand) return;
+      updateBrand(selectedBrand?.id, formData as BrandForm);
     }
   };
 
@@ -76,7 +92,7 @@ const BrandModal = () => {
     <ModalWrapper
       isOpen={brandModalOpen}
       onClose={closeBrandModal}
-      title={brandTypeMap[modalType].title}
+      title={typeMap[modalType].title}
       size="sm"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -126,7 +142,7 @@ const BrandModal = () => {
           />
           <CustomButton
             type="submit"
-            title="Add Brand"
+            title={typeMap[modalType].btnTitle}
             titleStyles="text-white"
             buttonStyles="bg-primary hover:bg-primary-hover"
             loading={loading}
