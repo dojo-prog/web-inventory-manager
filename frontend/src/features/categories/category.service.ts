@@ -19,6 +19,13 @@ export const fetchCategories = async (
   return { categories, total_count };
 };
 
+export const fetchMostUsed = async () => {
+  const res = await axios.get("/categories/most-used");
+  const { category, product_count } = res.data;
+
+  return { category, product_count };
+};
+
 export const addCategory = async (
   inputs: AddCategoryInput,
 ): Promise<Category> => {

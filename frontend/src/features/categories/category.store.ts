@@ -8,6 +8,11 @@ const useCategoryStore = create<CategoryState>((set) => ({
   categories: [],
   total_count: 0,
 
+  mostUsedCategory: {
+    data: null,
+    product_count: 0,
+  },
+
   fetchingCategories: false,
   loading: false,
 
@@ -33,6 +38,16 @@ const useCategoryStore = create<CategoryState>((set) => ({
       errorHandler(error, "fetchCategories", true);
     } finally {
       set({ fetchingCategories: false });
+    }
+  },
+
+  fetchMostUsed: async () => {
+    try {
+      const { category, product_count } = await categoryService.fetchMostUsed();
+
+      set({ mostUsedCategory: { data: category, product_count } });
+    } catch (error) {
+      errorHandler(error, "fetchMostUsed", true);
     }
   },
 
