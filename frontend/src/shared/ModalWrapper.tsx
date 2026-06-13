@@ -6,7 +6,7 @@ interface ModalWrapperProps {
   onClose: () => void;
   title?: string;
   children: React.ReactNode;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 const ModalWrapper = ({
@@ -35,6 +35,7 @@ const ModalWrapper = ({
   if (!isOpen) return null;
 
   const sizeClasses = {
+    xs: "max-w-sm",
     sm: "max-w-md",
     md: "max-w-lg",
     lg: "max-w-2xl",
@@ -53,7 +54,7 @@ const ModalWrapper = ({
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
           <h3 className="text-2xl font-headline font-semibold text-slate-900">
-            {title || "Modal Window"}
+            {title}
           </h3>
           <button
             onClick={onClose}
