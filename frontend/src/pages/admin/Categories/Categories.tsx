@@ -1,5 +1,26 @@
+import CategoryTableContainer from "./components/CategoryTableContainer";
+import Header from "./sections/Header";
+import Summary from "./sections/Summary";
+
 const Categories = () => {
-  return <div>Categories</div>;
+  return (
+    <div className="space-y-8">
+      {/* Header */}
+      <div>
+        <Header />
+      </div>
+
+      {/* Summary */}
+      <div>
+        <Summary />
+      </div>
+
+      {/* Table */}
+      <div>
+        <CategoryTableContainer />
+      </div>
+    </div>
+  );
 };
 
 export default Categories;
