@@ -47,7 +47,9 @@ export const updateCategory = async (
     throw new AppError("No changes has been made", 400);
   }
 
-  return await categoryModel.update(categoryId, changes);
+  const slug = generateSlug(changes.name);
+
+  return await categoryModel.update(categoryId, { ...changes, slug });
 };
 
 export const removeCategory = async (categoryId: string): Promise<Category> => {
