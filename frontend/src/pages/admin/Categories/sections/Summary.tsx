@@ -1,9 +1,14 @@
 import { BadgeCheckIcon } from "lucide-react";
 import SummaryCard from "../components/SummaryCard";
 import useCategoryStore from "../../../../features/categories/category.store";
+import { useEffect } from "react";
 
 const Summary = () => {
-  const { total_count } = useCategoryStore();
+  const { total_count, fetchMostUsed } = useCategoryStore();
+
+  useEffect(() => {
+    fetchMostUsed();
+  }, []);
 
   return (
     <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
