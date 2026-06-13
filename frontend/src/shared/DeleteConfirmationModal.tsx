@@ -3,6 +3,7 @@ import useModalStore from "../features/ui/modals/modal.store";
 import ModalWrapper from "./ModalWrapper";
 import CustomButton from "./CustomButton";
 import useBrandStore from "../features/brands/brand.store";
+import useCategoryStore from "../features/categories/category.store";
 
 const DeleteConfirmationModal = () => {
   const {
@@ -12,6 +13,7 @@ const DeleteConfirmationModal = () => {
     selectedEntity,
   } = useModalStore();
   const { removeBrand, loading: brandLoading } = useBrandStore();
+  const { removeCategory, loading: categoryLoading } = useCategoryStore();
 
   const entityMap: Record<
     string,
@@ -20,6 +22,10 @@ const DeleteConfirmationModal = () => {
     brand: {
       handler: removeBrand,
       loading: brandLoading,
+    },
+    category: {
+      handler: removeCategory,
+      loading: categoryLoading,
     },
   };
 
