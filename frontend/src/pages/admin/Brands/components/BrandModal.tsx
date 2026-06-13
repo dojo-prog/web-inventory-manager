@@ -7,8 +7,13 @@ import { InfoIcon } from "lucide-react";
 import CustomButton from "../../../../shared/CustomButton";
 import { useEffect, useState, type ChangeEvent } from "react";
 import UploadImagePreview from "../../../../shared/UploadImagePreview";
+import validateInputs from "../../../../utils/validateInputs";
+import { toast } from "react-toastify";
+import useBrandStore from "../../../../features/brands/brand.store";
+import { BrandFormSchema, type BrandForm } from "../../../../schemas/brand";
 
 const BrandModal = () => {
+  const { addBrand, loading } = useBrandStore();
   const { brandModalOpen, closeBrandModal, modalType } = useModalStore();
 
   const brandTypeMap = {
@@ -53,6 +58,20 @@ const BrandModal = () => {
     };
   }, [logoPreview]);
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    const error = validateInputs(BrandFormSchema, formData);
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    if (modalType === "create") {
+      addBrand(formData as BrandForm);
+    }
+  };
+
   return (
     <ModalWrapper
       isOpen={brandModalOpen}
@@ -60,7 +79,7 @@ const BrandModal = () => {
       title={brandTypeMap[modalType].title}
       size="sm"
     >
-      <form className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <CustomInput
           label="BRAND NAME"
           placeholder="e.g. Velocity Sport"
@@ -110,6 +129,7 @@ const BrandModal = () => {
             title="Add Brand"
             titleStyles="text-white"
             buttonStyles="bg-primary hover:bg-primary-hover"
+            loading={loading}
           />
         </div>
       </form>
