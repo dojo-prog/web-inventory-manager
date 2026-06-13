@@ -25,7 +25,7 @@ router.use(protectRoute, authorizeRoles("admin", "manager"));
 
 router.get("/", validate({ query: CategoryFiltersSchema }), getCategories);
 
-router.get("/", getMostUsedCategory);
+router.get("/most-used", getMostUsedCategory);
 
 router.post("/", validate({ body: AddCategoryInputSchema }), addCategory);
 
