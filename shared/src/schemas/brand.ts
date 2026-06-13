@@ -21,7 +21,7 @@ export const DetailedBrandSchema = z.object({
 });
 
 // Base Input Shape
-const InputShape = z.object({
+export const BrandInputShape = z.object({
   name: z
     .string()
     .min(1, { message: "Brand name is required" })
@@ -34,12 +34,12 @@ const InputShape = z.object({
 });
 
 // Action Schemas
-export const AddBrandInputSchema = InputShape.transform((data) => {
+export const AddBrandInputSchema = BrandInputShape.transform((data) => {
   const { logo, ...rest } = data;
   return rest;
 });
 
-export const UpdateBrandInputSchema = InputShape.transform((data) => {
+export const UpdateBrandInputSchema = BrandInputShape.transform((data) => {
   const { logo, ...rest } = data;
   return rest;
 });
