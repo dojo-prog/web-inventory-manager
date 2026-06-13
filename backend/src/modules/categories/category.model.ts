@@ -52,6 +52,8 @@ export const findById = async (categoryId: string): Promise<Category> => {
   return result.rows[0];
 };
 
+export const findMostUsed = async () => {};
+
 export const create = async (inputs: AddCategoryInput): Promise<Category> => {
   const { keysStr, placeholders, values } = buildInsertFields(inputs);
 

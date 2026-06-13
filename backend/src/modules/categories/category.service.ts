@@ -16,6 +16,8 @@ export const getCategories = async (
   return await categoryModel.findAll(filters);
 };
 
+export const getMostUsedCategory = async () => {};
+
 export const addCategory = async (
   inputs: AddCategoryInput,
 ): Promise<Category> => {

@@ -15,6 +15,13 @@ export const getCategories: Controller = async (req, res, next) => {
   }
 };
 
+export const getMostUsedCategory: Controller = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addCategory: Controller = async (req, res, next) => {
   try {
     const newCategory = await categoryService.addCategory(req.body);

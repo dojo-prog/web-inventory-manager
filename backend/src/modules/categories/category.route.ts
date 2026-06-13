@@ -7,6 +7,7 @@ import {
   addCategory,
   getCategories,
   getCategoryById,
+  getMostUsedCategory,
   removeCategory,
   updateCategory,
 } from "./category.controller";
@@ -23,6 +24,8 @@ const router = express.Router();
 router.use(protectRoute, authorizeRoles("admin", "manager"));
 
 router.get("/", validate({ query: CategoryFiltersSchema }), getCategories);
+
+router.get("/", getMostUsedCategory);
 
 router.post("/", validate({ body: AddCategoryInputSchema }), addCategory);
 
