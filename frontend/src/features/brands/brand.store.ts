@@ -108,6 +108,7 @@ const useBrandStore = create<BrandState>((set) => ({
         brands: state.brands.filter((b) => b.id !== brandId),
       }));
       toast.success("Brand removed");
+      useModalStore.getState().closeDeleteConfirmModal();
     } catch (error) {
       errorHandler(error, "fetchBrandById", true);
     } finally {
