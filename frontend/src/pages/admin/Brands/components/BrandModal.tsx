@@ -5,6 +5,8 @@ import { useForm } from "../../../../hooks/useForm";
 import ImageUploadZone from "../../../../shared/ImageUploadZone";
 import { InfoIcon } from "lucide-react";
 import CustomButton from "../../../../shared/CustomButton";
+import { useEffect, useState, type ChangeEvent } from "react";
+import UploadImagePreview from "../../../../shared/UploadImagePreview";
 
 const BrandModal = () => {
   const { brandModalOpen, closeBrandModal, modalType } = useModalStore();
@@ -18,11 +20,38 @@ const BrandModal = () => {
     },
   };
 
-  const { formData, handleChange } = useForm({
+  const { formData, setFormData, handleChange, handleFileChange } = useForm({
     name: "",
     logo: undefined,
   });
-  const { name, logo } = formData;
+  const { name } = formData;
+
+  const [logoPreview, setLogoPreview] = useState<string>("");
+
+  const handleLogoSelection = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    if (logoPreview) URL.revokeObjectURL(logoPreview);
+
+    setLogoPreview(URL.createObjectURL(file));
+
+    handleFileChange(e);
+  };
+
+  const handleRemoveLogo = () => {
+    if (logoPreview) URL.revokeObjectURL(logoPreview);
+    setLogoPreview("");
+
+    setFormData((prev) => ({ ...prev, logo: undefined }));
+  };
+
+  useEffect(() => {
+    return () => {
+      if (logoPreview) URL.revokeObjectURL(logoPreview);
+    };
+  }, [logoPreview]);
 
   return (
     <ModalWrapper
@@ -41,12 +70,19 @@ const BrandModal = () => {
           onChange={handleChange}
         />
 
-        <ImageUploadZone
-          label="BRAND LOGO"
-          id="logo"
-          name="logo"
-          fileChange={(e) => {}}
-        />
+        {logoPreview ? (
+          <UploadImagePreview
+            imagePreview={logoPreview}
+            handleRemove={handleRemoveLogo}
+          />
+        ) : (
+          <ImageUploadZone
+            label="BRAND LOGO"
+            id="logo"
+            name="logo"
+            fileChange={handleLogoSelection}
+          />
+        )}
 
         {/* Message block */}
         <div className="w-full bg-gray-50 flex items-start space-x-4 p-5 rounded">
