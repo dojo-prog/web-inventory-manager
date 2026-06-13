@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const useCategoryStore = create<CategoryState>((set) => ({
   categories: [],
+  total_count: 0,
 
   fetchingCategories: false,
   loading: false,
@@ -24,9 +25,10 @@ const useCategoryStore = create<CategoryState>((set) => ({
   fetchCategories: async (filters) => {
     set({ fetchingCategories: true });
     try {
-      const categories = await categoryService.fetchCategories(filters);
+      const { categories, total_count } =
+        await categoryService.fetchCategories(filters);
 
-      set({ categories });
+      set({ categories, total_count });
     } catch (error) {
       errorHandler(error, "fetchCategories", true);
     } finally {

@@ -2,18 +2,21 @@ import type {
   AddCategoryInput,
   BrandFilters,
   Category,
+  CategoryFilterResult,
   UpdateCategoryInput,
 } from "@web-inventory-manager/shared";
 import axios from "../../lib/axios";
 
 export const fetchCategories = async (
   filters: BrandFilters,
-): Promise<Category[]> => {
+): Promise<CategoryFilterResult> => {
   const res = await axios.get("/categories", {
     params: filters,
   });
 
-  return res.data.categories;
+  const { categories, total_count } = res.data;
+
+  return { categories, total_count };
 };
 
 export const addCategory = async (
