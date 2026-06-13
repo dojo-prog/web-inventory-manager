@@ -24,7 +24,7 @@ const Categories = () => {
       </div>
 
       {/* Table */}
-      <div>
+      <div className="h-[calc(100vh-8rem)]">
         <CategoryTableContainer />
       </div>
     </div>
