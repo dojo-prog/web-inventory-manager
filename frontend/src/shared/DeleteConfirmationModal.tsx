@@ -31,6 +31,8 @@ const DeleteConfirmationModal = () => {
     removeFun(selectedEntity.id);
   };
 
+  if (!entity || !selectedEntity) return null;
+
   return (
     <ModalWrapper
       title="Removal Confirmation"
