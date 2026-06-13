@@ -3,6 +3,7 @@ import type {
   BrandFilters,
   Category,
   CategoryFilterResult,
+  MostUsedCategoryResult,
   UpdateCategoryInput,
 } from "@web-inventory-manager/shared";
 import axios from "../../lib/axios";
@@ -19,12 +20,10 @@ export const fetchCategories = async (
   return { categories, total_count };
 };
 
-export const fetchMostUsed = async () => {
-  const res = await axios.get("/categories/most-used");
-  const { category, product_count } = res.data;
-
-  return { category, product_count };
-};
+export const fetchMostUsed =
+  async (): Promise<MostUsedCategoryResult | null> => {
+    return await axios.get("/categories/most-used");
+  };
 
 export const addCategory = async (
   inputs: AddCategoryInput,

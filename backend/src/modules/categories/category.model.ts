@@ -53,9 +53,10 @@ export const findById = async (categoryId: string): Promise<Category> => {
   return result.rows[0];
 };
 
-export const findMostUsed = async (): Promise<MostUsedCategoryResult> => {
-  const result = await db.query(
-    `
+export const findMostUsed =
+  async (): Promise<MostUsedCategoryResult | null> => {
+    const result = await db.query(
+      `
     SELECT category_id, COUNT(*) as product_count
     FROM products
     WHERE category_id IS NOT NULL
@@ -63,14 +64,16 @@ export const findMostUsed = async (): Promise<MostUsedCategoryResult> => {
     ORDER BY product_count DESC
     LIMIT 1;
     `,
-  );
+    );
 
-  const { category_id, product_count } = result.rows[0];
+    const data = result.rows[0];
 
-  const category = await findById(category_id);
+    if (!data) return null;
 
-  return { category, product_count };
-};
+    const category = await findById(data.category_id);
+
+    return { category, product_count: data.product_count };
+  };
 
 export const create = async (inputs: AddCategoryInput): Promise<Category> => {
   const { keysStr, placeholders, values } = buildInsertFields(inputs);

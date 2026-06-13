@@ -18,7 +18,7 @@ export const getCategories = async (
 };
 
 export const getMostUsedCategory =
-  async (): Promise<MostUsedCategoryResult> => {
+  async (): Promise<MostUsedCategoryResult | null> => {
     return await categoryModel.findMostUsed();
   };
 
