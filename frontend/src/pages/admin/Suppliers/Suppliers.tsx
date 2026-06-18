@@ -8,6 +8,7 @@ const Suppliers = () => {
   const { fetchSuppliers, filters } = useSupplierStore();
 
   useEffect(() => {
+    if (!filters) return;
     fetchSuppliers(filters);
   }, []);
 
