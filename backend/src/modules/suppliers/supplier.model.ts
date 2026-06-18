@@ -19,7 +19,7 @@ export const findAll = async (
 
   const result = await db.query(
     `
-    SELECT * 
+    SELECT *,
       COUNT(*) OVER()::INT AS total_count
     FROM suppliers  
     ${whereClause}
