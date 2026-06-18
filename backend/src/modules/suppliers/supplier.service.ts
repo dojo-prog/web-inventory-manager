@@ -1,6 +1,7 @@
 import {
   AddSupplierInput,
   Supplier,
+  SupplierFilterResult,
   SupplierFilters,
   UpdateSupplierInput,
 } from "@web-inventory-manager/shared";
@@ -10,7 +11,7 @@ import generateChanges from "../../utils/generateChanges";
 
 export const getSuppliers = async (
   filters: SupplierFilters,
-): Promise<Supplier[]> => {
+): Promise<SupplierFilterResult> => {
   return await supplierModel.findAll(filters);
 };
 

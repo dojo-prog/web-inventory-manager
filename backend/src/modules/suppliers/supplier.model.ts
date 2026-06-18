@@ -1,6 +1,7 @@
 import {
   AddSupplierInput,
   Supplier,
+  SupplierFilterResult,
   SupplierFilters,
 } from "@web-inventory-manager/shared";
 import db from "../../database/db";
@@ -10,7 +11,7 @@ import buildUpdateFields from "../../utils/buildUpdateFields";
 
 export const findAll = async (
   filters: SupplierFilters,
-): Promise<Supplier[]> => {
+): Promise<SupplierFilterResult> => {
   const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
     filters,
     ["name", "supplier_code", "contact_name", "email", "website", "id::text"],
@@ -18,14 +19,22 @@ export const findAll = async (
 
   const result = await db.query(
     `
-    SELECT * FROM suppliers
+    SELECT * 
+      COUNT(*) OVER()::INT AS total_count
+    FROM suppliers  
     ${whereClause}
+    ORDER BY created_at DESC
     ${limitClause} ${offsetClause}
     `,
     values,
   );
 
-  return result.rows;
+  const total_count = result.rows.length > 0 ? result.rows[0].total_count : 0;
+  const suppliers = result.rows.map(
+    ({ total_count, ...suppliers }) => suppliers,
+  );
+
+  return { suppliers, total_count };
 };
 
 export const findById = async (supplierId: string): Promise<Supplier> => {
