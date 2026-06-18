@@ -46,16 +46,8 @@ export const UpdateSupplierInputSchema = InputShape;
 export const SupplierFiltersSchema = z.object({
   q: z.string().optional(),
 
-  page: z
-    .string()
-    .optional()
-    .default("1")
-    .transform((v) => Math.max(1, parseInt(v, 10))),
-  limit: z
-    .string()
-    .optional()
-    .default("20")
-    .transform((v) => Math.max(1, parseInt(v, 10))),
+  page: z.coerce.number().int().optional(),
+  limit: z.coerce.number().int().optional(),
 });
 
 // Params Schema
@@ -67,4 +59,4 @@ export const SupplierParamsSchema = z.object({
 export type Supplier = z.infer<typeof SupplierSchema>;
 export type AddSupplierInput = z.infer<typeof AddSupplierInputSchema>;
 export type UpdateSupplierInput = z.infer<typeof UpdateSupplierInputSchema>;
-export type SupplierFilters = z.infer<typeof SupplierFiltersSchema>;
+export type SupplierFilters = z.input<typeof SupplierFiltersSchema>;
