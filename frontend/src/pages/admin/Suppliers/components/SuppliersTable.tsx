@@ -26,7 +26,7 @@ const SuppliersTable = () => {
       <tbody className="divide-y divide-gray-100 bg-white">
         {fetchingSuppliers ? (
           <SuppliersTableLoader />
-        ) : true ? (
+        ) : suppliers.length === 0 ? (
           <SuppliersTableEmpty />
         ) : (
           suppliers.map((supplier) => (
