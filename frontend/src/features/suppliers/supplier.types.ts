@@ -15,6 +15,8 @@ export interface SupplierState {
   filters: SupplierFilters;
   setFilters: (newFilters: Partial<SupplierFilters>) => void;
 
+  setSelectedSupplier: (value: Supplier | null) => void;
+
   fetchSuppliers: (filters: SupplierFilters) => Promise<void>;
   addSupplier: (inputs: AddSupplierInput) => Promise<void>;
   updateSupplier: (

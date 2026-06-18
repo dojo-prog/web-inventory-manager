@@ -22,6 +22,8 @@ const useSupplierStore = create<SupplierState>((set) => ({
       filters: { ...state.filters, ...newFilters },
     })),
 
+  setSelectedSupplier: (value) => set({ selectedSupplier: value }),
+
   fetchSuppliers: async (filters) => {
     set({ fetchingSuppliers: true });
     try {
