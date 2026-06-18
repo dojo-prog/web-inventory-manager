@@ -8,7 +8,11 @@ import db from "../database/db";
 
 export const protectRoute: Middleware = async (req, res, next) => {
   try {
-    const accessToken = req.cookies.accessToken;
+    const { accessToken, refreshToken } = req.cookies;
+
+    if (!refreshToken) {
+      return next(new AppError("Session expired. Please login again", 403));
+    }
 
     if (!accessToken) {
       return next(new AppError("Unauthorized: No token provided", 401));
