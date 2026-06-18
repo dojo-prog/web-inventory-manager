@@ -1,5 +1,5 @@
 import SupplierDetail from "./components/SupplierDetail";
-import SuppliersTable from "./components/SuppliersTable";
+import SuppliersContainerTable from "./components/SuppliersTableContainer";
 import Header from "./sections/Header";
 
 const Suppliers = () => {
@@ -11,8 +11,8 @@ const Suppliers = () => {
       </div>
 
       {/* Table & Detail */}
-      <div className="flex space-x-4">
-        <SuppliersTable />
+      <div className="h-[calc(100vh-16rem)] flex space-x-4">
+        <SuppliersContainerTable />
         <SupplierDetail />
       </div>
     </div>
