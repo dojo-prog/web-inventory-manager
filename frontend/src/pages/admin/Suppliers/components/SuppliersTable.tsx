@@ -6,7 +6,12 @@ import SuppliersTableEmpty from "./SuppliersTableEmpty";
 const headers = ["Supplier Name", "Code", "Contact Name", "Email", "Status"];
 
 const SuppliersTable = () => {
-  const { suppliers, fetchingSuppliers } = useSupplierStore();
+  const {
+    suppliers,
+    fetchingSuppliers,
+    selectedSupplier,
+    setSelectedSupplier,
+  } = useSupplierStore();
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -32,7 +37,8 @@ const SuppliersTable = () => {
           suppliers.map((supplier) => (
             <tr
               key={supplier.id}
-              className="group transition-colors duration-200 hover:bg-gray-50/50"
+              className={`group transition-colors duration-200 ${selectedSupplier?.id === supplier.id ? "bg-primary/10" : "hover:bg-gray-50/50"} cursor-pointer`}
+              onClick={() => setSelectedSupplier(supplier)}
             >
               {/* Column 1: Supplier Name */}
               <td className="px-6 py-4">
