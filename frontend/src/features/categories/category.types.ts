@@ -1,8 +1,4 @@
-import type {
-  BrandFilters,
-  Category,
-  CategoryFilters,
-} from "@web-inventory-manager/shared";
+import type { Category, CategoryFilters } from "@web-inventory-manager/shared";
 import type { CategoryForm } from "../../schemas/categories";
 
 export interface CategoryState {
@@ -18,7 +14,7 @@ export interface CategoryState {
   loading: boolean;
 
   filters: CategoryFilters;
-  setFilters: (newFilters: Partial<BrandFilters>) => void;
+  setFilters: (newFilters: Partial<CategoryFilters>) => void;
 
   fetchCategories: (filters: CategoryFilters) => Promise<void>;
   fetchMostUsed: () => Promise<void>;
