@@ -50,6 +50,11 @@ export const SupplierFiltersSchema = z.object({
   limit: z.coerce.number().int().optional(),
 });
 
+export const SupplierFilterResultSchema = z.object({
+  suppliers: z.array(SupplierSchema),
+  total_count: z.coerce.number().int(),
+});
+
 // Params Schema
 export const SupplierParamsSchema = z.object({
   supplierId: z.string().uuid({ message: "Invalid Supplier ID format" }),
@@ -60,3 +65,4 @@ export type Supplier = z.infer<typeof SupplierSchema>;
 export type AddSupplierInput = z.infer<typeof AddSupplierInputSchema>;
 export type UpdateSupplierInput = z.infer<typeof UpdateSupplierInputSchema>;
 export type SupplierFilters = z.input<typeof SupplierFiltersSchema>;
+export type SupplierFilterResult = z.infer<typeof SupplierFilterResultSchema>;
