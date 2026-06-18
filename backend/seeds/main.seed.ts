@@ -1,6 +1,7 @@
 import { mockBrands } from "./data/brand.data";
 import db from "../src/database/db";
 import { mockCategories } from "./data/category.data";
+import { mockSuppliers } from "./data/supplier.data";
 
 const seedBrands = async () => {
   console.log("🌱 Starting brand data seeding...");
@@ -47,6 +48,54 @@ const seedCategories = async () => {
     }
 
     console.log("✅ Category seeding completed successfully!");
+  } catch (error) {
+    console.error("❌ Category seeding encountered an error:", error);
+  } finally {
+    if (typeof db.end === "function") {
+      await db.end();
+    }
+  }
+};
+
+const seedSuppliers = async () => {
+  console.log("🌱 Starting suppliers data seeding...");
+
+  try {
+    await db.query("TRUNCATE TABLE suppliers CASCADE;");
+
+    for (const s of mockSuppliers) {
+      const values = [
+        s.name,
+        s.supplier_code,
+        s.contact_name,
+        s.email,
+        s.phone,
+        s.website,
+        JSON.stringify(s.address_line),
+        s.is_active,
+      ];
+
+      await db.query(
+        `
+        INSERT INTO suppliers (
+          name, 
+          supplier_code,
+          contact_name, 
+          email,
+          phone,
+          website, 
+          address_line, 
+          is_active
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
+        `,
+        values,
+      );
+
+      console.log(`🚀 Inserted supplier: ${s.name}`);
+    }
+
+    console.log("✅ Suppliers seeding completed successfully!");
   } catch (error) {
     console.error("❌ Category seeding encountered an error:", error);
   } finally {
