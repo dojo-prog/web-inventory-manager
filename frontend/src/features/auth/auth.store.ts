@@ -17,7 +17,7 @@ const useAuthStore = create<AuthState>((set) => ({
 
       set({ user });
     } catch (error) {
-      errorHandler(error, "checkAuth");
+      errorHandler(error, "checkAuth", true);
     } finally {
       set({ checkingAuth: false });
     }
