@@ -1,6 +1,7 @@
 import type {
   AddSupplierInput,
   Supplier,
+  SupplierFilterResult,
   SupplierFilters,
   UpdateSupplierInput,
 } from "@web-inventory-manager/shared";
@@ -8,10 +9,11 @@ import axios from "../../lib/axios";
 
 export const fetchSuppliers = async (
   filters: SupplierFilters,
-): Promise<Supplier[]> => {
+): Promise<SupplierFilterResult> => {
   const res = await axios.get("/suppliers", { params: filters });
+  const { suppliers, total_count } = res.data;
 
-  return res.data.suppliers;
+  return { suppliers, total_count };
 };
 
 export const addSupplier = async (
