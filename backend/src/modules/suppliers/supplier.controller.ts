@@ -4,7 +4,7 @@ import * as supplierService from "./supplier.service";
 
 export const getSuppliers: Controller = async (req, res, next) => {
   try {
-    const suppliers = await supplierService.getSuppliers(req.params);
+    const suppliers = await supplierService.getSuppliers(req.query);
 
     res.status(200).json({ success: true, suppliers });
   } catch (error) {
