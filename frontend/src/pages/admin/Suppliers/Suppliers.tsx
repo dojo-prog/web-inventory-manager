@@ -5,7 +5,7 @@ import SuppliersContainerTable from "./components/SuppliersTableContainer";
 import Header from "./sections/Header";
 
 const Suppliers = () => {
-  const { fetchSuppliers, filters } = useSupplierStore();
+  const { fetchSuppliers, filters, selectedSupplier } = useSupplierStore();
 
   useEffect(() => {
     if (!filters) return;
@@ -22,7 +22,7 @@ const Suppliers = () => {
       {/* Table & Detail */}
       <div className="h-[calc(100vh-16rem)] flex space-x-4">
         <SuppliersContainerTable />
-        <SupplierDetail />
+        {selectedSupplier && <SupplierDetail />}
       </div>
     </div>
   );
