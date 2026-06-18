@@ -6,6 +6,7 @@ import {
 import { validate } from "../../middlewares/validation.middleware";
 import {
   AddSupplierInputSchema,
+  SupplierFiltersSchema,
   SupplierParamsSchema,
   UpdateSupplierInputSchema,
   UserFilterSchema,
@@ -23,7 +24,7 @@ const router = express.Router();
 router.use(protectRoute);
 router.use(authorizeRoles("admin", "manager"));
 
-router.get("/", validate({ query: UserFilterSchema }), getSuppliers);
+router.get("/", validate({ query: SupplierFiltersSchema }), getSuppliers);
 
 router.post("/", validate({ body: AddSupplierInputSchema }), addSupplier);
 
