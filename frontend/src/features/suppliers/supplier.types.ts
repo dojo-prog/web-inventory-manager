@@ -9,6 +9,8 @@ export interface SupplierState {
   suppliers: Supplier[];
   selectedSupplier: Supplier | null;
 
+  total_count: number;
+
   fetchingSuppliers: boolean;
   loading: boolean;
 

@@ -11,6 +11,8 @@ const useSupplierStore = create<SupplierState>((set) => ({
   fetchingSuppliers: false,
   loading: false,
 
+  total_count: 0,
+
   filters: {
     q: "",
     page: 1,
@@ -27,9 +29,10 @@ const useSupplierStore = create<SupplierState>((set) => ({
   fetchSuppliers: async (filters) => {
     set({ fetchingSuppliers: true });
     try {
-      const suppliers = await supplierService.fetchSuppliers(filters);
+      const { suppliers, total_count } =
+        await supplierService.fetchSuppliers(filters);
 
-      set({ suppliers });
+      set({ suppliers, total_count });
     } catch (error) {
       errorHandler(error, "fetchSuppliers", true);
     } finally {
