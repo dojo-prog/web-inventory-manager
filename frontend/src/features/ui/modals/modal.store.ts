@@ -36,6 +36,21 @@ const useModalStore = create<ModalState>((set) => ({
     });
   },
 
+  // Supplier
+  supplierModalOpen: false,
+  supplierModalType: "create" as ModalType,
+  selectedSupplier: null,
+  openSupplierModal: (type, supplier) => {
+    if (supplier) {
+      set({ selectedSupplier: supplier });
+    }
+
+    set({ supplierModalType: type, supplierModalOpen: true });
+  },
+  closeSupplierModal: () => {
+    set({ selectedSupplier: null, supplierModalOpen: false });
+  },
+
   // Delete Confirmation
   deleteConfirmModalOpen: false,
   entity: undefined,
