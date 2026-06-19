@@ -1,9 +1,8 @@
 import type {
-  AddProductInput,
   ProductFilter,
   ProductWithRelations,
-  UpdateProductInput,
 } from "@web-inventory-manager/shared";
+import type { ProductForm } from "../../schemas/product";
 
 export interface ProductState {
   products: ProductWithRelations[];
@@ -16,10 +15,7 @@ export interface ProductState {
   setFilters: (newFilters: Partial<ProductFilter>) => void;
 
   fetchProducts: (filters: ProductFilter) => Promise<void>;
-  addProduct: (inputs: AddProductInput) => Promise<void>;
-  updateProduct: (
-    productId: string,
-    inputs: UpdateProductInput,
-  ) => Promise<void>;
+  addProduct: (inputs: ProductForm) => Promise<void>;
+  updateProduct: (productId: string, inputs: ProductForm) => Promise<void>;
   removeProduct: (productId: string) => Promise<void>;
 }
