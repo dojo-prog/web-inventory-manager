@@ -34,7 +34,7 @@ export const ProductWithRelationsSchema = ProductSchema.extend({
 });
 
 // Base Input Shape
-const InputShape = z.object({
+export const ProductInputShape = z.object({
   brand_id: z.string().uuid({ message: "Invalid brand ID " }),
   category_id: z.string().uuid({ message: "Invalid category ID" }),
   name: z
@@ -63,12 +63,12 @@ const InputShape = z.object({
 });
 
 // Action Schema
-export const AddProductInputSchema = InputShape.transform((data) => {
+export const AddProductInputSchema = ProductInputShape.transform((data) => {
   const { thumbnail, ...rest } = data;
   return rest;
 });
 
-export const UpdateProductInputSchema = InputShape.transform((data) => {
+export const UpdateProductInputSchema = ProductInputShape.transform((data) => {
   const { thumbnail, ...rest } = data;
   return rest;
 });
