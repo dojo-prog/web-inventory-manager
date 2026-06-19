@@ -101,4 +101,4 @@ export type ProductWithRelations = z.infer<typeof ProductWithRelationsSchema>;
 export type AddProductInput = z.infer<typeof AddProductInputSchema>;
 export type UpdateProductInput = z.infer<typeof UpdateProductInputSchema>;
 export type ProductFilter = z.input<typeof ProductFilterSchema>;
-export type ProductFilterResult = z.input<typeof ProductFilterResultSchema>;
+export type ProductFilterResult = z.infer<typeof ProductFilterResultSchema>;
