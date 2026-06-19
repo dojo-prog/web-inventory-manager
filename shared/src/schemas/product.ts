@@ -76,8 +76,8 @@ export const UpdateProductInputSchema = ProductInputShape.transform((data) => {
 // Filter Schema
 export const ProductFilterSchema = z.object({
   q: z.string().optional(),
-  brand_id: z.string().uuid({ message: "Invalid brand ID " }).optional(),
-  category_id: z.string().uuid({ message: "Invalid category ID" }).optional(),
+  brand_id: z.string().optional(),
+  category_id: z.string().optional(),
   gender: GenderSchema.optional(),
   status: ProductStatusSchema.optional(),
 
