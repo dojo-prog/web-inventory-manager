@@ -1,8 +1,10 @@
 import { ExternalLinkIcon, PenIcon, TruckIcon, XIcon } from "lucide-react";
 import CustomButton from "../../../../shared/CustomButton";
 import useSupplierStore from "../../../../features/suppliers/supplier.store";
+import useModalStore from "../../../../features/ui/modals/modal.store";
 
 const SupplierDetail = () => {
+  const { openSupplierModal } = useModalStore();
   const { selectedSupplier: ss, setSelectedSupplier } = useSupplierStore();
 
   const handleClose = () => {
@@ -165,6 +167,7 @@ const SupplierDetail = () => {
           title="Edit"
           Icon={PenIcon}
           buttonStyles="w-full bg-white border border-border hover:bg-gray-100"
+          onClick={() => openSupplierModal("update", ss)}
         />
       </div>
     </div>
