@@ -44,7 +44,7 @@ export const findAll = async (
 ): Promise<ProductFilterResult> => {
   const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
     filters,
-    ["id", "name"],
+    ["p.id", "p.name"],
   );
 
   const result = await db.query(
