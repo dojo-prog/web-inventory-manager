@@ -35,7 +35,7 @@ const BASE_PRODUCT_FROM_QUERY = `
   FROM products p
   JOIN brands b
     ON b.id = p.brand_id 
-  JOIN category c
+  JOIN categories c
     ON c.id = p.category_id
 `;
 
@@ -49,7 +49,7 @@ export const findAll = async (
 
   const result = await db.query(
     `
-    ${BASE_PRODUCT_SELECT_QUERY}
+    ${BASE_PRODUCT_SELECT_QUERY},
     COUNT(*) OVER()::INT AS total_count
     ${BASE_PRODUCT_FROM_QUERY}
     ${whereClause}
