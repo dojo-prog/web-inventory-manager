@@ -1,7 +1,10 @@
+import useModalStore from "../../../../features/ui/modals/modal.store";
 import CustomButton from "../../../../shared/CustomButton";
 import { PlusIcon } from "lucide-react";
 
 const Header = () => {
+  const { openSupplierModal } = useModalStore();
+
   return (
     <div className="flex items-center justify-between">
       {/* Title */}
@@ -21,7 +24,7 @@ const Header = () => {
           Icon={PlusIcon}
           buttonStyles="h-12 rounded-sm px-6 bg-primary hover:bg-primary-hover"
           titleStyles="text-white text-sm font-body"
-          // onClick={() => openCategoryModal("create")}
+          onClick={() => openSupplierModal("create")}
         />
       </div>
     </div>
