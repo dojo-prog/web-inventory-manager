@@ -2,6 +2,8 @@ import { mockBrands } from "./data/brand.data";
 import db from "../src/database/db";
 import { mockCategories } from "./data/category.data";
 import { mockSuppliers } from "./data/supplier.data";
+import { mockProducts } from "./data/product.data";
+import buildInsertFields from "../src/utils/buildInsertFields";
 
 const seedBrands = async () => {
   console.log("🌱 Starting brand data seeding...");
@@ -98,6 +100,58 @@ const seedSuppliers = async () => {
     console.log("✅ Suppliers seeding completed successfully!");
   } catch (error) {
     console.error("❌ Category seeding encountered an error:", error);
+  } finally {
+    if (typeof db.end === "function") {
+      await db.end();
+    }
+  }
+};
+
+const seedProducts = async () => {
+  console.log("🌱 Starting products data seeding...");
+
+  try {
+    const brandsResult = await db.query("SELECT id FROM brands LIMIT 1;");
+    const categoriesResult = await db.query(
+      "SELECT id FROM categories LIMIT 1;",
+    );
+
+    if (brandsResult.rows.length === 0 || categoriesResult.rows.length === 0) {
+      console.error(
+        "❌ Seeding failed: You must seed brands and categories before seeding products!",
+      );
+      return;
+    }
+
+    const validBrandId = brandsResult.rows[0].id;
+    const validCategoryId = categoriesResult.rows[0].id;
+
+    await db.query(`TRUNCATE TABLE products CASCADE;`);
+
+    for (const p of mockProducts) {
+      const productWithValidIds = {
+        ...p,
+        brand_id: validBrandId,
+        category_id: validCategoryId,
+      };
+
+      const { keysStr, placeholders, values } =
+        buildInsertFields(productWithValidIds);
+
+      await db.query(
+        `
+        INSERT INTO products (${keysStr})
+        VALUES (${placeholders})
+        `,
+        values,
+      );
+
+      console.log(`🚀 Inserted product: ${p.name}`);
+    }
+
+    console.log("✅ Products seeding completed successfully");
+  } catch (error) {
+    console.error("❌ Product seeding encountered an error:", error);
   } finally {
     if (typeof db.end === "function") {
       await db.end();
