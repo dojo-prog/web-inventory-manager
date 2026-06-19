@@ -28,7 +28,7 @@ router.get("/", validate({ query: SupplierFiltersSchema }), getSuppliers);
 
 router.post("/", validate({ body: AddSupplierInputSchema }), addSupplier);
 
-router.post(
+router.put(
   "/:supplierId",
   validate({ params: SupplierParamsSchema, body: UpdateSupplierInputSchema }),
   updateSupplier,
