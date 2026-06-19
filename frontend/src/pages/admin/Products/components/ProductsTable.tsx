@@ -1,46 +1,14 @@
 import { Edit2Icon, PackageIcon, Trash2Icon } from "lucide-react";
 import useModalStore from "../../../../features/ui/modals/modal.store";
+import useProductStore from "../../../../features/products/product.store";
+import ProductTableLoader from "./ProductTableLoader";
+import ProductTableEmpty from "./ProductTableEmpty";
 
 const headers = ["product", "brand", "category", "price", "status", "actions"];
 
-// Clean mock data representing our extended ProductWithRelations schema structure
-const mockProducts = [
-  {
-    id: "prod-1",
-    name: "Air Max Alpha 5",
-    sku: "NK-AM5-001",
-    thumbnail_url: null,
-    brand_name: "Nike",
-    category_name: "Footwear",
-    price: 4895.0,
-    status: "active",
-  },
-  {
-    id: "prod-2",
-    name: "Essential Fleece Hoodie",
-    sku: "AD-EFH-024",
-    thumbnail_url: null,
-    brand_name: "Adidas",
-    category_name: "Apparel",
-    price: 3200.0,
-    status: "active",
-  },
-  {
-    id: "prod-3",
-    name: "Classic Canvas Backpack",
-    sku: "VN-CCB-109",
-    thumbnail_url: null,
-    brand_name: "Vans",
-    category_name: "Accessories",
-    price: 2450.0,
-    status: "inactive",
-  },
-];
-
 const ProductsTable = () => {
   const { openDeleteConfirmModal } = useModalStore();
-
-  const fetchingProducts = false;
+  const { products, fetchingProducts } = useProductStore();
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -59,25 +27,11 @@ const ProductsTable = () => {
 
       <tbody className="divide-y divide-gray-100 bg-white">
         {fetchingProducts ? (
-          <tr>
-            <td
-              colSpan={headers.length}
-              className="text-center py-10 text-sm text-secondary"
-            >
-              Loading products...
-            </td>
-          </tr>
-        ) : mockProducts.length === 0 ? (
-          <tr>
-            <td
-              colSpan={headers.length}
-              className="text-center py-10 text-sm text-secondary"
-            >
-              No products found.
-            </td>
-          </tr>
+          <ProductTableLoader />
+        ) : products.length === 0 ? (
+          <ProductTableEmpty />
         ) : (
-          mockProducts.map((product) => (
+          products.map((product) => (
             <tr
               key={product.id}
               className="group transition-colors duration-200 hover:bg-gray-50/50"
@@ -99,9 +53,6 @@ const ProductsTable = () => {
                   <div className="flex flex-col truncate">
                     <span className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
                       {product.name}
-                    </span>
-                    <span className="text-[10px] text-secondary font-label tracking-wide">
-                      {product.sku}
                     </span>
                   </div>
                 </div>
