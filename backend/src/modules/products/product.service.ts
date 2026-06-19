@@ -2,6 +2,8 @@ import {
   AddProductInput,
   Product,
   ProductFilter,
+  ProductFilterResult,
+  ProductWithRelations,
   UpdateProductInput,
 } from "@web-inventory-manager/shared";
 import * as productModel from "./product.model";
@@ -12,14 +14,14 @@ import generateChanges from "../../utils/generateChanges";
 
 export const getProducts = async (
   filters: ProductFilter,
-): Promise<Product[]> => {
+): Promise<ProductFilterResult> => {
   return productModel.findAll(filters);
 };
 
 export const addProduct = async (
   inputs: AddProductInput,
   thumbnail?: Express.Multer.File,
-): Promise<Product> => {
+): Promise<ProductWithRelations> => {
   const payload: AddProductInput = { ...inputs };
 
   if (thumbnail) {
@@ -40,7 +42,7 @@ export const updateProduct = async (
   productId: string,
   inputs: UpdateProductInput,
   thumbnail?: Express.Multer.File,
-): Promise<Product> => {
+): Promise<ProductWithRelations> => {
   const product = await productModel.findById(productId);
 
   if (!product) {

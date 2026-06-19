@@ -5,9 +5,11 @@ import * as productService from "./product.service";
 
 export const getProducts: Controller = async (req, res, next) => {
   try {
-    const products = await productService.getProducts(req.query);
+    const { products, total_count } = await productService.getProducts(
+      req.query,
+    );
 
-    res.status(200).json({ success: true, products });
+    res.status(200).json({ success: true, products, total_count });
   } catch (error) {
     next(error);
   }
