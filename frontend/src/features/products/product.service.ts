@@ -3,18 +3,33 @@ import type {
   ProductFilterResult,
   ProductWithRelations,
 } from "@web-inventory-manager/shared";
+import axios from "../../lib/axios";
 
 export const fetchProducts = async (
   filters: ProductFilter,
-): Promise<ProductFilterResult> => {};
+): Promise<ProductFilterResult> => {
+  const res = await axios.get("/products", { params: filters });
+
+  return res.data;
+};
 
 export const addProduct = async (
   inputs: FormData,
-): Promise<ProductWithRelations> => {};
+): Promise<ProductWithRelations> => {
+  const res = await axios.post("/products", inputs);
+
+  return res.data.newProduct;
+};
 
 export const updateProduct = async (
   productId: string,
   inputs: FormData,
-): Promise<ProductWithRelations> => {};
+): Promise<ProductWithRelations> => {
+  const res = await axios.put(`/products/${productId}`, inputs);
 
-export const removeProduct = async (productId: string): Promise<void> => {};
+  return res.data.updatedProduct;
+};
+
+export const removeProduct = async (productId: string): Promise<void> => {
+  await axios.delete(`/products/${productId}`);
+};
