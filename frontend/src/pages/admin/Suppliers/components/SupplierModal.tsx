@@ -132,7 +132,7 @@ const SupplierModal = () => {
     >
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 max-h-[calc(100vh-12rem)] overflow-y-auto pr-1"
+        className="space-y-6 max-h-[calc(100vh-12rem)] overflow-y-auto px-1"
       >
         {/* Basic Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
