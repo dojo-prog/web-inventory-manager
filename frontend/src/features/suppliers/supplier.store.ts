@@ -3,6 +3,7 @@ import type { SupplierState } from "./supplier.types";
 import * as supplierService from "./supplier.service";
 import errorHandler from "../../utils/errorHandler";
 import { toast } from "react-toastify";
+import useModalStore from "../ui/modals/modal.store";
 
 const useSupplierStore = create<SupplierState>((set) => ({
   suppliers: [],
@@ -49,6 +50,7 @@ const useSupplierStore = create<SupplierState>((set) => ({
         suppliers: [newSupplier, ...state.suppliers],
       }));
       toast.success("New supplier added");
+      useModalStore.getState().closeSupplierModal();
     } catch (error) {
       errorHandler(error, "addSupplier", true);
     } finally {
@@ -70,6 +72,7 @@ const useSupplierStore = create<SupplierState>((set) => ({
         ),
       }));
       toast.success("Supplier updated");
+      useModalStore.getState().closeSupplierModal();
     } catch (error) {
       errorHandler(error, "updateSupplier", true);
     } finally {
