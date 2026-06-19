@@ -25,6 +25,7 @@ const useProductStore = create<ProductState>((set) => ({
     set((state) => ({ filters: { ...state.filters, ...newFilters } })),
 
   fetchProducts: async (filters) => {
+    set({ fetchingProducts: true });
     try {
       const { products, total_count } =
         await productService.fetchProducts(filters);
@@ -32,10 +33,13 @@ const useProductStore = create<ProductState>((set) => ({
       set({ products, total_count });
     } catch (error) {
       errorHandler(error, "fetchProducts", true);
+    } finally {
+      set({ fetchingProducts: false });
     }
   },
 
   addProduct: async (inputs) => {
+    set({ loading: true });
     try {
       const formData = new FormData();
 
@@ -55,10 +59,13 @@ const useProductStore = create<ProductState>((set) => ({
       toast.success("Product added");
     } catch (error) {
       errorHandler(error, "fetchProducts", true);
+    } finally {
+      set({ loading: false });
     }
   },
 
   updateProduct: async (productId, inputs) => {
+    set({ loading: false });
     try {
       const formData = new FormData();
 
@@ -83,10 +90,13 @@ const useProductStore = create<ProductState>((set) => ({
       toast.success("Product updated");
     } catch (error) {
       errorHandler(error, "fetchProducts", true);
+    } finally {
+      set({ loading: false });
     }
   },
 
   removeProduct: async (productId) => {
+    set({ loading: true });
     try {
       await productService.removeProduct(productId);
 
@@ -96,6 +106,8 @@ const useProductStore = create<ProductState>((set) => ({
       toast.success("Product removed");
     } catch (error) {
       errorHandler(error, "fetchProducts", true);
+    } finally {
+      set({ loading: false });
     }
   },
 }));
