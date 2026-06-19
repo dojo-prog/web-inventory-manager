@@ -28,6 +28,11 @@ export const ProductSchema = z.object({
   created_at: z.string(),
 });
 
+export const ProductWithRelationsSchema = ProductSchema.extend({
+  brand_name: z.string(),
+  category_name: z.string(),
+});
+
 // Base Input Shape
 const InputShape = z.object({
   brand_id: z.string().uuid({ message: "Invalid brand ID " }),
@@ -76,16 +81,13 @@ export const ProductFilterSchema = z.object({
   gender: GenderSchema.optional(),
   status: ProductStatusSchema.optional(),
 
-  page: z
-    .string()
-    .optional()
-    .default("1")
-    .transform((v) => Math.max(1, parseInt(v, 10))),
-  limit: z
-    .string()
-    .optional()
-    .default("20")
-    .transform((v) => Math.max(1, parseInt(v, 10))),
+  page: z.coerce.number().int().optional(),
+  limit: z.coerce.number().int().optional(),
+});
+
+export const ProductFilterResultSchema = z.object({
+  products: z.array(ProductWithRelationsSchema),
+  total_count: z.coerce.number().int(),
 });
 
 // Params
@@ -95,6 +97,8 @@ export const ProductParamsSchema = z.object({
 
 // Inferred Types
 export type Product = z.infer<typeof ProductSchema>;
+export type ProductWithRelations = z.infer<typeof ProductWithRelationsSchema>;
 export type AddProductInput = z.infer<typeof AddProductInputSchema>;
 export type UpdateProductInput = z.infer<typeof UpdateProductInputSchema>;
-export type ProductFilter = z.infer<typeof ProductFilterSchema>;
+export type ProductFilter = z.input<typeof ProductFilterSchema>;
+export type ProductFilterResult = z.input<typeof ProductFilterResultSchema>;
