@@ -1,7 +1,36 @@
+import { useEffect } from "react";
+import useProductStore from "../../../../features/products/product.store";
+import useDebounce from "../../../../hooks/useDebounce";
 import PageControl from "../../../../shared/PageControl";
 import Searchbar from "../../../../shared/Searchbar";
+import getPaginationRange from "../../../../utils/getPaginationRange";
 
 const TableHeader = () => {
+  const { filters, setFilters, total_count, fetchProducts } = useProductStore();
+  const { q, page, limit } = filters;
+
+  const { from, to } = getPaginationRange(
+    total_count,
+    page as number,
+    limit as number,
+  );
+
+  const handleSearchChange = (e: any) => {
+    setFilters({ q: e.target.value });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setFilters({ page: newPage });
+  };
+
+  const debouncedQ = useDebounce(q, 400);
+
+  useEffect(() => {
+    setFilters({ page: 1 });
+
+    fetchProducts(filters);
+  }, [debouncedQ]);
+
   return (
     <div className="border-b border-border p-5 shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-surface">
       {/* Title block */}
@@ -12,8 +41,12 @@ const TableHeader = () => {
 
         {/* Row Indicator */}
         <p className="text-xs font-medium font-body text-text-muted">
-          Showing <span className="font-semibold text-text">1-10</span> of{" "}
-          <span className="font-semibold text-text">25</span> entries
+          Showing{" "}
+          <span className="font-semibold text-text">
+            {from}-{to}
+          </span>{" "}
+          of <span className="font-semibold text-text">{total_count}</span>{" "}
+          entries
         </p>
       </div>
 
@@ -23,15 +56,15 @@ const TableHeader = () => {
           placeholder="Enter ID, name, contact name, email or website "
           id="q"
           name="q"
-          value=""
-          onChange={() => {}}
+          value={q || ""}
+          onChange={handleSearchChange}
         />
 
         <PageControl
-          page={1}
-          limit={10}
-          totalCount={25}
-          onPageChange={() => {}}
+          page={page as number}
+          limit={limit as number}
+          totalCount={total_count}
+          onPageChange={handlePageChange}
         />
       </div>
     </div>
