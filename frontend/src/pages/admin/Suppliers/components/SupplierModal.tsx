@@ -85,8 +85,8 @@ const SupplierModal = () => {
         supplier_code: selectedSupplier.supplier_code,
         contact_name: selectedSupplier.contact_name,
         email: selectedSupplier.email,
-        phone: selectedSupplier.phone,
-        website: selectedSupplier.website,
+        phone: selectedSupplier.phone || "",
+        website: selectedSupplier.website || "",
         address_line: selectedSupplier.address_line,
         is_active: selectedSupplier.is_active,
       });
@@ -107,7 +107,13 @@ const SupplierModal = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    const error = validateInputs(AddSupplierInputSchema, formData);
+    const submissionPayload = {
+      ...formData,
+      website: website.trim() === "" ? null : website.trim(),
+      phone: phone.trim() === "" ? null : phone.trim(),
+    };
+
+    const error = validateInputs(AddSupplierInputSchema, submissionPayload);
 
     if (error) {
       toast.error(error);
@@ -115,9 +121,12 @@ const SupplierModal = () => {
     }
 
     if (supplierModalType === "create") {
-      addSupplier(formData as AddSupplierInput);
+      addSupplier(submissionPayload as AddSupplierInput);
     } else if (supplierModalType === "update" && selectedSupplier?.id) {
-      updateSupplier(selectedSupplier.id, formData as UpdateSupplierInput);
+      updateSupplier(
+        selectedSupplier.id,
+        submissionPayload as UpdateSupplierInput,
+      );
     }
   };
 
