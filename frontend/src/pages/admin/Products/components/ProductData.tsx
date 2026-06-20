@@ -5,6 +5,7 @@ const ProductData = () => {
 
   return (
     <div className="w-full border border-border shadow rounded-md p-5">
+      {/* Id and Status */}
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-xs font-label text-secondary max-w-1/2 truncate">
           ID: {sp?.id}
@@ -20,7 +21,8 @@ const ProductData = () => {
         </span>
       </div>
 
-      <div className="flex items-start">
+      {/* Name and Price */}
+      <div className="flex items-start mb-4">
         <h2 className="flex-1 text-3xl font-headline font-medium">
           {sp?.name}
         </h2>
@@ -29,12 +31,25 @@ const ProductData = () => {
         </h3>
       </div>
 
+      {/* Thumbnail */}
+      {sp?.thumbnail_url && (
+        <div className="w-full bg-primary/10 aspect-video rounded-md overflow-hidden">
+          <img
+            src={sp?.thumbnail_url}
+            alt="image_url"
+            className="h-full w-full object-cover"
+          />
+        </div>
+      )}
+
+      {/* Description */}
       <div className="my-6">
         <p className="text-sm text-secondary font-body">{sp?.description}</p>
       </div>
 
       <div className="w-full border-b border-gray-300 mb-6" />
 
+      {/* Metadata */}
       <div className="grid grid-cols-3">
         <div className="w-full text-center">
           <p className="text-xs font-label uppercase text-secondary">Gender</p>
