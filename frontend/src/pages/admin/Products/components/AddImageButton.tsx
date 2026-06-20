@@ -1,5 +1,6 @@
-import { CameraIcon } from "lucide-react";
+import { CameraIcon, Loader2Icon } from "lucide-react";
 import type { ChangeEvent } from "react";
+import useProductImageStore from "../../../../features/product_images/product_image.store";
 
 type Props = {
   id: string;
@@ -8,6 +9,8 @@ type Props = {
 };
 
 const AddImageButton = ({ id, name, fileChange }: Props) => {
+  const { loading } = useProductImageStore();
+
   return (
     <label
       htmlFor={id}
@@ -20,12 +23,19 @@ const AddImageButton = ({ id, name, fileChange }: Props) => {
         accept="image/*"
         className="hidden"
         onChange={fileChange}
+        disabled={loading}
       />
 
-      <CameraIcon size={15} className="text-secondary mb-1" />
-      <span className="text-[10px] font-label text-secondary select-none">
-        Add Image
-      </span>
+      {!loading ? (
+        <>
+          <CameraIcon size={15} className="text-secondary mb-1" />
+          <span className="text-[10px] font-label text-secondary select-none">
+            Add Image
+          </span>
+        </>
+      ) : (
+        <Loader2Icon size={20} className="text-secondary animate-spin" />
+      )}
     </label>
   );
 };
