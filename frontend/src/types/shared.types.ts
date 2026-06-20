@@ -3,10 +3,11 @@ import type { JSX } from "react/jsx-runtime";
 
 export interface Route {
   index?: boolean;
-  title: string;
+  title?: string;
   path: string;
   element: JSX.Element;
-  Icon: LucideIcon;
+  Icon?: LucideIcon;
+  hideFromSidebar?: boolean;
 }
 
 export interface Pagination {
