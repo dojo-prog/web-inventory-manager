@@ -1,13 +1,11 @@
-import { Edit2Icon, PackageIcon, Trash2Icon } from "lucide-react";
-import useModalStore from "../../../../features/ui/modals/modal.store";
+import { PackageIcon } from "lucide-react";
 import useProductStore from "../../../../features/products/product.store";
 import ProductTableLoader from "./ProductTableLoader";
 import ProductTableEmpty from "./ProductTableEmpty";
 
-const headers = ["product", "brand", "category", "price", "status", "actions"];
+const headers = ["product", "brand", "category", "price", "status"];
 
 const ProductsTable = () => {
-  const { openDeleteConfirmModal } = useModalStore();
   const { products, fetchingProducts } = useProductStore();
 
   return (
@@ -94,27 +92,6 @@ const ProductsTable = () => {
                 >
                   {product.status === "active" ? "Active" : "Inactive"}
                 </span>
-              </td>
-
-              {/* Column 6: Action Controls */}
-              <td className="px-6 py-4">
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    aria-label="Edit Product"
-                    className="text-gray-400 hover:text-blue-600 transition-colors cursor-pointer"
-                  >
-                    <Edit2Icon className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Delete Product"
-                    className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
-                    onClick={() => openDeleteConfirmModal("product", product)}
-                  >
-                    <Trash2Icon className="h-4 w-4" />
-                  </button>
-                </div>
               </td>
             </tr>
           ))
