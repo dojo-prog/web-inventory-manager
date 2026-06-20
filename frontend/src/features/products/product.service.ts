@@ -13,6 +13,14 @@ export const fetchProducts = async (
   return res.data;
 };
 
+export const fetchProductById = async (
+  productId: string,
+): Promise<ProductWithRelations> => {
+  const res = await axios.get(`/products/${productId}`);
+
+  return res.data.product;
+};
+
 export const addProduct = async (
   inputs: FormData,
 ): Promise<ProductWithRelations> => {

@@ -6,9 +6,11 @@ import { toast } from "react-toastify";
 
 const useProductStore = create<ProductState>((set) => ({
   products: [],
+  selectedProduct: null,
   total_count: 0,
 
   fetchingProducts: false,
+  fetchingProduct: false,
   loading: false,
 
   filters: {
@@ -35,6 +37,19 @@ const useProductStore = create<ProductState>((set) => ({
       errorHandler(error, "fetchProducts", true);
     } finally {
       set({ fetchingProducts: false });
+    }
+  },
+
+  fetchProductById: async (productId) => {
+    set({ fetchingProduct: true });
+    try {
+      const product = await productService.fetchProductById(productId);
+
+      set({ selectedProduct: product });
+    } catch (error) {
+      errorHandler(error, "fetchProductById", true);
+    } finally {
+      set({ fetchingProduct: false });
     }
   },
 

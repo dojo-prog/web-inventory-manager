@@ -6,15 +6,18 @@ import type { ProductForm } from "../../schemas/product";
 
 export interface ProductState {
   products: ProductWithRelations[];
+  selectedProduct: ProductWithRelations | null;
   total_count: number;
 
   fetchingProducts: boolean;
+  fetchingProduct: boolean;
   loading: boolean;
 
   filters: ProductFilter;
   setFilters: (newFilters: Partial<ProductFilter>) => void;
 
   fetchProducts: (filters: ProductFilter) => Promise<void>;
+  fetchProductById: (productId: string) => Promise<void>;
   addProduct: (inputs: ProductForm) => Promise<void>;
   updateProduct: (productId: string, inputs: ProductForm) => Promise<void>;
   removeProduct: (productId: string) => Promise<void>;
