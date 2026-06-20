@@ -3,11 +3,17 @@ import useProductStore from "../../../../features/products/product.store";
 import AddImageButton from "./AddImageButton";
 import useProductImageStore from "../../../../features/product_images/product_image.store";
 import type { ProductImage } from "@web-inventory-manager/shared";
+import { ImageIcon, Loader2Icon, Trash2Icon } from "lucide-react";
 
 const ProductImages = () => {
   const { selectedProduct } = useProductStore();
-  const { fetchProductImages, product_images, addProductImage } =
-    useProductImageStore();
+  const {
+    fetchProductImages,
+    product_images,
+    addProductImage,
+    removeProductImage,
+    loading,
+  } = useProductImageStore();
 
   useEffect(() => {
     if (!selectedProduct?.id) return;
@@ -31,19 +37,54 @@ const ProductImages = () => {
     }
   };
 
-  const [selectedImage, setSelectedImage] = useState<ProductImage | undefined>(
+  const [selectedImage, setSelectedImage] = useState<ProductImage | null>(
     product_images[0],
   );
+
+  useEffect(() => {
+    const image = product_images[0] ? product_images[0] : null;
+    setSelectedImage(image);
+  }, [product_images]);
 
   return (
     <div className="w-full">
       {/* Preview Image */}
-      <div className="h-90 border bg-gray-200/10 border-border rounded-md shadow mb-4">
-        <img
-          src={selectedImage?.image_url}
-          alt="image_preview"
-          className="h-full w-full object-contain"
-        />
+      <div className="relative group h-90 border bg-gray-200/10 border-border rounded-md shadow mb-4">
+        {selectedImage ? (
+          <>
+            <img
+              src={selectedImage?.image_url}
+              alt="image_preview"
+              className="h-full w-full object-contain"
+            />
+
+            <button
+              className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-150 text-secondary hover:text-red-500 cursor-pointer"
+              onClick={() =>
+                removeProductImage(selectedProduct!.id, selectedImage!.id)
+              }
+            >
+              {!loading ? (
+                <Trash2Icon size={20} />
+              ) : (
+                <Loader2Icon size={20} className="animate-spin" />
+              )}
+            </button>
+          </>
+        ) : (
+          <div className="h-full w-full flex flex-col items-center justify-center select-none animate-fade-in">
+            <div className="p-4 bg-primary/5 rounded-full mb-3 border border-dashed border-gray-300">
+              <ImageIcon size={32} className="text-primary/60" />
+            </div>
+            <p className="text-sm font-label font-medium text-primary">
+              No Image Selected
+            </p>
+            <p className="text-xs text-primary/70 font-body mt-1 max-w-50 text-center">
+              Select an image from the gallery below or upload a new one to
+              preview it here.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Images */}
