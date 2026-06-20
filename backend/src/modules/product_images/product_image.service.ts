@@ -36,7 +36,7 @@ export const addProductImage = async (
   const payload = {
     product_id: productId,
     image_url: url,
-    image_pat: path,
+    image_path: path,
   };
 
   return await productImageModel.add(productId, payload);
