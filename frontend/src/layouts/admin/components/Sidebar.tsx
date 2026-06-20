@@ -18,9 +18,9 @@ const Sidebar = () => {
 
       {/* Tabs */}
       <div className="flex-1 w-full space-y-2">
-        {adminRoutes.map((r) => (
-          <SidebarTab key={r.path} item={r} />
-        ))}
+        {adminRoutes.map(
+          (r) => !r.hideFromSidebar && <SidebarTab key={r.path} item={r} />,
+        )}
       </div>
 
       {/* Footer */}
