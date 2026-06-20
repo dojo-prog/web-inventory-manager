@@ -8,6 +8,7 @@ const useProductImageStore = create<ProductImageState>((set) => ({
   product_images: [],
 
   fetchingProductImages: false,
+  loading: false,
 
   fetchProductImages: async (productId) => {
     try {
@@ -21,6 +22,7 @@ const useProductImageStore = create<ProductImageState>((set) => ({
   },
 
   addProductImage: async (productId, inputs) => {
+    set({ loading: true });
     try {
       const { image } = inputs;
 
@@ -38,10 +40,13 @@ const useProductImageStore = create<ProductImageState>((set) => ({
       toast.success("Image added");
     } catch (error) {
       errorHandler(error, "fetchProductImages", true);
+    } finally {
+      set({ loading: false });
     }
   },
 
   removeProductImage: async (productId, imageId) => {
+    set({ loading: true });
     try {
       await productImageService.removeProductImage(productId, imageId);
       toast.success("Image removed");
@@ -50,6 +55,8 @@ const useProductImageStore = create<ProductImageState>((set) => ({
       }));
     } catch (error) {
       errorHandler(error, "fetchProductImages", true);
+    } finally {
+      set({ loading: false });
     }
   },
 }));

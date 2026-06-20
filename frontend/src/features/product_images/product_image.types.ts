@@ -5,6 +5,7 @@ export interface ProductImageState {
   product_images: ProductImage[];
 
   fetchingProductImages: boolean;
+  loading: boolean;
 
   fetchProductImages: (productId: string) => Promise<void>;
   addProductImage: (
