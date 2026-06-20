@@ -21,7 +21,7 @@ const router = express.Router();
 router.use(protectRoute, authorizeRoles("admin", "manager"));
 
 router.get(
-  "/:productId",
+  "/:productId/image",
   validate({
     params: ProductParamsSchema,
   }),
@@ -29,7 +29,7 @@ router.get(
 );
 
 router.post(
-  "/:productId",
+  "/:productId/image",
   multerUpload.single("image"),
   validate({
     body: AddProductImageInputSchema,
