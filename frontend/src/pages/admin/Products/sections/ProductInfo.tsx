@@ -3,7 +3,7 @@ import ProductImages from "../components/ProductImages";
 
 const ProductInfo = () => {
   return (
-    <div className="flex space-x-6">
+    <div className="flex flex-col space-y-6 xl:flex-row lg:space-x-6">
       {/* Product Images */}
       <div className="flex-1">
         <ProductImages />
