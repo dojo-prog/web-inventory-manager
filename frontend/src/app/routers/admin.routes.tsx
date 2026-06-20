@@ -15,6 +15,7 @@ import Brands from "../../pages/admin/Brands/Brands";
 import Categories from "../../pages/admin/Categories/Categories";
 import ActivityLogs from "../../pages/admin/ActivityLogs/ActivityLogs";
 import type { Route } from "../../types/shared.types";
+import ProductDetails from "../../pages/admin/Products/subpage/ProductDetails";
 
 export const adminRoutes: Route[] = [
   {
@@ -29,6 +30,11 @@ export const adminRoutes: Route[] = [
     element: <Products />,
     title: "Products",
     Icon: BoxIcon,
+  },
+  {
+    path: "/admin/products/:productId",
+    element: <ProductDetails />,
+    hideFromSidebar: true,
   },
   {
     path: "/admin/suppliers",
