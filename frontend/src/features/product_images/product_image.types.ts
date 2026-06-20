@@ -11,5 +11,5 @@ export interface ProductImageState {
     productId: string,
     inputs: ProductImageForm,
   ) => Promise<void>;
-  removeProductImage: (imageId: string) => Promise<void>;
+  removeProductImage: (productId: string, imageId: string) => Promise<void>;
 }

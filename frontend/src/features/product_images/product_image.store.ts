@@ -1,14 +1,57 @@
 import { create } from "zustand";
 import type { ProductImageState } from "./product_image.types";
+import errorHandler from "../../utils/errorHandler";
+import * as productImageService from "./product_image.service";
+import { toast } from "react-toastify";
 
 const useProductImageStore = create<ProductImageState>((set) => ({
   product_images: [],
 
   fetchingProductImages: false,
 
-  fetchProductImages: async (productId) => {},
-  addProductImage: async (productId, inputs) => {},
-  removeProductImage: async (imageId) => {},
+  fetchProductImages: async (productId) => {
+    try {
+      const product_images =
+        await productImageService.fetchProductImages(productId);
+
+      set({ product_images });
+    } catch (error) {
+      errorHandler(error, "fetchProductImages", true);
+    }
+  },
+
+  addProductImage: async (productId, inputs) => {
+    try {
+      const { image } = inputs;
+
+      const formData = new FormData();
+      formData.append("image", image);
+
+      const newProductImage = await productImageService.addProductImage(
+        productId,
+        formData,
+      );
+
+      set((state) => ({
+        product_images: [...state.product_images, newProductImage],
+      }));
+      toast.success("Image added");
+    } catch (error) {
+      errorHandler(error, "fetchProductImages", true);
+    }
+  },
+
+  removeProductImage: async (productId, imageId) => {
+    try {
+      await productImageService.removeProductImage(productId, imageId);
+      toast.success("Image removed");
+      set((state) => ({
+        product_images: state.product_images.filter((pi) => pi.id !== imageId),
+      }));
+    } catch (error) {
+      errorHandler(error, "fetchProductImages", true);
+    }
+  },
 }));
 
 export default useProductImageStore;
