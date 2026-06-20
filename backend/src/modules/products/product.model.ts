@@ -71,7 +71,7 @@ export const findById = async (
     `
     ${BASE_PRODUCT_SELECT_QUERY}
     ${BASE_PRODUCT_FROM_QUERY} 
-    WHERE id = $1;
+    WHERE p.id = $1;
     `,
     [productId],
   );
