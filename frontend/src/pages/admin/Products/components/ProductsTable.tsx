@@ -2,11 +2,13 @@ import { PackageIcon } from "lucide-react";
 import useProductStore from "../../../../features/products/product.store";
 import ProductTableLoader from "./ProductTableLoader";
 import ProductTableEmpty from "./ProductTableEmpty";
+import { useNavigate } from "react-router-dom";
 
 const headers = ["product", "brand", "category", "price", "status"];
 
 const ProductsTable = () => {
   const { products, fetchingProducts } = useProductStore();
+  const navigate = useNavigate();
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -32,7 +34,8 @@ const ProductsTable = () => {
           products.map((product) => (
             <tr
               key={product.id}
-              className="group transition-colors duration-200 hover:bg-gray-50/50"
+              className="group transition-colors duration-200 hover:bg-gray-50/50 active:bg-primary/10 cursor-pointer"
+              onClick={() => navigate(`/admin/products/${product.id}`)}
             >
               {/* Column 1: Product Name & Image/Icon */}
               <td className="px-6 py-4">
