@@ -3,6 +3,7 @@ import type { ProductState } from "./product.types";
 import errorHandler from "../../utils/errorHandler";
 import * as productService from "./product.service";
 import { toast } from "react-toastify";
+import useModalStore from "../ui/modals/modal.store";
 
 const useProductStore = create<ProductState>((set) => ({
   products: [],
@@ -72,6 +73,7 @@ const useProductStore = create<ProductState>((set) => ({
         products: [newProduct, ...state.products],
       }));
       toast.success("Product added");
+      useModalStore.getState().closeProductModal();
     } catch (error) {
       errorHandler(error, "fetchProducts", true);
     } finally {
@@ -103,6 +105,7 @@ const useProductStore = create<ProductState>((set) => ({
         ),
       }));
       toast.success("Product updated");
+      useModalStore.getState().closeProductModal();
     } catch (error) {
       errorHandler(error, "fetchProducts", true);
     } finally {
@@ -119,6 +122,7 @@ const useProductStore = create<ProductState>((set) => ({
         products: state.products.filter((p) => p.id !== productId),
       }));
       toast.success("Product removed");
+      useModalStore.getState().closeDeleteConfirmModal();
     } catch (error) {
       errorHandler(error, "fetchProducts", true);
     } finally {
