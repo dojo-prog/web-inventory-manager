@@ -35,13 +35,19 @@ export const ProductWithRelationsSchema = ProductSchema.extend({
 
 // Base Input Shape
 export const ProductInputShape = z.object({
-  brand_id: z.string().uuid({ message: "Invalid brand ID " }),
-  category_id: z.string().uuid({ message: "Invalid category ID" }),
   name: z
     .string()
     .trim()
     .min(1, { message: "Product name is required" })
     .max(100, { message: "Product name cannot exceed 100 characters" }),
+  price: z.coerce
+    .number({ message: "Price must be a number" })
+    .min(0, { message: "Price cannot be negative" })
+    .max(999999, { message: "Price too large" }),
+  brand_id: z.string().uuid({ message: "Invalid brand ID " }),
+  category_id: z.string().uuid({ message: "Invalid category ID" }),
+  gender: GenderSchema.default("unisex"),
+  status: ProductStatusSchema.default("inactive"),
   description: z
     .string()
     .trim()
@@ -49,12 +55,6 @@ export const ProductInputShape = z.object({
     .max(2000, {
       message: "Product description cannot exceed 2000 characters",
     }),
-  price: z.coerce
-    .number({ message: "Price must be a number" })
-    .min(0, { message: "Price cannot be negative" })
-    .max(999999, { message: "Price too large" }),
-  gender: GenderSchema.default("unisex"),
-  status: ProductStatusSchema.default("inactive"),
 
   thumbnail_url: z.string().url().nullable().optional(),
   thumbnail_path: z.string().nullable().optional(),
