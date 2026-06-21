@@ -31,7 +31,7 @@ const ProductModal = () => {
     productModalOpen,
     closeProductModal,
     productModalType,
-    selectedProduct,
+    selectedProduct: sp,
   } = useModalStore();
   const { brands, fetchBrands } = useBrandStore();
   const { categories, fetchCategories } = useCategoryStore();
@@ -81,6 +81,24 @@ const ProductModal = () => {
 
   const [thumbnailPreview, setThumbnailPreview] = useState<string>("");
 
+  useEffect(() => {
+    if (sp) {
+      setFormData({
+        name: sp.name,
+        price: sp.price,
+        brand_id: sp.brand_id,
+        category_id: sp.category_id,
+        description: sp.description,
+        gender: sp.gender,
+        status: sp.status,
+      });
+
+      if (sp.thumbnail_url) {
+        setThumbnailPreview(sp.thumbnail_url);
+      }
+    }
+  }, [sp]);
+
   const handleThumbnailSelection = (e: any) => {
     const file = e.target.files?.[0];
 
@@ -119,8 +137,8 @@ const ProductModal = () => {
     if (productModalType === "create") {
       addProduct(formData as ProductForm);
     } else if (productModalType === "update") {
-      if (!selectedProduct || !selectedProduct.id) return;
-      updateProduct(selectedProduct.id, formData as ProductForm);
+      if (!sp || !sp.id) return;
+      updateProduct(sp.id, formData as ProductForm);
     }
   };
 
