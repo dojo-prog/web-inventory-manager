@@ -53,6 +53,7 @@ export const findAll = async (
     COUNT(*) OVER()::INT AS total_count
     ${BASE_PRODUCT_FROM_QUERY}
     ${whereClause}
+    ORDER BY p.created_at DESC
     ${limitClause} ${offsetClause}
     `,
     values,
