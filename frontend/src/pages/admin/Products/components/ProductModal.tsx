@@ -14,12 +14,11 @@ import CustomButton from "../../../../shared/CustomButton";
 import useProductStore from "../../../../features/products/product.store";
 import UploadImagePreview from "../../../../shared/UploadImagePreview";
 import validateInputs from "../../../../utils/validateInputs";
-import {
-  AddProductInputSchema,
-  type AddProductInput,
-  type UpdateProductInput,
-} from "@web-inventory-manager/shared";
 import { toast } from "react-toastify";
+import {
+  ProductFormSchema,
+  type ProductForm,
+} from "../../../../schemas/product";
 
 const genderButtons = [
   { title: "unisex", value: "unisex" },
@@ -110,7 +109,7 @@ const ProductModal = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    const error = validateInputs(AddProductInputSchema, formData);
+    const error = validateInputs(ProductFormSchema, formData);
 
     if (error) {
       toast.error(error);
@@ -118,10 +117,10 @@ const ProductModal = () => {
     }
 
     if (productModalType === "create") {
-      addProduct(formData as AddProductInput);
+      addProduct(formData as ProductForm);
     } else if (productModalType === "update") {
       if (!selectedProduct || !selectedProduct.id) return;
-      updateProduct(selectedProduct.id, formData as UpdateProductInput);
+      updateProduct(selectedProduct.id, formData as ProductForm);
     }
   };
 
