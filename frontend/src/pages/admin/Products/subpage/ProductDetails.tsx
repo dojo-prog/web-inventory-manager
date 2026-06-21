@@ -3,6 +3,8 @@ import useProductStore from "../../../../features/products/product.store";
 import { useParams } from "react-router-dom";
 import ProductDetailsHeader from "../sections/ProductDetailsHeader";
 import ProductInfo from "../sections/ProductInfo";
+import useModalStore from "../../../../features/ui/modals/modal.store";
+import ProductModal from "../components/ProductModal";
 
 const ProductDetails = () => {
   const {
@@ -10,6 +12,7 @@ const ProductDetails = () => {
     fetchingProduct,
     selectedProduct: sp,
   } = useProductStore();
+  const { productModalOpen } = useModalStore();
 
   const { productId } = useParams<{ productId: string }>();
 
@@ -32,6 +35,8 @@ const ProductDetails = () => {
       <div>
         <ProductInfo />
       </div>
+
+      {productModalOpen && <ProductModal />}
     </div>
   );
 };
