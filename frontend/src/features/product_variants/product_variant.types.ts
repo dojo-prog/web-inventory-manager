@@ -1,7 +1,7 @@
 import type {
   AddProductVariantInput,
   ProductVariant,
-  UpdateProductInput,
+  UpdateProductVariantInput,
 } from "@web-inventory-manager/shared";
 
 export interface ProductVariantState {
@@ -19,7 +19,7 @@ export interface ProductVariantState {
   updateVariant: (
     productId: string,
     variantId: string,
-    inputs: UpdateProductInput,
+    inputs: UpdateProductVariantInput,
   ) => Promise<void>;
   removeVariant: (productId: string, variantId: string) => Promise<void>;
 }
