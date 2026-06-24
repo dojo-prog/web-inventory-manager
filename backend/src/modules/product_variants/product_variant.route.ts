@@ -23,10 +23,10 @@ const router = express.Router();
 
 router.use(protectRoute, authorizeRoles("admin", "manager"));
 
-router.get("/", getAllProductVariants);
+router.get("/:productId/variants", getAllProductVariants);
 
 router.post(
-  "/:productId",
+  "/:productId/variants",
   validate({ params: ProductParamsSchema, body: AddProductVariantInputSchema }),
   addProductVariant,
 );
