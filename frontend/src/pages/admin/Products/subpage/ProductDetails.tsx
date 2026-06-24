@@ -5,6 +5,7 @@ import ProductDetailsHeader from "../sections/ProductDetailsHeader";
 import ProductInfo from "../sections/ProductInfo";
 import useModalStore from "../../../../features/ui/modals/modal.store";
 import ProductModal from "../components/ProductModal";
+import VariantsTableContainer from "../components/VariantsTableContainer";
 
 const ProductDetails = () => {
   const {
@@ -34,6 +35,11 @@ const ProductDetails = () => {
       {/* Info */}
       <div>
         <ProductInfo />
+      </div>
+
+      {/* Variants Table */}
+      <div>
+        <VariantsTableContainer />
       </div>
 
       {productModalOpen && <ProductModal />}
