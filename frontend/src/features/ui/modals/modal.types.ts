@@ -1,6 +1,7 @@
 import type {
   Category,
   DetailedBrand,
+  ProductVariant,
   ProductWithRelations,
   Supplier,
 } from "@web-inventory-manager/shared";
@@ -36,6 +37,13 @@ export interface ModalState {
   selectedProduct: ProductWithRelations | null;
   openProductModal: (type: ModalType, product?: ProductWithRelations) => void;
   closeProductModal: () => void;
+
+  // Product Variant
+  productVariantModalOpen: boolean;
+  productVariantModalType: ModalType;
+  selectedProductVariant: ProductVariant | null;
+  openProductVariantModal: (type: ModalType, variant?: ProductVariant) => void;
+  closeProductVariantModal: () => void;
 
   // Delete Confirmation Modal
   deleteConfirmModalOpen: boolean;
