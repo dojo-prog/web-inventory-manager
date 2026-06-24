@@ -10,7 +10,7 @@ export const ProductVariantSchema = z.object({
   size: z.string(),
   color_name: z.string(),
   color_hex: z.string(),
-  stock_quanitty: z.coerce.number().int(),
+  stock_quantity: z.coerce.number().int(),
 
   created_at: z.string(),
 });
