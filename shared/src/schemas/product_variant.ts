@@ -8,7 +8,8 @@ export const ProductVariantSchema = z.object({
   supplier_id: z.string().uuid(),
 
   size: z.string(),
-  color: z.string(),
+  color_name: z.string(),
+  color_hex: z.string(),
   stock_quanitty: z.coerce.number().int(),
 
   created_at: z.string(),
@@ -23,10 +24,14 @@ const InputShape = z.object({
     .string()
     .min(1, { message: "Size is required" })
     .max(10, { message: "Invalid size" }),
-  color: z
+  color_name: z
     .string()
-    .min(1, { message: "Color is required" })
-    .max(10, { message: "Color text too long" }),
+    .min(1, { message: "Color name is required" })
+    .max(30, { message: "Color name too long" }),
+  color_hex: z
+    .string()
+    .min(1, { message: "Color hex is required" })
+    .max(30, { message: "Invalid color hex" }),
   stock_quantity: z.coerce
     .number()
     .int()
