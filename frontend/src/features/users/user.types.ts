@@ -1,9 +1,5 @@
-import type {
-  AddUserInput,
-  UpdateUserInput,
-  User,
-  UserFilter,
-} from "@web-inventory-manager/shared";
+import type { User, UserFilter } from "@web-inventory-manager/shared";
+import type { AddUserForm, UpdateUserForm } from "../../schemas/user";
 
 export interface UserState {
   users: User[];
@@ -16,7 +12,7 @@ export interface UserState {
   setFilters: (newFilters: Partial<UserFilter>) => void;
 
   fetchUsers: (filters: UserFilter) => Promise<void>;
-  addUser: (inputs: AddUserInput) => Promise<void>;
-  updateUser: (userId: string, inputs: UpdateUserInput) => Promise<void>;
+  addUser: (inputs: AddUserForm) => Promise<void>;
+  updateUser: (userId: string, inputs: UpdateUserForm) => Promise<void>;
   removeUser: (userId: string) => Promise<void>;
 }
