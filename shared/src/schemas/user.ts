@@ -85,16 +85,13 @@ export const UserFilterSchema = z.object({
   q: z.string().optional(),
   role: UserRoleSchema.optional(),
 
-  page: z
-    .string()
-    .optional()
-    .default("1")
-    .transform((v) => Math.max(1, parseInt(v, 10))),
-  limit: z
-    .string()
-    .optional()
-    .default("20")
-    .transform((v) => Math.max(1, parseInt(v, 10))),
+  page: z.coerce.number().int().optional(),
+  limit: z.coerce.number().int().optional(),
+});
+
+export const UserFilterResultSchema = z.object({
+  users: z.array(UserSchema),
+  total_count: z.coerce.number().int(),
 });
 
 // Params Schema
@@ -107,4 +104,5 @@ export type User = z.infer<typeof UserSchema>;
 export type UserRole = z.infer<typeof UserRoleSchema>;
 export type AddUserInput = z.infer<typeof AddUserInputSchema>;
 export type UpdateUserInput = z.infer<typeof UpdateUserInputSchema>;
-export type UserFilter = z.infer<typeof UserFilterSchema>;
+export type UserFilter = z.input<typeof UserFilterSchema>;
+export type UserFilterResult = z.infer<typeof UserFilterResultSchema>;
