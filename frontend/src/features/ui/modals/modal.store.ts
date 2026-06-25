@@ -78,7 +78,7 @@ const useModalStore = create<ModalState>((set) => ({
     set({ productVariantModalType: type, productVariantModalOpen: true });
   },
   closeProductVariantModal: () => {
-    set({ selectedProductVariant: null, productModalOpen: false });
+    set({ selectedProductVariant: null, productVariantModalOpen: false });
   },
 
   // Delete Confirmation
