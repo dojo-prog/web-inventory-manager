@@ -32,7 +32,8 @@ export const findLowStock = async (): Promise<LowStockProduct[]> => {
     SELECT 
       pv.id, 
       pv.size,
-      pv.color,
+      pv.color_name,
+      pv.color_hex,
       pv.stock_quantity,
 
       b.id AS brand_id,
