@@ -18,7 +18,7 @@ export const UserSchema = z.object({
   created_at: z.string(),
 });
 
-const AddUserInputShape = LoginInputSchema.extend({
+export const AddUserInputShape = LoginInputSchema.extend({
   fname: z
     .string()
     .min(1, { message: "First name is required" })
@@ -47,7 +47,7 @@ const AddUserInputShape = LoginInputSchema.extend({
   avatar: MulterFileSchema.optional(),
 });
 
-const UpdateUserInputShape = z.object({
+export const UpdateUserInputShape = z.object({
   fname: z
     .string()
     .min(1, { message: "First name is required" })
