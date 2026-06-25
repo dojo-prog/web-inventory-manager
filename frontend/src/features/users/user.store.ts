@@ -20,7 +20,7 @@ const useUserStore = create<UserState>((set) => ({
 
   setFilters: (newFilters) =>
     set((state) => ({
-      filters: { ...state.filters, newFilters },
+      filters: { ...state.filters, ...newFilters },
     })),
 
   fetchUsers: async (filters) => {
