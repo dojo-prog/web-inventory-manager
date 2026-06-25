@@ -3,7 +3,8 @@ import useProductVariantStore from "../../../../features/product_variants/produc
 import VariantsTableLoader from "./VariantsTableLoader";
 import VariantsTableEmpty from "./VariantsTableEmpty";
 import useModalStore from "../../../../features/ui/modals/modal.store";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 const headers = ["Variant ID", "Color", "Size", "Stock", "Actions"];
 
@@ -13,6 +14,21 @@ const VariantsTable = () => {
   const { openProductVariantModal } = useModalStore();
 
   const { productId } = useParams<{ productId: string }>();
+  const [searchParams] = useSearchParams();
+  const highlightId = searchParams.get("highlight");
+
+  const rowRefs = useRef<{ [key: string]: HTMLTableRowElement | null }>({});
+
+  useEffect(() => {
+    if (highlightId && rowRefs.current[highlightId] && !fetchingVariants) {
+      setTimeout(() => {
+        rowRefs.current[highlightId]?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 300);
+    }
+  }, [highlightId, fetchingVariants]);
 
   if (!productId) return null;
 
@@ -39,93 +55,116 @@ const VariantsTable = () => {
         ) : productVariants.length === 0 ? (
           <VariantsTableEmpty />
         ) : (
-          productVariants.map((variant) => (
-            <tr
-              key={variant.id}
-              className="group transition-colors duration-200 hover:bg-gray-50/50 cursor-pointer"
-              onClick={() => console.log("Clicked variant row:", variant.id)}
-            >
-              {/* Column 1: Variant ID */}
-              <td className="px-6 py-4">
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-primary/10 flex items-center justify-center rounded">
-                    <LayersIcon size={16} className="text-primary" />
+          productVariants.map((variant) => {
+            const isHighlighted = variant.id === highlightId;
+
+            return (
+              <tr
+                key={variant.id}
+                ref={(el) => {
+                  rowRefs.current[variant.id] = el;
+                }}
+                className={`group transition-all cursor-pointer ${
+                  isHighlighted
+                    ? "bg-blue-50/80 [animation:flash_2s_ease-out_forwards]"
+                    : "hover:bg-gray-50/50"
+                }`}
+                onClick={() => console.log("Clicked variant row:", variant.id)}
+              >
+                {/* Column 1: Variant ID */}
+                <td className="px-6 py-4">
+                  <div className="flex items-center space-x-4">
+                    <div
+                      className={`w-10 h-10 flex items-center justify-center rounded transition-colors duration-1000 ${
+                        isHighlighted
+                          ? "bg-blue-100 text-blue-600 [animation:flash_icon_2s_ease-out_forwards]"
+                          : "bg-primary/10 text-primary"
+                      }`}
+                    >
+                      <LayersIcon size={16} />
+                    </div>
+                    <span
+                      className={`font-mono text-xs max-w-[120px] truncate transition-colors duration-1000 ${
+                        isHighlighted
+                          ? "text-blue-700 font-medium [animation:flash_text_2s_ease-out_forwards]"
+                          : "text-gray-500 group-hover:text-blue-600"
+                      }`}
+                    >
+                      {variant.id}
+                    </span>
                   </div>
-                  <span className="font-mono text-xs text-gray-500 max-w-[120px] truncate group-hover:text-blue-600 transition-colors">
-                    {variant.id}
+                </td>
+
+                {/* Column 2: Color */}
+                <td className="px-6 py-4">
+                  <div className="flex items-center space-x-2.5">
+                    <div
+                      className="w-5 h-5 rounded-full border border-gray-200 shadow-sm shrink-0"
+                      style={{ backgroundColor: variant.color_hex }}
+                      title={variant.color_hex}
+                    />
+                    <span className="text-sm font-medium text-gray-900">
+                      {variant.color_name}
+                    </span>
+                  </div>
+                </td>
+
+                {/* Column 3: Size */}
+                <td className="px-6 py-4">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded bg-gray-100 text-gray-800 text-xs font-semibold uppercase tracking-wider">
+                    {variant.size}
                   </span>
-                </div>
-              </td>
+                </td>
 
-              {/* Column 2: Color */}
-              <td className="px-6 py-4">
-                <div className="flex items-center space-x-2.5">
-                  <div
-                    className="w-5 h-5 rounded-full border border-gray-200 shadow-sm shrink-0"
-                    style={{ backgroundColor: variant.color_hex }}
-                    title={variant.color_hex}
-                  />
-                  <span className="text-sm font-medium text-gray-900">
-                    {variant.color_name}
-                  </span>
-                </div>
-              </td>
-
-              {/* Column 3: Size */}
-              <td className="px-6 py-4">
-                <span className="inline-flex items-center px-2.5 py-1 rounded bg-gray-100 text-gray-800 text-xs font-semibold uppercase tracking-wider">
-                  {variant.size}
-                </span>
-              </td>
-
-              {/* Column 4: Stock Quantity with Dynamic Badge Colors */}
-              <td className="px-6 py-4">
-                <span
-                  className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide ${
-                    variant.stock_quantity > 10
-                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                      : variant.stock_quantity > 0
-                        ? "bg-amber-50 text-amber-700 border border-amber-200"
-                        : "bg-rose-50 text-rose-700 border border-rose-200"
-                  }`}
-                >
+                {/* Column 4: Stock Quantity */}
+                <td className="px-6 py-4">
                   <span
-                    className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
+                    className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide ${
                       variant.stock_quantity > 10
-                        ? "bg-emerald-500"
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                         : variant.stock_quantity > 0
-                          ? "bg-amber-500"
-                          : "bg-rose-500"
+                          ? "bg-amber-50 text-amber-700 border border-amber-200"
+                          : "bg-rose-50 text-rose-700 border border-rose-200"
                     }`}
-                  />
-                  {variant.stock_quantity} available
-                </span>
-              </td>
+                  >
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
+                        variant.stock_quantity > 10
+                          ? "bg-emerald-500"
+                          : variant.stock_quantity > 0
+                            ? "bg-amber-500"
+                            : "bg-rose-500"
+                      }`}
+                    />
+                    {variant.stock_quantity} available
+                  </span>
+                </td>
 
-              {/* Column 5: Actions */}
-              <td className="px-6 py-4 text-right">
-                <div
-                  className="flex items-center justify-end space-x-2"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <button
-                    onClick={() => openProductVariantModal("update", variant)}
-                    className="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-gray-100 transition-colors"
-                    title="Edit Variant"
+                {/* Column 5: Actions */}
+                <td className="px-6 py-4 text-right">
+                  <div
+                    className="flex items-center justify-end space-x-2"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    <Edit3Icon size={16} />
-                  </button>
-                  <button
-                    onClick={() => removeVariant(productId, variant.id)}
-                    className="p-1.5 text-gray-400 hover:text-rose-600 rounded hover:bg-gray-100 transition-colors"
-                    title="Delete Variant"
-                  >
-                    <Trash2Icon size={16} />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))
+                    <button
+                      onClick={() => openProductVariantModal("update", variant)}
+                      className="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-gray-100 transition-colors"
+                      title="Edit Variant"
+                    >
+                      <Edit3Icon size={16} />
+                    </button>
+                    <button
+                      onClick={() => removeVariant(productId, variant.id)}
+                      className="p-1.5 text-gray-400 hover:text-rose-600 rounded hover:bg-gray-100 transition-colors"
+                      title="Delete Variant"
+                    >
+                      <Trash2Icon size={16} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })
         )}
       </tbody>
     </table>

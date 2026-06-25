@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import useDashboardStore from "../../../../features/dashboard/dashboard.store";
 import LowStockTableEmpty from "./LowStockTableEmpty";
 import LowStockTableLoader from "./LowStockTableLoader";
+import { useNavigate } from "react-router-dom";
 
 const headers = ["product", "brand", "category", "current stock", "status"];
 
@@ -30,6 +31,12 @@ const LowStockTable = () => {
       };
     });
   }, [lowStockProducts]);
+
+  const navigate = useNavigate();
+
+  const handleRowClick = (productId: string, variantId: string) => {
+    navigate(`/admin/products/${productId}?highlight=${variantId}`);
+  };
 
   return (
     <div className="h-full flex flex-col overflow-hidden rounded-md border border-border bg-surface shadow-sm">
@@ -66,6 +73,7 @@ const LowStockTable = () => {
                 <tr
                   key={item.id}
                   className="group transition-colors duration-200 hover:bg-gray-50/50"
+                  onClick={() => handleRowClick(item.product_id, item.id)}
                 >
                   {/* Product Details */}
                   <td className="px-6 py-4">
