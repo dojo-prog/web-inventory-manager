@@ -34,6 +34,7 @@ const useProductVariantStore = create<ProductVariantState>((set) => ({
         productVariants: [newVariant, ...state.productVariants],
       }));
       toast.success("New variant added");
+      useModalStore.getState().closeProductVariantModal();
     } catch (error) {
       errorHandler(error, "fetchVariants", true);
     } finally {
@@ -56,6 +57,7 @@ const useProductVariantStore = create<ProductVariantState>((set) => ({
         ),
       }));
       toast.success("Variant updated");
+      useModalStore.getState().closeProductVariantModal();
     } catch (error) {
       errorHandler(error, "fetchVariants", true);
     } finally {
