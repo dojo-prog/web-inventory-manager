@@ -2,11 +2,19 @@ import { LayersIcon, Trash2Icon, Edit3Icon } from "lucide-react";
 import useProductVariantStore from "../../../../features/product_variants/product_variant.store";
 import VariantsTableLoader from "./VariantsTableLoader";
 import VariantsTableEmpty from "./VariantsTableEmpty";
+import useModalStore from "../../../../features/ui/modals/modal.store";
+import { useParams } from "react-router-dom";
 
 const headers = ["Variant ID", "Color", "Size", "Stock", "Actions"];
 
 const VariantsTable = () => {
-  const { productVariants, fetchingVariants } = useProductVariantStore();
+  const { productVariants, fetchingVariants, removeVariant } =
+    useProductVariantStore();
+  const { openProductVariantModal } = useModalStore();
+
+  const { productId } = useParams<{ productId: string }>();
+
+  if (!productId) return null;
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -101,14 +109,14 @@ const VariantsTable = () => {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
-                    onClick={() => console.log("Edit click:", variant.id)}
+                    onClick={() => openProductVariantModal("update", variant)}
                     className="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-gray-100 transition-colors"
                     title="Edit Variant"
                   >
                     <Edit3Icon size={16} />
                   </button>
                   <button
-                    onClick={() => console.log("Delete click:", variant.id)}
+                    onClick={() => removeVariant(productId, variant.id)}
                     className="p-1.5 text-gray-400 hover:text-rose-600 rounded hover:bg-gray-100 transition-colors"
                     title="Delete Variant"
                   >
