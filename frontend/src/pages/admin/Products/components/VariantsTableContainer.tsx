@@ -1,8 +1,11 @@
 import { PlusIcon } from "lucide-react";
 import CustomButton from "../../../../shared/CustomButton";
 import VariantsTable from "./VariantsTable";
+import useModalStore from "../../../../features/ui/modals/modal.store";
 
 const VariantsTableContainer = () => {
+  const { openProductVariantModal } = useModalStore();
+
   return (
     <div className="h-full flex flex-col overflow-hidden rounded-md border border-border bg-surface shadow-sm">
       {/* Header */}
@@ -15,6 +18,7 @@ const VariantsTableContainer = () => {
           title="ADD VARIANT"
           Icon={PlusIcon}
           buttonStyles="text-white text-sm font-headline border-sm bg-primary hover:bg-primary-hover"
+          onClick={() => openProductVariantModal("create")}
         />
       </div>
 
