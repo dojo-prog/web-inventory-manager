@@ -5,7 +5,6 @@ import {
   LayoutDashboardIcon,
   ShapesIcon,
   TagIcon,
-  Users,
   UsersRound,
 } from "lucide-react";
 import Dashboard from "../../pages/admin/Dashboard/Dashboard";
@@ -16,6 +15,7 @@ import Categories from "../../pages/admin/Categories/Categories";
 import ActivityLogs from "../../pages/admin/ActivityLogs/ActivityLogs";
 import type { Route } from "../../types/shared.types";
 import ProductDetails from "../../pages/admin/Products/subpage/ProductDetails";
+import Users from "../../pages/admin/Users/Users";
 
 export const adminRoutes: Route[] = [
   {
