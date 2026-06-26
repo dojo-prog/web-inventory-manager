@@ -40,6 +40,7 @@ export const findById = async (userId: string): Promise<User> => {
   const result = await db.query(
     `
     SELECT ${userSelectProjection}
+    FROM users
     WHERE id = $1
     `,
     [userId],
@@ -77,8 +78,9 @@ export const update = async (
     UPDATE users 
     SET ${setClause}
     WHERE id = $${values.length}
+    RETURNING ${userSelectProjection};
     `,
-    [values],
+    values,
   );
 
   return result.rows[0];
