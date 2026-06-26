@@ -3,6 +3,7 @@ import {
   UpdateUserInput,
   User,
   UserFilter,
+  UserFilterResult,
 } from "@web-inventory-manager/shared";
 import * as userModel from "./user.model";
 import * as authModel from "../auth/auth.model";
@@ -12,7 +13,9 @@ import uploadImage from "../../storage/handlers/uploadImage";
 import deleteImage from "../../storage/handlers/deleteImage";
 import generateChanges from "../../utils/generateChanges";
 
-export const getUsers = async (filters: UserFilter): Promise<User[]> => {
+export const getUsers = async (
+  filters: UserFilter,
+): Promise<UserFilterResult> => {
   return await userModel.findAll(filters);
 };
 

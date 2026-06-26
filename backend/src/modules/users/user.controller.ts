@@ -8,9 +8,9 @@ import AppError from "../../utils/AppError";
 
 export const getUsers: Controller = async (req, res, next) => {
   try {
-    const users = await userService.getUsers(req.query);
+    const { users, total_count } = await userService.getUsers(req.query);
 
-    res.status(200).json({ success: true, users });
+    res.status(200).json({ success: true, users, total_count });
   } catch (error) {
     next(error);
   }

@@ -1,4 +1,9 @@
-import { AddUserInput, User, UserFilter } from "@web-inventory-manager/shared";
+import {
+  AddUserInput,
+  User,
+  UserFilter,
+  UserFilterResult,
+} from "@web-inventory-manager/shared";
 import { keyof } from "zod";
 import db from "../../database/db";
 import { userSelectProjection } from "../../constants/auth.constants";
@@ -6,7 +11,9 @@ import buildFilterClause from "../../utils/buildFilterClause";
 import buildInsertFields from "../../utils/buildInsertFields";
 import buildUpdateFields from "../../utils/buildUpdateFields";
 
-export const findAll = async (filters: UserFilter): Promise<User[]> => {
+export const findAll = async (
+  filters: UserFilter,
+): Promise<UserFilterResult> => {
   const { whereClause, values, limitClause, offsetClause } = buildFilterClause(
     filters,
     ["fname", "lname", "email", "id::text"],
@@ -14,7 +21,8 @@ export const findAll = async (filters: UserFilter): Promise<User[]> => {
 
   const result = await db.query(
     `
-    SELECT ${userSelectProjection}
+    SELECT ${userSelectProjection},
+      COUNT(*) OVER()::INT AS total_count
     FROM users 
     ${whereClause}
     ${limitClause} ${offsetClause}
@@ -22,7 +30,10 @@ export const findAll = async (filters: UserFilter): Promise<User[]> => {
     values,
   );
 
-  return result.rows;
+  const total_count = result.rows.length > 0 ? result.rows[0].total_count : 0;
+  const users = result.rows.map(({ total_count, ...user }) => user);
+
+  return { users, total_count };
 };
 
 export const findById = async (userId: string): Promise<User> => {
