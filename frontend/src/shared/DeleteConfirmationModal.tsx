@@ -5,6 +5,7 @@ import CustomButton from "./CustomButton";
 import useBrandStore from "../features/brands/brand.store";
 import useCategoryStore from "../features/categories/category.store";
 import useProductStore from "../features/products/product.store";
+import useUserStore from "../features/users/user.store";
 
 const DeleteConfirmationModal = () => {
   const {
@@ -16,6 +17,7 @@ const DeleteConfirmationModal = () => {
   const { removeBrand, loading: brandLoading } = useBrandStore();
   const { removeCategory, loading: categoryLoading } = useCategoryStore();
   const { removeProduct, loading: productLoading } = useProductStore();
+  const { removeUser, loading: userLoading } = useUserStore();
 
   const entityMap: Record<
     string,
@@ -32,6 +34,10 @@ const DeleteConfirmationModal = () => {
     product: {
       handler: removeProduct,
       loading: productLoading,
+    },
+    user: {
+      handler: removeUser,
+      loading: userLoading,
     },
   };
 
@@ -59,7 +65,12 @@ const DeleteConfirmationModal = () => {
 
         <h2 className="text-xl font-headline font-bold capitalize">
           Delete {entity}{" "}
-          <span className="text-red-500">{selectedEntity.name || ""}</span>?
+          <span className="text-red-500">
+            {selectedEntity.name ||
+              selectedEntity.fname + " " + selectedEntity.lname ||
+              ""}
+          </span>
+          ?
         </h2>
 
         <p className="font-label text-sm text-secondary">
