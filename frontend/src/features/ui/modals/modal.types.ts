@@ -4,6 +4,7 @@ import type {
   ProductVariant,
   ProductWithRelations,
   Supplier,
+  User,
 } from "@web-inventory-manager/shared";
 
 export type ModalType = "create" | "update";
@@ -44,6 +45,13 @@ export interface ModalState {
   selectedProductVariant: ProductVariant | null;
   openProductVariantModal: (type: ModalType, variant?: ProductVariant) => void;
   closeProductVariantModal: () => void;
+
+  // Users
+  userModalOpen: boolean;
+  userModalType: ModalType;
+  selectedUser: User | null;
+  openUserModal: (type: ModalType, user?: User) => void;
+  closeUserModal: () => void;
 
   // Delete Confirmation Modal
   deleteConfirmModalOpen: boolean;

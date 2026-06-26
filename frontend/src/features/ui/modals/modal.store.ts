@@ -81,6 +81,21 @@ const useModalStore = create<ModalState>((set) => ({
     set({ selectedProductVariant: null, productVariantModalOpen: false });
   },
 
+  // Users
+  userModalOpen: false,
+  userModalType: "create" as ModalType,
+  selectedUser: null,
+  openUserModal: (type, user) => {
+    if (user) {
+      set({ selectedUser: user });
+    }
+
+    set({ userModalType: type, userModalOpen: true });
+  },
+  closeUserModal: () => {
+    set({ selectedUser: null, userModalOpen: false });
+  },
+
   // Delete Confirmation
   deleteConfirmModalOpen: false,
   entity: undefined,
