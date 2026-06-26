@@ -3,6 +3,7 @@ import type { UserState } from "./user.types";
 import * as userService from "./user.service";
 import errorHandler from "../../utils/errorHandler";
 import { toast } from "react-toastify";
+import useModalStore from "../ui/modals/modal.store";
 
 const useUserStore = create<UserState>((set) => ({
   users: [],
@@ -55,6 +56,7 @@ const useUserStore = create<UserState>((set) => ({
         users: [newUser, ...state.users],
       }));
       toast.success("New user added");
+      useModalStore.getState().closeUserModal();
     } catch (error) {
       errorHandler(error, "fetchUsers", true);
     } finally {
@@ -81,6 +83,7 @@ const useUserStore = create<UserState>((set) => ({
         users: state.users.map((u) => (u.id === userId ? updatedUser : u)),
       }));
       toast.success("User information updated");
+      useModalStore.getState().closeUserModal();
     } catch (error) {
       errorHandler(error, "fetchUsers", true);
     } finally {
@@ -93,7 +96,11 @@ const useUserStore = create<UserState>((set) => ({
     try {
       await userService.removeUser(userId);
 
+      set((state) => ({
+        users: state.users.filter((u) => u.id !== userId),
+      }));
       toast.success("User removed");
+      useModalStore.getState().closeDeleteConfirmModal();
     } catch (error) {
       errorHandler(error, "fetchUsers", true);
     } finally {
