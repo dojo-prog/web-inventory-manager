@@ -3,6 +3,7 @@ import type { ChangeEvent } from "react";
 
 type Props = {
   label: string;
+  imageName?: string;
   id: string;
   name: string;
   fileChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -11,6 +12,7 @@ type Props = {
 
 const ImageUploadZone = ({
   label,
+  imageName = "image",
   id,
   name,
   fileChange,
@@ -41,7 +43,7 @@ const ImageUploadZone = ({
           <UploadCloudIcon className="h-full w-full text-primary" />
         </div>
         <p className="text-primary text-sm font-label">
-          Click to upload product thumbnail
+          Click to upload {imageName}
         </p>
         <p className="text-secondary text-xs font-body">
           PNG or JPG (max: 800x400px)
