@@ -2,11 +2,13 @@ import { UserIcon, Edit3Icon, Trash2Icon } from "lucide-react";
 import useUserStore from "../../../../features/users/user.store";
 import UserTableLoader from "./UserTableLoader";
 import UserTableEmpty from "./UserTableEmpty";
+import useAuthStore from "../../../../features/auth/auth.store";
 
 const headers = ["user profile", "email address", "role", "actions"];
 
 const UserTable = () => {
   const { users, fetchingUsers } = useUserStore();
+  const { user: currentUser } = useAuthStore();
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -31,20 +33,20 @@ const UserTable = () => {
         ) : users.length === 0 ? (
           <UserTableEmpty />
         ) : (
-          users.map((user) => (
+          users.map((u) => (
             <tr
-              key={user.id}
+              key={u.id}
               className="group transition-colors duration-200 hover:bg-gray-50/50 cursor-pointer"
-              onClick={() => console.log("Static row clicked:", user.id)}
+              onClick={() => console.log("Static row clicked:", u.id)}
             >
               {/* Column 1: User Profile (Avatar & Full Name) */}
               <td className="px-6 py-4">
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 bg-primary/10 flex items-center justify-center rounded-full shrink-0 overflow-hidden border border-gray-100">
-                    {user.avatar_url ? (
+                    {u.avatar_url ? (
                       <img
-                        src={user.avatar_url}
-                        alt={`${user.fname} ${user.lname}`}
+                        src={u.avatar_url}
+                        alt={`${u.fname} ${u.lname}`}
                         className="w-full h-full object-cover"
                       />
                     ) : (
@@ -53,10 +55,10 @@ const UserTable = () => {
                   </div>
                   <div className="flex flex-col truncate">
                     <span className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
-                      {user.fname} {user.lname}
+                      {u.fname} {u.lname}
                     </span>
                     <span className="text-[11px] font-mono text-gray-400 truncate">
-                      ID: {user.id}
+                      ID: {u.id}
                     </span>
                   </div>
                 </div>
@@ -65,7 +67,7 @@ const UserTable = () => {
               {/* Column 2: Email Address */}
               <td className="px-6 py-4">
                 <span className="text-sm text-gray-600 font-medium">
-                  {user.email}
+                  {u.email}
                 </span>
               </td>
 
@@ -73,17 +75,17 @@ const UserTable = () => {
               <td className="px-6 py-4">
                 <span
                   className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide capitalize ${
-                    user.role === "admin"
+                    u.role === "admin"
                       ? "bg-blue-50 text-blue-700 border border-blue-200"
                       : "bg-gray-50 text-gray-700 border border-gray-200"
                   }`}
                 >
                   <span
                     className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                      user.role === "admin" ? "bg-blue-500" : "bg-gray-400"
+                      u.role === "admin" ? "bg-blue-500" : "bg-gray-400"
                     }`}
                   />
-                  {user.role}
+                  {u.role}
                 </span>
               </td>
 
@@ -95,22 +97,24 @@ const UserTable = () => {
                 >
                   <button
                     onClick={() =>
-                      console.log("Mock edit context active for:", user.id)
+                      console.log("Mock edit context active for:", u.id)
                     }
                     className="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-gray-100 transition-colors"
                     title="Edit User"
                   >
                     <Edit3Icon size={16} />
                   </button>
-                  <button
-                    onClick={() =>
-                      console.log("Mock delete triggered for:", user.id)
-                    }
-                    className="p-1.5 text-gray-400 hover:text-rose-600 rounded hover:bg-gray-100 transition-colors"
-                    title="Delete User"
-                  >
-                    <Trash2Icon size={16} />
-                  </button>
+                  {u.id !== currentUser?.id && (
+                    <button
+                      onClick={() =>
+                        console.log("Mock delete triggered for:", u.id)
+                      }
+                      className="p-1.5 text-gray-400 hover:text-rose-600 rounded hover:bg-gray-100 transition-colors"
+                      title="Delete User"
+                    >
+                      <Trash2Icon size={16} />
+                    </button>
+                  )}
                 </div>
               </td>
             </tr>
