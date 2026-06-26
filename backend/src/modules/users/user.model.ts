@@ -88,10 +88,13 @@ export const update = async (
 };
 
 export const remove = async (userId: string): Promise<User> => {
+  console.log(userId);
+
   const result = await db.query(
     `
     DELETE FROM users
-    WHERE id = $1;
+    WHERE id = $1
+    RETURNING ${userSelectProjection};
     `,
     [userId],
   );
