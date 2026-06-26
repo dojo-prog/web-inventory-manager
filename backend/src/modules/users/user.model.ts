@@ -49,7 +49,7 @@ export const findById = async (userId: string): Promise<User> => {
 };
 
 export const create = async (
-  inputs: AddUserInput & { hash_password: string },
+  inputs: Partial<AddUserInput> & { hash_password: string },
 ): Promise<User> => {
   const { keysStr, placeholders, values } = buildInsertFields(inputs);
 
