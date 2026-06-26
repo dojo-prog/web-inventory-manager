@@ -57,9 +57,9 @@ export const removeUser: Controller = async (req, res, next) => {
   try {
     const userId = req.params.userId as string;
 
-    const removedUser = await userService.removeUser(req.body);
+    const removedUser = await userService.removeUser(userId);
 
-    res.status(200).json({ success: true, removeUser });
+    res.status(200).json({ success: true, removedUser });
   } catch (error) {
     next(error);
   }
