@@ -3,12 +3,14 @@ import useUserStore from "../../../../features/users/user.store";
 import UserTableLoader from "./UserTableLoader";
 import UserTableEmpty from "./UserTableEmpty";
 import useAuthStore from "../../../../features/auth/auth.store";
+import useModalStore from "../../../../features/ui/modals/modal.store";
 
 const headers = ["user profile", "email address", "role", "actions"];
 
 const UserTable = () => {
   const { users, fetchingUsers } = useUserStore();
   const { user: currentUser } = useAuthStore();
+  const { openUserModal } = useModalStore();
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -96,9 +98,7 @@ const UserTable = () => {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
-                    onClick={() =>
-                      console.log("Mock edit context active for:", u.id)
-                    }
+                    onClick={() => openUserModal("update", u)}
                     className="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-gray-100 transition-colors"
                     title="Edit User"
                   >
