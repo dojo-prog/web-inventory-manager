@@ -45,8 +45,10 @@ export const addUser = async (
   // Password hash
   const hash_password = await generateHash(password);
 
+  const { password: p, confirm_password, ...clean } = inputs;
+
   let payload = {
-    ...inputs,
+    ...clean,
     hash_password,
   };
 
