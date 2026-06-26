@@ -10,7 +10,7 @@ const headers = ["user profile", "email address", "role", "actions"];
 const UserTable = () => {
   const { users, fetchingUsers } = useUserStore();
   const { user: currentUser } = useAuthStore();
-  const { openUserModal } = useModalStore();
+  const { openUserModal, openDeleteConfirmModal } = useModalStore();
 
   return (
     <table className="w-full min-w-200 border-collapse text-left align-middle">
@@ -106,9 +106,7 @@ const UserTable = () => {
                   </button>
                   {u.id !== currentUser?.id && (
                     <button
-                      onClick={() =>
-                        console.log("Mock delete triggered for:", u.id)
-                      }
+                      onClick={() => openDeleteConfirmModal("user", u)}
                       className="p-1.5 text-gray-400 hover:text-rose-600 rounded hover:bg-gray-100 transition-colors"
                       title="Delete User"
                     >
