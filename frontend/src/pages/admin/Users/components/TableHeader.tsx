@@ -1,0 +1,74 @@
+import { useEffect } from "react";
+import useUserStore from "../../../../features/users/user.store";
+import useDebounce from "../../../../hooks/useDebounce";
+import PageControl from "../../../../shared/PageControl";
+import Searchbar from "../../../../shared/Searchbar";
+import getPaginationRange from "../../../../utils/getPaginationRange";
+
+const TableHeader = () => {
+  const { filters, setFilters, total_count, fetchUsers } = useUserStore();
+  const { q, page, limit } = filters;
+
+  const { from, to } = getPaginationRange(
+    total_count,
+    page as number,
+    limit as number,
+  );
+
+  const handleSearchChange = (e: any) => {
+    setFilters({ q: e.target.value });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setFilters({ page: newPage });
+  };
+
+  const debouncedQ = useDebounce(q, 400);
+
+  useEffect(() => {
+    setFilters({ page: 1 });
+
+    fetchUsers({ q: debouncedQ });
+  }, [debouncedQ]);
+
+  return (
+    <div className="border-b border-border p-5 shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-surface">
+      {/* Title block */}
+      <div className="space-y-1">
+        <h2 className="text-base font-bold font-headline tracking-wide text-text uppercase">
+          User Staff Directory
+        </h2>
+
+        {/* Row Indicator */}
+        <p className="text-xs font-medium font-body text-text-muted">
+          Showing{" "}
+          <span className="font-semibold text-text">
+            {total_count === 0 ? 0 : from}-{to}
+          </span>{" "}
+          of <span className="font-semibold text-text">{total_count}</span>{" "}
+          entries
+        </p>
+      </div>
+
+      {/* Control Actions Panel */}
+      <div className="flex flex-wrap items-center gap-4">
+        <Searchbar
+          placeholder="Search by ID, name, or email address..."
+          id="q"
+          name="q"
+          value={q || ""}
+          onChange={handleSearchChange}
+        />
+
+        <PageControl
+          page={page as number}
+          limit={limit as number}
+          totalCount={total_count}
+          onPageChange={handlePageChange}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default TableHeader;

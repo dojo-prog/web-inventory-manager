@@ -1,3 +1,6 @@
+import { PlusIcon } from "lucide-react";
+import CustomButton from "../../../../shared/CustomButton";
+
 const Header = () => {
   return (
     <div className="flex items-center justify-between">
@@ -10,6 +13,14 @@ const Header = () => {
           logistics staff.
         </p>
       </div>
+
+      <CustomButton
+        title="ADD STAFF USER"
+        Icon={PlusIcon}
+        buttonStyles="h-12 rounded-sm px-6 bg-primary hover:bg-primary-hover"
+        titleStyles="text-white text-sm font-body"
+        // onClick={() => openProductVariantModal("create")}
+      />
     </div>
   );
 };
