@@ -5,6 +5,7 @@ import Signin from "../../pages/admin/Auth/Signin";
 import NotFound from "../../pages/NotFound";
 import useAuthStore from "../../features/auth/auth.store";
 import PageLoader from "../../shared/PageLoader";
+import { ProtectedRoute } from "../ProtectedRoute";
 
 const AppRouter = () => {
   const { user, checkingAuth } = useAuthStore();
@@ -18,14 +19,21 @@ const AppRouter = () => {
         {/* Admin Main */}
         <Route
           path="/admin"
-          element={user ? <AdminLayout /> : <Navigate to={"/admin/auth"} />}
+          element={
+            user ? <AdminLayout /> : <Navigate to={"/admin/auth"} replace />
+          }
         >
           {adminRoutes.map((r, i) => (
             <Route
               key={r.path ?? `index-${i}`}
               index={r.index}
               path={r.path}
-              element={r.element}
+              element={
+                <ProtectedRoute
+                  element={r.element}
+                  permissionKey={r.permissionKey}
+                />
+              }
             />
           ))}
         </Route>

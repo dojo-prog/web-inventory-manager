@@ -19,6 +19,7 @@ export interface Route {
   element: JSX.Element;
   Icon?: LucideIcon;
   hideFromSidebar?: boolean;
+  permissionKey?: Tab;
 }
 
 export interface Pagination {
