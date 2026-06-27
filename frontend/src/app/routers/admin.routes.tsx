@@ -12,10 +12,11 @@ import Products from "../../pages/admin/Products/Products";
 import Suppliers from "../../pages/admin/Suppliers/Suppliers";
 import Brands from "../../pages/admin/Brands/Brands";
 import Categories from "../../pages/admin/Categories/Categories";
-import ActivityLogs from "../../pages/admin/ActivityLogs/ActivityLogs";
+// import ActivityLogs from "../../pages/admin/ActivityLogs/ActivityLogs";
 import type { Route } from "../../types/shared.types";
 import ProductDetails from "../../pages/admin/Products/subpage/ProductDetails";
 import Users from "../../pages/admin/Users/Users";
+import UnderDevelopment from "../../pages/UnderDevelopment";
 
 export const adminRoutes: Route[] = [
   {
@@ -69,7 +70,8 @@ export const adminRoutes: Route[] = [
   },
   {
     path: "/admin/activity-logs",
-    element: <ActivityLogs />,
+    element: <UnderDevelopment />,
+    // element: <ActivityLogs />,
     title: "Activity Logs",
     Icon: HistoryIcon,
     permissionKey: "activity logs",
