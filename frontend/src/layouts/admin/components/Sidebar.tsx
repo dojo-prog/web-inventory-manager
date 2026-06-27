@@ -4,10 +4,10 @@ import SidebarTab from "./SidebarTab";
 import useAuthStore from "../../../features/auth/auth.store";
 
 const Sidebar = () => {
-  const { logout } = useAuthStore();
+  const { allowedTabs, logout } = useAuthStore();
 
   return (
-    <div className="h-screen w-full p-6 flex flex-col">
+    <div className="h-screen w-full p-6 flex flex-col bg-background border-r border-border">
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-headline font-bold text-primary">
@@ -18,13 +18,24 @@ const Sidebar = () => {
 
       {/* Tabs */}
       <div className="flex-1 w-full space-y-2">
-        {adminRoutes.map(
-          (r) => !r.hideFromSidebar && <SidebarTab key={r.path} item={r} />,
-        )}
+        {allowedTabs &&
+          adminRoutes.map((r) => {
+            if (r.hideFromSidebar) return null;
+
+            if (!r.permissionKey) {
+              return <SidebarTab key={r.path ?? "index"} item={r} />;
+            }
+
+            if (allowedTabs[r.permissionKey]) {
+              return <SidebarTab key={r.path ?? r.permissionKey} item={r} />;
+            }
+
+            return null;
+          })}
       </div>
 
       {/* Footer */}
-      <div className="h-16 border-t border-border flex flex-col item-center justify-center">
+      <div className="h-16 border-t border-border flex flex-col items-center justify-center">
         <button
           className="h-full w-full mt-4 px-4 flex items-center rounded-md text-secondary transition-colors duration-200 hover:bg-secondary/10 cursor-pointer"
           onClick={logout}
