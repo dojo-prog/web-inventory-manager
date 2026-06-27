@@ -3,9 +3,11 @@ import type { AuthState } from "./auth.types";
 import errorHandler from "../../utils/errorHandler";
 import * as authService from "./auth.service";
 import { toast } from "react-toastify";
+import { getAllowedTabs } from "../../config/permissions";
 
 const useAuthStore = create<AuthState>((set) => ({
   user: null,
+  allowedTabs: null,
 
   checkingAuth: true,
   loading: false,
@@ -15,7 +17,7 @@ const useAuthStore = create<AuthState>((set) => ({
     try {
       const user = await authService.checkAuth();
 
-      set({ user });
+      set({ user, allowedTabs: user.role ? getAllowedTabs(user.role) : null });
     } catch (error) {
       errorHandler(error, "checkAuth", true);
     } finally {
@@ -28,7 +30,7 @@ const useAuthStore = create<AuthState>((set) => ({
     try {
       const user = await authService.login(loginInputs);
 
-      set({ user });
+      set({ user, allowedTabs: user.role ? getAllowedTabs(user.role) : null });
       toast.success("Login successful");
     } catch (error) {
       errorHandler(error, "login", true);
@@ -53,7 +55,7 @@ const useAuthStore = create<AuthState>((set) => ({
     try {
       await authService.refresh();
     } catch (error) {
-      set({ user: null });
+      set({ user: null, allowedTabs: null });
       errorHandler(error, "refresh", true);
     }
   },

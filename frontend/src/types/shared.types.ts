@@ -1,6 +1,17 @@
 import type { LucideIcon } from "lucide-react";
 import type { JSX } from "react/jsx-runtime";
 
+export type Tab =
+  | "dashboard"
+  | "products"
+  | "suppliers"
+  | "brands"
+  | "categories"
+  | "users"
+  | "activity logs";
+
+export type Role = "admin" | "manager";
+
 export interface Route {
   index?: boolean;
   title?: string;
